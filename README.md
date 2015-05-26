@@ -38,8 +38,8 @@ done
 ```
 
 Afterwards, the `preprocessing.py` script can be called on all the corpus files with the following options:
-flag | description
---- | ---
+flag               | description
+------------------ | -----------------------------------------------------
 -h, --help         | show this help message and exit
 -p, --punctuation  | filter punctuation tokens
 -s, --stopwords    | filter stop word tokens
