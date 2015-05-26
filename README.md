@@ -38,6 +38,7 @@ done
 ```
 
 Afterwards, the `preprocessing.py` script can be called on all the corpus files with the following options:
+
 flag               | description
 ------------------ | -----------------------------------------------------
 -h, --help         | show this help message and exit
