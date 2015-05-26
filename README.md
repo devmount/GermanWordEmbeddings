@@ -8,6 +8,11 @@ There has been a lot of research into training of word embeddings on English cor
 3. [Evaluation](#evaluation)
 
 ## Obtaining corpora <a name="obtention"></a>
+There are multiple possibilities for an obtention of huge German corpora that are public and free to use. For example the German Wikipedia
+```shell
+wget http://download.wikimedia.org/dewiki/latest/dewiki-latest-pages-articles.xml.bz2
+```
+
 ## Preprocessing <a name="preprocessing"></a>
 ## Training models <a name="training"></a>
 ## Vocabulary <a name="vocabulary"></a>
