@@ -12,14 +12,24 @@ There are multiple possibilities for an obtention of huge German corpora that ar
 ```shell
 wget http://download.wikimedia.org/dewiki/latest/dewiki-latest-pages-articles.xml.bz2
 ```
-Or German news in 2007 to 2013:
+Or shuffled German news in 2007 to 2013:
 ```shell
 for i in 2007 2008 2009 2010 2011 2012 2013; do
-	wget http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.$i.de.shuffled.gz
+  wget http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.$i.de.shuffled.gz
 done
 ```
 
 ## Preprocessing <a name="preprocessing"></a>
+This Tool preprocesses the raw wikipedia XML corpus with the WikipediaExtractor (a Python Script from Giuseppe Attardi to filter a Wikipedia XML Dump) and some shell instructions to filter all XML tags and quotations:
+```shell
+wget http://medialab.di.unipi.it/Project/SemaWiki/Tools/WikiExtractor.py
+python WikiExtractor.py -c -b 25M -o extracted dewiki-latest-pages-articles.xml.bz2
+find extracted -name '*bz2' \! -exec bzip2 -k -c -d {} \; > dewiki.xml
+sed -i 's/<[^>]*>//g' dewiki.xml
+sed -i 's|["'\''„“‚‘]||g' dewiki.xml
+rm -rf extracted
+```
+
 ## Training models <a name="training"></a>
 ## Vocabulary <a name="vocabulary"></a>
 ## Evaluation <a name="evaluation"></a>
