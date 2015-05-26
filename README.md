@@ -55,17 +55,17 @@ python preprocessing.py dewiki.xml corpus/dewiki.corpus -psub
 ## Training models <a name="training"></a>
 Models are trained with the help of the  `training.py` script with the following options:
 
-flag                 | default | description
----------------------| ------- | -----------------------------------------------------
--h, --help           | -       | show this help message and exit
--s [], --size []     | 100     | dimension of word vectors
--w [], --window []   | 5       | size of the sliding window
--m [], --mincount [] | 5       | minimum number of occurences of a word to be considered
--c [], --workers []  | 4       | number of worker threads to train the model
--g [], --sg []       | 1       | training algorithm: Skip-Gram (1), otherwise CBOW (0)
--i [], --hs []       | 1       | use of hierachical sampling for training
--n [], --negative [] | 0       | use of negative sampling for training (usually between 5-20)
--o [], --cbowmean [] | 0       | for CBOW training algorithm: use sum (0) or mean (1) to merge context vectors
+flag                   | default | description
+-----------------------| ------- | -----------------------------------------------------
+-h, --help             | -       | show this help message and exit
+-s [ ], --size [ ]     | 100     | dimension of word vectors
+-w [ ], --window [ ]   | 5       | size of the sliding window
+-m [ ], --mincount [ ] | 5       | minimum number of occurences of a word to be considered
+-c [ ], --workers [ ]  | 4       | number of worker threads to train the model
+-g [ ], --sg [ ]       | 1       | training algorithm: Skip-Gram (1), otherwise CBOW (0)
+-i [ ], --hs [ ]       | 1       | use of hierachical sampling for training
+-n [ ], --negative [ ] | 0       | use of negative sampling for training (usually between 5-20)
+-o [ ], --cbowmean [ ] | 0       | for CBOW training algorithm: use sum (0) or mean (1) to merge context vectors
 
 ## Vocabulary <a name="vocabulary"></a>
 ## Evaluation <a name="evaluation"></a>
