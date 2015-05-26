@@ -29,6 +29,21 @@ sed -i 's/<[^>]*>//g' dewiki.xml
 sed -i 's|["'\''„“‚‘]||g' dewiki.xml
 rm -rf extracted
 ```
+The German news are already containing one sentence per line and don't have any XML overhead. Only the quotation has to be removed:
+```shell
+for i in 2007 2008 2009 2010 2011 2012 2013; do
+  gzip -d news.$i.de.shuffled.gz
+  sed -i 's|["'\''„“‚‘]||g' news.$i.de.shuffled
+done
+```
+
+Afterwards, the `preprocessing.py` script can be called on all the corpus files with the following options:
+-h, --help         | show this help message and exit
+-p, --punctuation  | filter punctuation tokens
+-s, --stopwords    | filter stop word tokens
+-u, --umlauts      | replace german umlauts with their respective digraphs
+-b, --bigram       | detect and process common bigram phrases
+
 
 ## Training models <a name="training"></a>
 ## Vocabulary <a name="vocabulary"></a>
