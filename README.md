@@ -56,7 +56,7 @@ python preprocessing.py dewiki.xml corpus/dewiki.corpus -psub
 Models are trained with the help of the  `training.py` script with the following options:
 
 flag                   | default | description
------------------------| ------- | -----------------------------------------------------
+---------------------- | ------- | -----------------------------------------------------
 -h, --help             | -       | show this help message and exit
 -s [ ], --size [ ]     | 100     | dimension of word vectors
 -w [ ], --window [ ]   | 5       | size of the sliding window
@@ -67,5 +67,38 @@ flag                   | default | description
 -n [ ], --negative [ ] | 0       | use of negative sampling for training (usually between 5-20)
 -o [ ], --cbowmean [ ] | 0       | for CBOW training algorithm: use sum (0) or mean (1) to merge context vectors
 
+Example use:
+```shell
+python training.py corpus/ model/corpus_SG-200-5.model -s 200 -w 5
+```
+Mind that the first parameter is a folder and that every contained file will be taken as a corpus file for training.
+
+If the time needed to train the model should be measured and stored into the results file, this would be a possible command:
+```shell
+{ time python training.py corpus/ model/corpus_SG-200-5.model -s 200 -w 5; } 2> model/corpus_SG-200-5.model.result
+```
+
 ## Vocabulary <a name="vocabulary"></a>
+To compute the vocabulary of a given corpus, the `vocabulary.py` script can be used:
+```shell
+python vocabulary.py model/corpus_SG-200-5.model model/corpus_SG-200-5.model.vocab
+```
+
 ## Evaluation <a name="evaluation"></a>
+To create test sets and evaluate trained models, the `evaluation.py` script can be used. For a successful creation of testsets, some source files must be created before starting the script (see the script configuration part for more information).
+Those options are possible:
+
+flag          | description
+------------- | -----------------------------------------------------
+-h, --help    | show a help message and exit
+-c, --creat   | if set, create testsets before evaluating
+-u, --umlauts | if set, create additional testsets with transformed umlauts and use them instead
+
+Example use:
+```shell
+python evaluation.py model/corpus_SG-200-5.model >> model/corpus_SG-200-5.model.result
+```
+Example use with measuring runtime:
+```shell
+{ time python evaluation.py model/corpus_SG-200-5.model >> model/corpus_SG-200-5.model.result; } 2>> model/corpus_SG-200-5.model.result
+```

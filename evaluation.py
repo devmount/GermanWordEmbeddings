@@ -18,7 +18,7 @@ import logging
 parser = argparse.ArgumentParser(description='Script for creating testsets and evaluating word vector models')
 parser.add_argument('model', type=str, help='source file with trained model')
 parser.add_argument('-c', '--create', action='store_true', help='if set, create testsets before evaluating')
-parser.add_argument('-u', '--umlauts', action='store_true', help='if set, create additional testsets with transformed umlauts')
+parser.add_argument('-u', '--umlauts', action='store_true', help='if set, create additional testsets with transformed umlauts and use them instead')
 args = parser.parse_args()
 TARGET_SYN     = 'data/syntactic_questions.txt'
 TARGET_SEM     = 'data/semantic_questions.txt'
