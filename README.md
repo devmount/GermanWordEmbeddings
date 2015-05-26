@@ -55,17 +55,17 @@ python preprocessing.py dewiki.xml corpus/dewiki.corpus -psub
 ## Training models <a name="training"></a>
 Models are trained with the help of the  `training.py` script with the following options:
 
-flag                             | default | description
--------------------------------- | ------- | -----------------------------------------------------
--h, --help            		 	 | -       | show this help message and exit
--s SIZE, --size SIZE  		 	 | 100     | dimension of word vectors
--w WINDOW, --window WINDOW 		 | 5       | size of the sliding window
--m MINCOUNT, --mincount MINCOUNT | 5       | minimum number of occurences of a word to be considered
--c WORKERS, --workers WORKERS 	 | 4       | number of worker threads to train the model
--g SG, --sg SG        			 | 1       | training algorithm: Skip-Gram (1), otherwise CBOW (0)
--i HS, --hs HS        			 | 1       | use of hierachical sampling for training
--n NEGATIVE, --negative NEGATIVE | 0       | use of negative sampling for training (usually between 5-20)
--o CBOWMEAN, --cbowmean CBOWMEAN | 0       | for CBOW training algorithm: use sum (0) or mean (1) to merge context vectors
+flag                   | default | description
+-----------------------| ------- | -----------------------------------------------------
+-h, --help             | -       | show this help message and exit
+-s *X*, --size *X*     | 100     | dimension of word vectors
+-w *X*, --window *X*   | 5       | size of the sliding window
+-m *X*, --mincount *X* | 5       | minimum number of occurences of a word to be considered
+-c *X*, --workers *X*  | 4       | number of worker threads to train the model
+-g *X*, --sg *X*       | 1       | training algorithm: Skip-Gram (1), otherwise CBOW (0)
+-i *X*, --hs *X*       | 1       | use of hierachical sampling for training
+-n *X*, --negative *X* | 0       | use of negative sampling for training (usually between 5-20)
+-o *X*, --cbowmean *X* | 0       | for CBOW training algorithm: use sum (0) or mean (1) to merge context vectors
 
 ## Vocabulary <a name="vocabulary"></a>
 ## Evaluation <a name="evaluation"></a>
