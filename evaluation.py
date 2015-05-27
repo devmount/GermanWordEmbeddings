@@ -21,7 +21,9 @@ parser.add_argument('-c', '--create', action='store_true', help='if set, create 
 parser.add_argument('-u', '--umlauts', action='store_true', help='if set, create additional testsets with transformed umlauts and use them instead')
 args = parser.parse_args()
 TARGET_SYN     = 'data/syntactic_questions.txt'
-TARGET_SEM     = 'data/semantic_questions.txt'
+TARGET_SEM_OP  = 'data/semantic_op_questions.txt'
+TARGET_SEM_BM  = 'data/semantic_bm_questions.txt'
+TARGET_SEM_DF  = 'data/semantic_df_questions.txt'
 SRC_NOUNS      = 'src/nouns.txt'
 SRC_ADJECTIVES = 'src/adjectives.txt'
 SRC_VERBS      = 'src/verbs.txt'
@@ -90,17 +92,25 @@ def create_syntactic_testset():
 # ... creates semantic test set and writes it into a file
 # @return void
 def create_semantic_testset():
+    # opposite
     if args.umlauts:
-        u = open(TARGET_SEM + '.nouml', 'w')
-        u.write(': opposite\n')
-    with open(TARGET_SEM, 'w') as t:
-        # opposite
-        t.write(': opposite\n')
+        u = open(TARGET_SEM_OP + '.nouml', 'w')
+        u.write(': Gegenteil\n')
+    with open(TARGET_SEM_OP, 'w') as t:
+        t.write(': Gegenteil\n')
         for q in create_questions(SRC_OPPOSITE, combinate=10):
             t.write(q + '\n')
             if args.umlauts:
                 u.write(replace_umlauts(q) + '\n')
         logging.info('created opposite questions')
+    # best match
+    if args.umlauts:
+        u = open(TARGET_SEM_BM + '.nouml', 'w')
+    with open(TARGET_SEM_BM, 'w') as t:
+        groups = open(SRC_BESTMATCH).read().split(':')
+        for group in groups:
+            questions = group.split('\n').pop(0)
+        logging.info('created best-match questions')
 
 
 # function create_questions
@@ -209,6 +219,6 @@ model = gensim.models.Word2Vec.load_word2vec_format(args.model, binary=True)
 logging.info('> EVALUATING SYNTACTIC FEATURES')
 model.accuracy(TARGET_SYN, restrict_vocab=50000)
 logging.info('> EVALUATING SEMANTIC FEATURES')
-model.accuracy(TARGET_SEM, restrict_vocab=50000)
-test_bestmatch(model, SRC_BESTMATCH)
-test_doesntfit(model, SRC_DOESNTFIT)
+model.accuracy(TARGET_SEM_OP, restrict_vocab=50000)
+test_bestmatch(model, TARGET_SEM_BM)
+test_doesntfit(model, TARGET_SEM_DF)

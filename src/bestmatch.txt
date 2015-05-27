@@ -1,67 +1,83 @@
-Deutschland Euro USA Dollar
-Deutschland Euro Daenemark Krone
-Deutschland Euro Russland Rubel
-Deutschland Euro Japan Yen
-Deutschland Euro China Yuan
-Deutschland Euro England Pfund
-Berlin Deutschland Bern Schweiz
-Berlin Deutschland Kairo Aegypten
-Berlin Deutschland Melbourne Australien
-Berlin Deutschland Hanoi Vietnam
-Berlin Deutschland Helsinki Finnland
-Berlin Deutschland London England
-Berlin Deutschland Madrid Spain
-Berlin Deutschland Moskau Russland
-Berlin Deutschland Oslo Norwegen
-Berlin Deutschland Ottawa Kanada
-Berlin Deutschland Paris Frankreich
-Berlin Deutschland Rom Italien
-Berlin Deutschland Stockholm Schweden
-Berlin Deutschland Teheran Iran
-Berlin Deutschland Tokio Japan
-Berlin Deutschland Athen Griechenland
-Berlin Deutschland Bagdad Irak
-Berlin Deutschland Bangkok Thailand
-Berlin Deutschland Washington USA
-Berlin Deutschland Kiew Ukraine
-Moskau Russland Bern Schweiz
-Moskau Russland Kairo Aegypten
-Moskau Russland Melbourne Australien
-Moskau Russland Hanoi Vietnam
-Moskau Russland Helsinki Finnland
-Moskau Russland London England
-Moskau Russland Madrid Spain
-Moskau Russland Oslo Norwegen
-Moskau Russland Ottawa Kanada
-Moskau Russland Paris Frankreich
-Moskau Russland Rom Italien
-Moskau Russland Stockholm Schweden
-Moskau Russland Teheran Iran
-Moskau Russland Tokio Japan
-Moskau Russland Athen Griechenland
-Moskau Russland Bagdad Irak
-Moskau Russland Bangkok Thailand
-Moskau Russland Washington USA
-Moskau Russland Kiew Ukraine
-Deutschland Europa USA Amerika
-Deutschland Europa China Asien
-Deutschland Europa Indien Asien
-Deutschland Europa Kanada Amerika
-Deutschland Europa Vietnam Asien
-Deutschland Deutsch Griechenland Griechisch
-Deutschland Deutsch Italien Italienisch
-Deutschland Deutsch Japan Japanisch
-Deutschland Deutsch Korea Koreanisch
-Deutschland Deutsch Polen Polnisch
-Deutschland Deutsch Russland Russisch
-Deutschland Deutsch Spanien Spanisch
-Deutschland Deutsch Schweden Schwedisch
-Deutschland Deutsch Norwegen Norwegisch
-Deutschland Deutsch Frankreich Französisch
-Deutschland Deutsch Ukraine Ukrainisch
-Deutschland Deutsch China Chinesisch
-Deutschland Deutsch England Englisch
-Elisabeth Koenigin Charles Prinz
-Windows Microsoft iOS Apple
-Windows Microsoft Android Google
-Android Google iOS Apple
+: Land-Währung
+China-Yuan
+Deutschland-Euro
+Dänemark-Krone
+England-Pfund
+Japan-Yen
+Russland-Rubel
+USA-Dollar
+: Hauptstad-Land
+Athen-Griechenland
+Bagdad-Irak
+Bangkok-Thailand
+Berlin-Deutschland
+Bern-Schweiz
+Hanoi-Vietnam
+Helsinki-Finnland
+Kairo-Ägypten
+Kiew-Ukraine
+London-England
+Madrid-Spain
+Melbourne-Australien
+Moskau-Russland
+Oslo-Norwegen
+Ottawa-Kanada
+Paris-Frankreich
+Rom-Italien
+Stockholm-Schweden
+Teheran-Iran
+Tokio-Japan
+Washington-USA
+: Land-Kontinent
+Brasilien-Südamerika
+China-Asien
+Deutschland-Europa
+England-Europa
+Frankreich-Europa
+Griechenland-Europa
+Indien-Asien
+Italien-Europa
+Kanada-Nordamerika
+Polen-Europa
+USA-Nordamerika
+Vietnam-Asien
+Ägypten-Afrika
+: Land-Sprache
+China-Chinesisch
+Deutschland-Deutsch
+England-Englisch
+Frankreich-Französisch
+Griechenland-Griechisch
+Italien-Italienisch
+Japan-Japanisch
+Korea-Koreanisch
+Norwegen-Norwegisch
+Polen-Polnisch
+Russland-Russisch
+Schweden-Schwedisch
+Spanien-Spanisch
+Ukraine-Ukrainisch
+: Politik
+Elisabeth-Königin-Charles-Prinz
+: Technik
+Android-Google
+iOS-Apple
+Windows-Microsoft
+: Geschlecht
+Bruder-Schwester
+Bräutigam-Braut
+Ehemann-Ehefrau
+Enkel-Enkelin
+er-sie
+Er-Sie
+Großvater-Großmutter
+Junge-Mädchen
+König-Königin
+Mann-Frau
+männlich-weiblich
+Neffe-Nichte
+Onkel-Tante
+Papa-Mama
+Partner-Partnerin
+Prinz-Prinzessin
+Vater-Mutter

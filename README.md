@@ -7,6 +7,7 @@ There has been a lot of research into training of word embeddings on English cor
 3. [Vocabulary](#vocabulary)
 3. [Evaluation](#evaluation)
 
+
 ## Obtaining corpora <a name="obtention"></a>
 There are multiple possibilities for an obtention of huge German corpora that are public and free to use. For example the German Wikipedia:
 ```shell
@@ -18,6 +19,7 @@ for i in 2007 2008 2009 2010 2011 2012 2013; do
   wget http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.$i.de.shuffled.gz
 done
 ```
+
 
 ## Preprocessing <a name="preprocessing"></a>
 This Tool preprocesses the raw wikipedia XML corpus with the WikipediaExtractor (a Python Script from Giuseppe Attardi to filter a Wikipedia XML Dump) and some shell instructions to filter all XML tags and quotations:
@@ -52,6 +54,7 @@ Example use:
 python preprocessing.py dewiki.xml corpus/dewiki.corpus -psub
 ```
 
+
 ## Training models <a name="training"></a>
 Models are trained with the help of the  `training.py` script with the following options:
 
@@ -78,11 +81,13 @@ If the time needed to train the model should be measured and stored into the res
 { time python training.py corpus/ model/corpus_SG-200-5.model -s 200 -w 5; } 2> model/corpus_SG-200-5.model.result
 ```
 
+
 ## Vocabulary <a name="vocabulary"></a>
 To compute the vocabulary of a given corpus, the `vocabulary.py` script can be used:
 ```shell
 python vocabulary.py model/corpus_SG-200-5.model model/corpus_SG-200-5.model.vocab
 ```
+
 
 ## Evaluation <a name="evaluation"></a>
 To create test sets and evaluate trained models, the `evaluation.py` script can be used. For a successful creation of testsets, some source files must be created before starting the script (see the script configuration part for more information).
