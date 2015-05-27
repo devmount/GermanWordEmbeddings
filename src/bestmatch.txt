@@ -58,7 +58,8 @@ Schweden-Schwedisch
 Spanien-Spanisch
 Ukraine-Ukrainisch
 : Politik
-Elisabeth-Königin-Charles-Prinz
+Elisabeth-Königin
+Charles-Prinz
 : Technik
 Android-Google
 iOS-Apple

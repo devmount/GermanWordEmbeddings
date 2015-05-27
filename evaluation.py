@@ -108,8 +108,17 @@ def create_semantic_testset():
         u = open(TARGET_SEM_BM + '.nouml', 'w')
     with open(TARGET_SEM_BM, 'w') as t:
         groups = open(SRC_BESTMATCH).read().split(':')
+        groups.pop(0) # remove first empty group
         for group in groups:
-            questions = group.split('\n').pop(0)
+            questions = group.splitlines()
+            label = questions.pop(0)
+            while questions:
+                for i in range(1,len(questions)):
+                    question = questions[0].split('-') + questions[i].split('-')
+                    t.write(' '.join(question) + '\n')
+                    if args.umlauts:
+                        u.write(replace_umlauts(' '.join(question)) + '\n')
+                questions.pop(0)
         logging.info('created best-match questions')
 
 
@@ -208,17 +217,17 @@ def test_doesntfit(model, src):
                 
 
 if args.create:
-    logging.info('> CREATING SYNTACTIC TESTSET')
-    create_syntactic_testset()
+    # logging.info('> CREATING SYNTACTIC TESTSET')
+    # create_syntactic_testset()
     logging.info('> CREATING SEMANTIC TESTSET')
     create_semantic_testset()
 
-# get trained model
-model = gensim.models.Word2Vec.load_word2vec_format(args.model, binary=True)
-# execute evaluation
-logging.info('> EVALUATING SYNTACTIC FEATURES')
-model.accuracy(TARGET_SYN, restrict_vocab=50000)
-logging.info('> EVALUATING SEMANTIC FEATURES')
-model.accuracy(TARGET_SEM_OP, restrict_vocab=50000)
-test_bestmatch(model, TARGET_SEM_BM)
-test_doesntfit(model, TARGET_SEM_DF)
+# # get trained model
+# model = gensim.models.Word2Vec.load_word2vec_format(args.model, binary=True)
+# # execute evaluation
+# logging.info('> EVALUATING SYNTACTIC FEATURES')
+# model.accuracy(TARGET_SYN, restrict_vocab=50000)
+# logging.info('> EVALUATING SEMANTIC FEATURES')
+# model.accuracy(TARGET_SEM_OP, restrict_vocab=50000)
+# test_bestmatch(model, TARGET_SEM_BM)
+# test_doesntfit(model, TARGET_SEM_DF)
