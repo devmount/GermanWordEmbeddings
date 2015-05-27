@@ -20,10 +20,10 @@ parser.add_argument('model', type=str, help='source file with trained model')
 parser.add_argument('-c', '--create', action='store_true', help='if set, create testsets before evaluating')
 parser.add_argument('-u', '--umlauts', action='store_true', help='if set, create additional testsets with transformed umlauts and use them instead')
 args = parser.parse_args()
-TARGET_SYN     = 'data/syntactic_questions.txt'
-TARGET_SEM_OP  = 'data/semantic_op_questions.txt'
-TARGET_SEM_BM  = 'data/semantic_bm_questions.txt'
-TARGET_SEM_DF  = 'data/semantic_df_questions.txt'
+TARGET_SYN     = 'data/syntactic.questions'
+TARGET_SEM_OP  = 'data/semantic_op.questions'
+TARGET_SEM_BM  = 'data/semantic_bm.questions'
+TARGET_SEM_DF  = 'data/semantic_df.questions'
 SRC_NOUNS      = 'src/nouns.txt'
 SRC_ADJECTIVES = 'src/adjectives.txt'
 SRC_VERBS      = 'src/verbs.txt'
@@ -31,26 +31,26 @@ SRC_BESTMATCH  = 'src/bestmatch.txt'
 SRC_DOESNTFIT  = 'src/doesntfit.txt'
 SRC_OPPOSITE   = 'src/opposite.txt'
 PATTERN_SYN = [
-    ('Nomen', 'SI/PL', SRC_NOUNS, 0, 1),
-    ('Nomen', 'PL/SI', SRC_NOUNS, 1, 0),
-    ('Adjektive', 'GR/KOM', SRC_ADJECTIVES, 0, 1),
-    ('Adjektive', 'KOM/GR', SRC_ADJECTIVES, 1, 0),
-    ('Adjektive', 'GR/SUP', SRC_ADJECTIVES, 0, 2),
-    ('Adjektive', 'SUP/GR', SRC_ADJECTIVES, 2, 0),
-    ('Adjektive', 'KOM/SUP', SRC_ADJECTIVES, 1, 2),
-    ('Adjektive', 'SUP/KOM', SRC_ADJECTIVES, 2, 1),
-    ('Verben (Präsens)', 'INF/1SP', SRC_VERBS, 0, 1),
-    ('Verben (Präsens)', '1SP/INF', SRC_VERBS, 1, 0),
-    ('Verben (Präsens)', 'INF/2PP', SRC_VERBS, 0, 2),
-    ('Verben (Präsens)', '2PP/INF', SRC_VERBS, 2, 0),
-    ('Verben (Präsens)', '1SP/2PP', SRC_VERBS, 1, 2),
-    ('Verben (Präsens)', '2PP/1SP', SRC_VERBS, 2, 1),
-    ('Verben (Präteritum)', 'INF/3SV', SRC_VERBS, 0, 3),
-    ('Verben (Präteritum)', '3SV/INF', SRC_VERBS, 3, 0),
-    ('Verben (Präteritum)', 'INF/3PV', SRC_VERBS, 0, 4),
-    ('Verben (Präteritum)', '3PV/INF', SRC_VERBS, 4, 0),
-    ('Verben (Präteritum)', '3SV/3PV', SRC_VERBS, 3, 4),
-    ('Verben (Präteritum)', '3PV/3SV', SRC_VERBS, 4, 3)]
+    ('nouns', 'SI/PL', SRC_NOUNS, 0, 1),
+    ('nouns', 'PL/SI', SRC_NOUNS, 1, 0),
+    ('adjectives', 'GR/KOM', SRC_ADJECTIVES, 0, 1),
+    ('adjectives', 'KOM/GR', SRC_ADJECTIVES, 1, 0),
+    ('adjectives', 'GR/SUP', SRC_ADJECTIVES, 0, 2),
+    ('adjectives', 'SUP/GR', SRC_ADJECTIVES, 2, 0),
+    ('adjectives', 'KOM/SUP', SRC_ADJECTIVES, 1, 2),
+    ('adjectives', 'SUP/KOM', SRC_ADJECTIVES, 2, 1),
+    ('verbs (pres)', 'INF/1SP', SRC_VERBS, 0, 1),
+    ('verbs (pres)', '1SP/INF', SRC_VERBS, 1, 0),
+    ('verbs (pres)', 'INF/2PP', SRC_VERBS, 0, 2),
+    ('verbs (pres)', '2PP/INF', SRC_VERBS, 2, 0),
+    ('verbs (pres)', '1SP/2PP', SRC_VERBS, 1, 2),
+    ('verbs (pres)', '2PP/1SP', SRC_VERBS, 2, 1),
+    ('verbs (past)', 'INF/3SV', SRC_VERBS, 0, 3),
+    ('verbs (past)', '3SV/INF', SRC_VERBS, 3, 0),
+    ('verbs (past)', 'INF/3PV', SRC_VERBS, 0, 4),
+    ('verbs (past)', '3PV/INF', SRC_VERBS, 4, 0),
+    ('verbs (past)', '3SV/3PV', SRC_VERBS, 3, 4),
+    ('verbs (past)', '3PV/3SV', SRC_VERBS, 4, 3)]
 logging.basicConfig(filename=args.model + '.result', format='%(asctime)s : %(message)s', level=logging.INFO)
 
 
@@ -95,9 +95,9 @@ def create_semantic_testset():
     # opposite
     if args.umlauts:
         u = open(TARGET_SEM_OP + '.nouml', 'w')
-        u.write(': Gegenteil\n')
+        u.write(': opposite\n')
     with open(TARGET_SEM_OP, 'w') as t:
-        t.write(': Gegenteil\n')
+        t.write(': opposite\n')
         for q in create_questions(SRC_OPPOSITE, combinate=10):
             t.write(q + '\n')
             if args.umlauts:
@@ -120,6 +120,18 @@ def create_semantic_testset():
                         u.write(replace_umlauts(' '.join(question)) + '\n')
                 questions.pop(0)
         logging.info('created best-match questions')
+    # doesn't fit
+    if args.umlauts:
+        u = open(TARGET_SEM_DF + '.nouml', 'w')
+    with open(TARGET_SEM_DF, 'w') as t:
+        for line in open(SRC_DOESNTFIT):
+            words = line.split()
+            for wrongword in words[-1].split('-'):
+                question = ' '.join(words[0:2] + [wrongword])
+                t.write(question + '\n')
+                if args.umlauts:
+                    u.write(replace_umlauts(question) + '\n')
+        logging.info('created doesn\'t-fit questions')
 
 
 # function create_questions
@@ -183,9 +195,9 @@ def test_bestmatch(model, src, topn=10):
     topn_matches = num_topn/num_questions*100 if num_questions>0 else 0.0
     coverage = num_questions/num_lines*100 if num_lines>0 else 0.0
     # log result
-    logging.info('best match result: ' + str(correct_matches) + '% correct matches (' + str(num_right) + '/' + str(num_questions) + ')')
-    logging.info('best match result: ' + str(topn_matches) + '% in top ' + str(topn) + ' matches (' + str(num_topn) + '/' + str(num_questions) + ')')
-    logging.info('best match coverage: ' + str(coverage) + '% (' + str(num_questions) + '/' + str(num_lines) + ')')
+    logging.info('best match correct:   {0}% ({1}/{2})'.format(str(correct_matches), str(num_right), str(num_questions)))
+    logging.info('best match top {0}:    {1}% ({2}/{3})'.format(str(topn), str(topn_matches), str(num_topn), str(num_questions)))
+    logging.info('best match coverage:  {0}% ({1}/{2})'.format(str(coverage), str(num_questions), str(num_lines)))
         
 
 # function test_doesntfit
@@ -212,22 +224,22 @@ def test_doesntfit(model, src):
     correct_matches = num_right/num_questions*100 if num_questions>0 else 0.0
     coverage = num_questions/num_lines*100 if num_lines>0 else 0.0
     # log result
-    logging.info('doesn\'t fit result: ' + str(correct_matches) + '% correct matches (' + str(num_right) + '/' + str(num_questions) + ')')
-    logging.info('doesn\'t fit coverage: ' + str(coverage) + '% (' + str(num_questions) + '/' + str(num_lines) + ')')
+    logging.info('doesn\'t fit correct:  {0}% ({1}/{2})'.format(str(correct_matches), str(num_right), str(num_questions)))
+    logging.info('doesn\'t fit coverage: {0}% ({1}/{2})'.format(str(coverage), str(num_questions), str(num_lines)))
                 
 
 if args.create:
-    # logging.info('> CREATING SYNTACTIC TESTSET')
-    # create_syntactic_testset()
+    logging.info('> CREATING SYNTACTIC TESTSET')
+    create_syntactic_testset()
     logging.info('> CREATING SEMANTIC TESTSET')
     create_semantic_testset()
 
-# # get trained model
-# model = gensim.models.Word2Vec.load_word2vec_format(args.model, binary=True)
-# # execute evaluation
-# logging.info('> EVALUATING SYNTACTIC FEATURES')
-# model.accuracy(TARGET_SYN, restrict_vocab=50000)
-# logging.info('> EVALUATING SEMANTIC FEATURES')
-# model.accuracy(TARGET_SEM_OP, restrict_vocab=50000)
-# test_bestmatch(model, TARGET_SEM_BM)
-# test_doesntfit(model, TARGET_SEM_DF)
+# get trained model
+model = gensim.models.Word2Vec.load_word2vec_format(args.model, binary=True)
+# execute evaluation
+logging.info('> EVALUATING SYNTACTIC FEATURES')
+model.accuracy(TARGET_SYN + '.nouml' if args.umlauts else TARGET_SYN, restrict_vocab=50000)
+logging.info('> EVALUATING SEMANTIC FEATURES')
+model.accuracy(TARGET_SEM_OP + '.nouml' if args.umlauts else TARGET_SEM_OP, restrict_vocab=50000)
+test_bestmatch(model, TARGET_SEM_BM + '.nouml' if args.umlauts else TARGET_SEM_BM)
+test_doesntfit(model, TARGET_SEM_DF + '.nouml' if args.umlauts else TARGET_SEM_DF)
