@@ -90,8 +90,21 @@ python vocabulary.py model/corpus_SG-200-5.model model/corpus_SG-200-5.model.voc
 
 
 ## Evaluation <a name="evaluation"></a>
-To create test sets and evaluate trained models, the `evaluation.py` script can be used. For a successful creation of testsets, some source files must be created before starting the script (see the script configuration part for more information).
-Those options are possible:
+To create test sets and evaluate trained models, the `evaluation.py` script can be used. It's possible to evaluate both syntactic and semantic features of a trained model. For a successful creation of testsets, the following source files should be created before starting the script (see the configuration part in the script for more information).
+
+### Syntactic test set
+With the syntactic test, you can evaluate features like singular, plural, 3rd person, past tense, comparative or superlative. Therefor there are 3 files: adjectives, nouns and verbs. Every file contains a unique word with it's assessable conjugation per line, divided bei a dash. Here are some examples:
+
+#### adjectives.txt
+```
+gut-besser-beste
+```
+
+
+### Semantic test set
+
+
+Those options for the script execution are possible:
 
 flag          | description
 ------------- | -----------------------------------------------------
