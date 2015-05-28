@@ -49,7 +49,7 @@ flag               | description
 -u, --umlauts      | replace german umlauts with their respective digraphs
 -b, --bigram       | detect and process common bigram phrases
 
-Example use:
+Example usage:
 ```shell
 python preprocessing.py dewiki.xml corpus/dewiki.corpus -psub
 ```
@@ -70,7 +70,7 @@ flag                   | default | description
 -n [ ], --negative [ ] | 0       | use of negative sampling for training (usually between 5-20)
 -o [ ], --cbowmean [ ] | 0       | for CBOW training algorithm: use sum (0) or mean (1) to merge context vectors
 
-Example use:
+Example usage:
 ```shell
 python training.py corpus/ model/corpus_SG-200-5.model -s 200 -w 5
 ```
@@ -93,9 +93,9 @@ python vocabulary.py model/corpus_SG-200-5.model model/corpus_SG-200-5.model.voc
 To create test sets and evaluate trained models, the `evaluation.py` script can be used. It's possible to evaluate both syntactic and semantic features of a trained model. For a successful creation of testsets, the following source files should be created before starting the script (see the configuration part in the script for more information).
 
 ### Syntactic test set
-With the syntactic test, you can evaluate features like singular, plural, 3rd person, past tense, comparative or superlative. Therefor there are 3 source files: adjectives, nouns and verbs. Every file contains a unique word with it's assessable conjugation per line, divided bei a dash. These combination patterns can be entered in the `PATTERN_SYN` constant in the script configuration. The script now combinates each word with 5 (default) random other words according to the given pattern, to create assessable analogy questions. Once the data file with the questions is created, it can be evaluated with the [gensim word2vec accuracy function](http://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec.accuracy).
+With the syntactic test, features like singular, plural, 3rd person, past tense, comparative or superlative can be evaluated. Therefore there are 3 source files: adjectives, nouns and verbs. Every file contains a unique word with it's assessable conjugations per line, divided bei a dash. These combination patterns can be entered in the `PATTERN_SYN` constant in the script configuration. The script now combinates each word with 5 (default) random other words according to the given pattern, to create assessable analogy questions. Once the data file with the questions is created, it can be evaluated with the [gensim word2vec accuracy function](http://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec.accuracy).
 
-Here are some examples for possible source files:
+The given source files of this project contains 100 unique nouns with 2 patterns, 100 unique adjectives with 6 patterns and 100 unique verbs with 12 patterns, resulting in 10k analogy questions. Here are some examples for possible source files:
 
 #### adjectives.txt
 Possible pattern: `basic-comparative-superlative`
@@ -115,7 +115,6 @@ Bild-Bilder
 Name-Namen
 ```
 
-
 #### verbs.txt
 Possible pattern: `basic-1stPersonSingularPresent-2ndPersonPluralPresent-3rdPersonSingularPast-3rdPersonPluralPast`
 
@@ -125,9 +124,40 @@ finden-finde-findet-fand-fanden
 suchen-suche-sucht-suchte-suchten
 ```
 
-
 ### Semantic test set
+With the semantic test, features concering word meanings can be evaluated. Therefore there are 3 source files: opposite, best match and doesn't match. The given source files result in a total of 950 semantic questions.
 
+#### opposite.txt
+This file contains opposite words, like `oneword-oppositeword` per line, to evaluate the models ability to find opposites. The script combinates each pair with 10 (default) random other pairs, to build analogy questions. The given opposite source file of this project includes 30 unique pairs, resulting in 300 analogy questions.
+
+Example content:
+```
+Sommer-Winter
+Tag-Nacht
+```
+
+#### bestmatch.txt
+This file contains groups of content similar word pairs, to evaluate the models ability to find thematic relevant analogies. The script combinates each pair with all other pairs of the same group, to build analogy questions. The given bestmatch source file of this project includes 7 groups with a total of 77 unique pairs, resulting in 540 analogy questions.
+
+Example content:
+```
+: Politik
+Elisabeth-Königin
+Charles-Prinz
+: Technik
+Android-Google
+iOS-Apple
+Windows-Microsoft
+```
+
+#### doesntmatch.txt
+This file contains (per line) 3 words with similar content divided by space and a set of not fitting words, divided by dash, like `fittingword1 fittingword2 fittingword3 notfittingword1-notfittingword2-...-notfittingwordn`. This evaluates the models ability to find the least fitting word in a set of 4 words. The script combinates each matching triple with every not matching word of the dash divided list, to build doesntmatch questions. The given doesntmatch source file of this project includes 11 triple each with 10 not fitting words, resulting in 110 questions.
+
+Example content:
+```
+Hase Hund Katze Baum-Besitzer-Elefant-Essen-Haus-Mensch-Tier-Tierheim-Wiese-Zoo
+August April September Jahr-Monat-Tag-Stunde-Minute-Zeit-Kalender-Woche-Quartal-Uhr
+```
 
 Those options for the script execution are possible:
 
@@ -137,11 +167,11 @@ flag          | description
 -c, --creat   | if set, create testsets before evaluating
 -u, --umlauts | if set, create additional testsets with transformed umlauts and use them instead
 
-Example use:
+Example usage:
 ```shell
-python evaluation.py model/corpus_SG-200-5.model >> model/corpus_SG-200-5.model.result
+python evaluation.py model/corpus_SG-200-5.model -u
 ```
-Example use with measuring runtime:
+Example usage with measuring runtime:
 ```shell
 { time python evaluation.py model/corpus_SG-200-5.model >> model/corpus_SG-200-5.model.result; } 2>> model/corpus_SG-200-5.model.result
 ```
