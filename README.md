@@ -78,7 +78,7 @@ Mind that the first parameter is a folder and that every contained file will be 
 
 If the time needed to train the model should be measured and stored into the results file, this would be a possible command:
 ```shell
-{ time python training.py corpus/ my.model -s 200 -w 5; } 2> my.model.result
+{ time python training.py corpus/ my.model -s 200 -w 5; } 2>> my.model.result
 ```
 
 
