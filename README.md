@@ -96,8 +96,31 @@ To create test sets and evaluate trained models, the `evaluation.py` script can 
 With the syntactic test, you can evaluate features like singular, plural, 3rd person, past tense, comparative or superlative. Therefor there are 3 files: adjectives, nouns and verbs. Every file contains a unique word with it's assessable conjugation per line, divided bei a dash. Here are some examples:
 
 #### adjectives.txt
+Possible pattern: `basic-comparative-superlative`
+
+Example content:
 ```
 gut-besser-beste
+laut-lauter-lauteste
+```
+
+#### nouns.txt
+Possible pattern: `singular-plural`
+
+Example content:
+```
+Bild-Bilder
+Name-Namen
+```
+
+
+#### verbs.txt
+Possible pattern: `basic-1stPersonSingularPresent-2ndPersonPluralPresent-3rdPersonSingularPast-3rdPersonPluralPast`
+
+Example content:
+```
+finden-finde-findet-fand-fanden
+suchen-suche-sucht-suchte-suchten
 ```
 
 
