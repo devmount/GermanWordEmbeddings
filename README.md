@@ -93,7 +93,9 @@ python vocabulary.py model/corpus_SG-200-5.model model/corpus_SG-200-5.model.voc
 To create test sets and evaluate trained models, the `evaluation.py` script can be used. It's possible to evaluate both syntactic and semantic features of a trained model. For a successful creation of testsets, the following source files should be created before starting the script (see the configuration part in the script for more information).
 
 ### Syntactic test set
-With the syntactic test, you can evaluate features like singular, plural, 3rd person, past tense, comparative or superlative. Therefor there are 3 files: adjectives, nouns and verbs. Every file contains a unique word with it's assessable conjugation per line, divided bei a dash. Here are some examples:
+With the syntactic test, you can evaluate features like singular, plural, 3rd person, past tense, comparative or superlative. Therefor there are 3 source files: adjectives, nouns and verbs. Every file contains a unique word with it's assessable conjugation per line, divided bei a dash. These combination patterns can be entered in the `PATTERN_SYN` constant in the script configuration. The script now combinates each word with 5 (default) random other words according to the given pattern, to create assessable analogy questions. Once the data file with the questions is created, it can be evaluated with the [gensim word2vec accuracy function](http://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec.accuracy).
+
+Here are some examples for possible source files:
 
 #### adjectives.txt
 Possible pattern: `basic-comparative-superlative`
