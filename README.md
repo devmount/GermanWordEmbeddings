@@ -72,20 +72,20 @@ flag                   | default | description
 
 Example usage:
 ```shell
-python training.py corpus/ model/my.model -s 200 -w 5
+python training.py corpus/ my.model -s 200 -w 5
 ```
 Mind that the first parameter is a folder and that every contained file will be taken as a corpus file for training.
 
 If the time needed to train the model should be measured and stored into the results file, this would be a possible command:
 ```shell
-{ time python training.py corpus/ model/my.model -s 200 -w 5; } 2> model/my.model.result
+{ time python training.py corpus/ my.model -s 200 -w 5; } 2> my.model.result
 ```
 
 
 ## Vocabulary <a name="vocabulary"></a>
 To compute the vocabulary of a given corpus, the `vocabulary.py` script can be used:
 ```shell
-python vocabulary.py model/my.model model/my.model.vocab
+python vocabulary.py my.model my.model.vocab
 ```
 
 
@@ -169,9 +169,9 @@ flag          | description
 
 Example usage:
 ```shell
-python evaluation.py model/my.model -u
+python evaluation.py my.model -u
 ```
 Example usage with measuring runtime:
 ```shell
-{ time python evaluation.py model/my.model; } 2>> model/my.model.result
+{ time python evaluation.py my.model; } 2>> my.model.result
 ```
