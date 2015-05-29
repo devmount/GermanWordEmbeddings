@@ -39,7 +39,7 @@ for i in 2007 2008 2009 2010 2011 2012 2013; do
 done
 ```
 
-Afterwards, the `preprocessing.py` script can be called on all the corpus files with the following options:
+Afterwards, the [`preprocessing.py`](preprocessing.py) script can be called on all the corpus files with the following options:
 
 flag               | description
 ------------------ | -----------------------------------------------------
@@ -56,7 +56,7 @@ python preprocessing.py dewiki.xml corpus/dewiki.corpus -psub
 
 
 ## Training models <a name="training"></a>
-Models are trained with the help of the  `training.py` script with the following options:
+Models are trained with the help of the  [`training.py`](training.py) script with the following options:
 
 flag                   | default | description
 ---------------------- | ------- | -----------------------------------------------------
@@ -83,17 +83,17 @@ If the time needed to train the model should be measured and stored into the res
 
 
 ## Vocabulary <a name="vocabulary"></a>
-To compute the vocabulary of a given corpus, the `vocabulary.py` script can be used:
+To compute the vocabulary of a given corpus, the [`vocabulary.py`](vocabulary.py) script can be used:
 ```shell
 python vocabulary.py my.model my.model.vocab
 ```
 
 
 ## Evaluation <a name="evaluation"></a>
-To create test sets and evaluate trained models, the `evaluation.py` script can be used. It's possible to evaluate both syntactic and semantic features of a trained model. For a successful creation of testsets, the following source files should be created before starting the script (see the configuration part in the script for more information).
+To create test sets and evaluate trained models, the [`evaluation.py`](evaluation.py) script can be used. It's possible to evaluate both syntactic and semantic features of a trained model. For a successful creation of testsets, the following source files should be created before starting the script (see the configuration part in the script for more information).
 
 ### Syntactic test set
-With the syntactic test, features like singular, plural, 3rd person, past tense, comparative or superlative can be evaluated. Therefore there are 3 source files: adjectives, nouns and verbs. Every file contains a unique word with it's assessable conjugations per line, divided bei a dash. These combination patterns can be entered in the `PATTERN_SYN` constant in the script configuration. The script now combinates each word with 5 (default) random other words according to the given pattern, to create assessable analogy questions. Once the data file with the questions is created, it can be evaluated with the [gensim word2vec accuracy function](http://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec.accuracy).
+With the syntactic test, features like singular, plural, 3rd person, past tense, comparative or superlative can be evaluated. Therefore there are 3 source files: adjectives, nouns and verbs. Every file contains a unique word with it's assessable conjugations per line, divided bei a dash. These combination patterns can be entered in the `PATTERN_SYN` constant in the script configuration. The script now combinates each word with 5 (default) random other words according to the given pattern, to create assessable analogy questions. Once the data file with the questions is created, it can be evaluated. Normally the evaluation can be done by [gensim's word2vec accuracy function](http://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec.accuracy), but to get a more specific evaluation result (correct matches, top n matches and coverage), this project uses it's own accuracy functions (`test_mostsimilar_groups()` and `test_mostsimilar()` in [`evaluation.py`](evaluation.py)). 
 
 The given source files of this project contains 100 unique nouns with 2 patterns, 100 unique adjectives with 6 patterns and 100 unique verbs with 12 patterns, resulting in 10k analogy questions. Here are some examples for possible source files:
 

@@ -195,10 +195,66 @@ def test_mostsimilar(model, src, label='most similar', topn=10):
     topn_matches = round(num_topn/float(num_questions)*100, 1) if num_questions>0 else 0.0
     coverage = round(num_questions/float(num_lines)*100, 1) if num_lines>0 else 0.0
     # log result
-    logging.info(label + ' correct:   {0}% ({1}/{2})'.format(str(correct_matches), str(num_right), str(num_questions)))
-    logging.info(label + ' top {0}:    {1}% ({2}/{3})'.format(str(topn), str(topn_matches), str(num_topn), str(num_questions)))
-    logging.info(label + ' coverage:  {0}% ({1}/{2})'.format(str(coverage), str(num_questions), str(num_lines)))
-        
+    logging.info(label + ' correct:  {0}% ({1}/{2})'.format(str(correct_matches), str(num_right), str(num_questions)))
+    logging.info(label + ' top {0}:   {1}% ({2}/{3})'.format(str(topn), str(topn_matches), str(num_topn), str(num_questions)))
+    logging.info(label + ' coverage: {0}% ({1}/{2})'.format(str(coverage), str(num_questions), str(num_lines)))
+
+
+# function test_mostsimilar
+# ... tests given model to most similar word
+# @param word2vec model to test
+# @param string   src   source file to load words from
+# @param integer  topn  number of top matches
+def test_mostsimilar_groups(model, src, topn=10):
+    num_lines = 0
+    num_questions = 0
+    num_right = 0
+    num_topn = 0
+    # test each group
+    groups = open(src).read().split('\n: ')
+    groups.pop(0) # remove first empty group
+    for group in groups:
+        questions = group.splitlines()
+        label = questions.pop(0)
+        num_group_lines = len(questions)
+        num_group_questions = 0
+        num_group_right = 0
+        num_group_topn = 0
+        # test each question of current group
+        for question in questions:
+            words = question.decode('utf-8').split()
+            # check if all words exist in vocabulary
+            if all(x in model.index2word for x in words):
+                num_group_questions += 1
+                bestmatches = model.most_similar(positive=[words[1], words[2]], negative=[words[0]])
+                # best match
+                if words[3] in bestmatches[0]:
+                    num_group_right += 1
+                # topn match
+                for topmatches in bestmatches[:topn]:
+                    if words[3] in topmatches:
+                        num_group_topn += 1
+                        break
+        # calculate result
+        correct_group_matches = round(num_group_right/float(num_group_questions)*100, 1) if num_group_questions>0 else 0.0
+        topn_group_matches = round(num_group_topn/float(num_group_questions)*100, 1) if num_group_questions>0 else 0.0
+        group_coverage = round(num_group_questions/float(num_group_lines)*100, 1) if num_group_lines>0 else 0.0
+        # log result
+        logging.info(label + ': {0}% ({1}/{2}), {3}% ({4}/{5}), {6}% ({7}/{8})'.format(str(correct_group_matches), str(num_group_right), str(num_group_questions), str(topn_group_matches), str(num_group_topn), str(num_group_questions), str(group_coverage), str(num_group_questions), str(num_group_lines)))
+        # total numbers
+        num_lines += num_group_lines
+        num_questions += num_group_questions
+        num_right += num_group_right
+        num_topn += num_group_topn
+    # calculate result
+    correct_matches = round(num_right/float(num_questions)*100, 1) if num_questions>0 else 0.0
+    topn_matches = round(num_topn/float(num_questions)*100, 1) if num_questions>0 else 0.0
+    coverage = round(num_questions/float(num_lines)*100, 1) if num_lines>0 else 0.0
+    # log result
+    logging.info('total correct:  {0}% ({1}/{2})'.format(str(correct_matches), str(num_right), str(num_questions)))
+    logging.info('total top {0}:   {1}% ({2}/{3})'.format(str(topn), str(topn_matches), str(num_topn), str(num_questions)))
+    logging.info('total coverage: {0}% ({1}/{2})'.format(str(coverage), str(num_questions), str(num_lines)))
+
 
 # function test_doesntfit
 # ... tests given model to most not fitting word
@@ -236,9 +292,10 @@ if args.create:
 # get trained model
 model = gensim.models.Word2Vec.load_word2vec_format(args.model, binary=True)
 # execute evaluation
-# logging.info('> EVALUATING SYNTACTIC FEATURES')
+logging.info('> EVALUATING SYNTACTIC FEATURES')
 # model.accuracy(TARGET_SYN + '.nouml' if args.umlauts else TARGET_SYN, restrict_vocab=10000000)
-logging.info('> EVALUATING SEMANTIC FEATURES')
-test_mostsimilar(model, TARGET_SEM_OP + '.nouml' if args.umlauts else TARGET_SEM_OP, 'opposite')
-test_mostsimilar(model, TARGET_SEM_BM + '.nouml' if args.umlauts else TARGET_SEM_BM, 'best match')
-test_doesntfit(model, TARGET_SEM_DF + '.nouml' if args.umlauts else TARGET_SEM_DF)
+test_mostsimilar_groups(model, TARGET_SYN + '.nouml' if args.umlauts else TARGET_SYN)
+# logging.info('> EVALUATING SEMANTIC FEATURES')
+# test_mostsimilar(model, TARGET_SEM_OP + '.nouml' if args.umlauts else TARGET_SEM_OP, 'opposite')
+# test_mostsimilar(model, TARGET_SEM_BM + '.nouml' if args.umlauts else TARGET_SEM_BM, 'best match')
+# test_doesntfit(model, TARGET_SEM_DF + '.nouml' if args.umlauts else TARGET_SEM_DF)
