@@ -34,8 +34,8 @@
 #
 # evaluation
 # for m in SG-300-10; do
-{ time python evaluation.py model/corpus_SG-52-5.model; } 2>> model/corpus_SG-52-5.model.result
-# 	{ time python evaluation.py model/corpus-ps_SG-52-5.model; } 2>> model/corpus-ps_SG-52-5.model.result
-# 	{ time python evaluation.py model/corpus-psu_SG-52-5.model; } 2>> model/corpus-psu_SG-52-5.model.result
-# 	{ time python evaluation.py model/corpus-psub_SG-52-5.model; } 2>> model/corpus-psub_SG-52-5.model.result
+# python evaluation.py model/corpus_SG-52-5.model
+# python evaluation.py model/corpus-ps_SG-52-5.model
+python evaluation.py -u model/corpus-psu_SG-52-5.model
+python evaluation.py -u model/corpus-psub_SG-52-5.model
 # done

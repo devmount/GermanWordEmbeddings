@@ -51,7 +51,7 @@ PATTERN_SYN = [
     ('verbs (past)', '3PV/INF', SRC_VERBS, 4, 0),
     ('verbs (past)', '3SV/3PV', SRC_VERBS, 3, 4),
     ('verbs (past)', '3PV/3SV', SRC_VERBS, 4, 3)]
-logging.basicConfig(filename=args.model + '.result', format='%(asctime)s : %(message)s', level=logging.INFO)
+logging.basicConfig(filename=args.model.strip() + '.result', format='%(asctime)s : %(message)s', level=logging.INFO)
 
 
 # function replace_umlauts
@@ -212,10 +212,10 @@ def test_mostsimilar_groups(model, src, topn=10):
     num_topn = 0
     # test each group
     groups = open(src).read().split('\n: ')
-    groups.pop(0) # remove first empty group
     for group in groups:
         questions = group.splitlines()
         label = questions.pop(0)
+        label = label[2:] if label.startswith(': ') else label # handle first group
         num_group_lines = len(questions)
         num_group_questions = 0
         num_group_right = 0
@@ -290,12 +290,11 @@ if args.create:
     create_semantic_testset()
 
 # get trained model
-model = gensim.models.Word2Vec.load_word2vec_format(args.model, binary=True)
+model = gensim.models.Word2Vec.load_word2vec_format(args.model.strip(), binary=True)
 # execute evaluation
 logging.info('> EVALUATING SYNTACTIC FEATURES')
-# model.accuracy(TARGET_SYN + '.nouml' if args.umlauts else TARGET_SYN, restrict_vocab=10000000)
 test_mostsimilar_groups(model, TARGET_SYN + '.nouml' if args.umlauts else TARGET_SYN)
-# logging.info('> EVALUATING SEMANTIC FEATURES')
-# test_mostsimilar(model, TARGET_SEM_OP + '.nouml' if args.umlauts else TARGET_SEM_OP, 'opposite')
-# test_mostsimilar(model, TARGET_SEM_BM + '.nouml' if args.umlauts else TARGET_SEM_BM, 'best match')
-# test_doesntfit(model, TARGET_SEM_DF + '.nouml' if args.umlauts else TARGET_SEM_DF)
+logging.info('> EVALUATING SEMANTIC FEATURES')
+test_mostsimilar(model, TARGET_SEM_OP + '.nouml' if args.umlauts else TARGET_SEM_OP, 'opposite')
+test_mostsimilar(model, TARGET_SEM_BM + '.nouml' if args.umlauts else TARGET_SEM_BM, 'best match')
+test_doesntfit(model, TARGET_SEM_DF + '.nouml' if args.umlauts else TARGET_SEM_DF)
