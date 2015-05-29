@@ -31,7 +31,7 @@ sed -i 's/<[^>]*>//g' dewiki.xml
 sed -i 's|["'\''„“‚‘]||g' dewiki.xml
 rm -rf extracted
 ```
-The German news are already containing one sentence per line and don't have any XML overhead. Only the quotation has to be removed:
+The German news already contain one sentence per line and don't have any XML overhead. Only the quotation has to be removed:
 ```shell
 for i in 2007 2008 2009 2010 2011 2012 2013; do
   gzip -d news.$i.de.shuffled.gz

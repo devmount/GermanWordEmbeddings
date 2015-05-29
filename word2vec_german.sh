@@ -8,8 +8,8 @@
 # for i in 2007 2008 2009 2010 2011 2012 2013; do
 # 	wget http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.$i.de.shuffled.gz
 # 	gzip -d news.$i.de.shuffled.gz
-	# sed -i 's|["'\''„“‚‘]||g' news.$i.de.shuffled
-	# python preprocessing.py news.$i.de.shuffled corpus_ps/news.$i.de.shuffled.corpus -ps
+# 	sed -i 's|["'\''„“‚‘]||g' news.$i.de.shuffled
+# 	python preprocessing.py news.$i.de.shuffled corpus_ps/news.$i.de.shuffled.corpus -ps
 # done
 # rm news*
 #

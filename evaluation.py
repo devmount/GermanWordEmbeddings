@@ -95,9 +95,7 @@ def create_semantic_testset():
     # opposite
     if args.umlauts:
         u = open(TARGET_SEM_OP + '.nouml', 'w')
-        u.write(': opposite\n')
     with open(TARGET_SEM_OP, 'w') as t:
-        t.write(': opposite\n')
         for q in create_questions(SRC_OPPOSITE, combinate=10):
             t.write(q + '\n')
             if args.umlauts:
@@ -162,12 +160,13 @@ def create_questions(src, index1=0, index2=1, combinate=5):
     return questions
 
 
-# function test_bestmatch
-# ... tests given model to best matching word
+# function test_mostsimilar
+# ... tests given model to most similar word
 # @param word2vec model to test
 # @param string   src   source file to load words from
-# @param integer  topn  source file to load words from
-def test_bestmatch(model, src, topn=10):
+# @param string   label to print current test case
+# @param integer  topn  number of top matches
+def test_mostsimilar(model, src, label='most similar', topn=10):
     num_lines = sum(1 for line in open(src))
     num_questions = 0
     num_right = 0
@@ -178,28 +177,27 @@ def test_bestmatch(model, src, topn=10):
         questions = [x.strip() for x in questions]
     # test each question
     for question in questions:
-        words = question.split()
+        words = question.decode('utf-8').split()
         # check if all words exist in vocabulary
-        if words[0] in model.index2word and words[1] in model.index2word and words[2] in model.index2word and words[3] in model.index2word:
+        if all(x in model.index2word for x in words):
             num_questions += 1
             bestmatches = model.most_similar(positive=[words[1], words[2]], negative=[words[0]])
-            for topnmatches in bestmatches[:topn]:
-                # best match
-                if words[3] in topnmatches[0]:
-                    num_right += 1
-                # topn match
-                for topnmatch in topnmatches: # TODO
-                    if words[3] in topnmatch:
-                        num_topn += 1
-                        break
+            # best match
+            if words[3] in bestmatches[0]:
+                num_right += 1
+            # topn match
+            for topmatches in bestmatches[:topn]:
+                if words[3] in topmatches:
+                    num_topn += 1
+                    break
     # calculate result
-    correct_matches = round(num_right/float(num_questions)*100) if num_questions>0 else 0.0
-    topn_matches = round(num_topn/float(num_questions)*100) if num_questions>0 else 0.0
-    coverage = round(num_questions/float(num_lines)*100) if num_lines>0 else 0.0
+    correct_matches = round(num_right/float(num_questions)*100, 1) if num_questions>0 else 0.0
+    topn_matches = round(num_topn/float(num_questions)*100, 1) if num_questions>0 else 0.0
+    coverage = round(num_questions/float(num_lines)*100, 1) if num_lines>0 else 0.0
     # log result
-    logging.info('best match correct:   {0}% ({1}/{2})'.format(str(correct_matches), str(num_right), str(num_questions)))
-    logging.info('best match top {0}:    {1}% ({2}/{3})'.format(str(topn), str(topn_matches), str(num_topn), str(num_questions)))
-    logging.info('best match coverage:  {0}% ({1}/{2})'.format(str(coverage), str(num_questions), str(num_lines)))
+    logging.info(label + ' correct:   {0}% ({1}/{2})'.format(str(correct_matches), str(num_right), str(num_questions)))
+    logging.info(label + ' top {0}:    {1}% ({2}/{3})'.format(str(topn), str(topn_matches), str(num_topn), str(num_questions)))
+    logging.info(label + ' coverage:  {0}% ({1}/{2})'.format(str(coverage), str(num_questions), str(num_lines)))
         
 
 # function test_doesntfit
@@ -216,20 +214,19 @@ def test_doesntfit(model, src):
         questions = [x.strip() for x in questions]
     # test each question
     for question in questions:
-        words = question.split()
+        words = question.decode('utf-8').split()
         # check if all words exist in vocabulary
-        if words[0] in model.index2word and words[1] in model.index2word and words[2] in model.index2word and words[3] in model.index2word:
+        if all(x in model.index2word for x in words):
             num_questions += 1
             if model.doesnt_match(words) == words[3]:
                 num_right += 1
     # calculate result
-    correct_matches = round(num_right/float(num_questions)*100) if num_questions>0 else 0.0
-    coverage = round(num_questions/float(num_lines)*100) if num_lines>0 else 0.0
+    correct_matches = round(num_right/float(num_questions)*100, 1) if num_questions>0 else 0.0
+    coverage = round(num_questions/float(num_lines)*100, 1) if num_lines>0 else 0.0
     # log result
     logging.info('doesn\'t fit correct:  {0}% ({1}/{2})'.format(str(correct_matches), str(num_right), str(num_questions)))
     logging.info('doesn\'t fit coverage: {0}% ({1}/{2})'.format(str(coverage), str(num_questions), str(num_lines)))
                 
-
 if args.create:
     logging.info('> CREATING SYNTACTIC TESTSET')
     create_syntactic_testset()
@@ -242,6 +239,6 @@ model = gensim.models.Word2Vec.load_word2vec_format(args.model, binary=True)
 # logging.info('> EVALUATING SYNTACTIC FEATURES')
 # model.accuracy(TARGET_SYN + '.nouml' if args.umlauts else TARGET_SYN, restrict_vocab=10000000)
 logging.info('> EVALUATING SEMANTIC FEATURES')
-model.accuracy(TARGET_SEM_OP + '.nouml' if args.umlauts else TARGET_SEM_OP, restrict_vocab=10000000)
-test_bestmatch(model, TARGET_SEM_BM + '.nouml' if args.umlauts else TARGET_SEM_BM)
+test_mostsimilar(model, TARGET_SEM_OP + '.nouml' if args.umlauts else TARGET_SEM_OP, 'opposite')
+test_mostsimilar(model, TARGET_SEM_BM + '.nouml' if args.umlauts else TARGET_SEM_BM, 'best match')
 test_doesntfit(model, TARGET_SEM_DF + '.nouml' if args.umlauts else TARGET_SEM_DF)
