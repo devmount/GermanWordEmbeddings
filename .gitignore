@@ -48,9 +48,12 @@ Temporary Items
 
 corpus*/*
 extracted*
-model*
+model/old*
+model/*.model
+model/*.vocab
 src/dewiki*
 src/news*
 info.txt
 temp*
 test*
+*.html

@@ -1,0 +1,46 @@
+2015-05-18 04:47:23,446 : INFO : collected 13757051 word types from a corpus of 651219519 words and 72454876 sentences
+2015-05-18 04:47:33,026 : INFO : total 3867069 word types after removing those with count<5
+2015-05-18 04:47:33,027 : INFO : constructing a huffman tree from 3867069 words
+2015-05-18 04:50:46,487 : INFO : built huffman tree with maximum node depth 27
+2015-05-18 04:50:50,679 : INFO : resetting layer weights
+2015-05-18 04:51:45,822 : INFO : training model with 4 workers on 3867069 vocabulary and 52 features, using 'skipgram'=1 'hierarchical softmax'=1 'subsample'=0 and 'negative sampling'=0
+2015-05-18 06:15:51,401 : INFO : training on 636847156 words took 5045.6s, 126219 words/s
+2015-05-18 06:15:51,401 : INFO : storing 3867069x52 projection weights into model/corpus-psub_SG-52-5.model
+15307.43user 1156.52system 1:38:47elapsed 277%CPU (0avgtext+0avgdata 9269468maxresident)k
+23893592inputs+0outputs (42major+2816936minor)pagefaults 0swaps
+2015-05-29 18:14:52,334 : loading projection weights from model/corpus-psub_SG-52-5.model
+2015-05-29 18:16:00,166 : loaded (3867069, 52) matrix from model/corpus-psub_SG-52-5.model
+2015-05-29 18:16:00,166 : precomputing L2-norms of word weight vectors
+2015-05-29 18:16:28,808 : > EVALUATING SYNTACTIC FEATURES
+2015-05-29 18:27:01,868 : nouns: SI/PL: 13.4% (67/500), 30.8% (154/500), 100.0% (500/500)
+2015-05-29 18:39:14,037 : nouns: PL/SI: 10.0% (50/500), 26.6% (133/500), 100.0% (500/500)
+2015-05-29 18:51:07,267 : adjectives: GR/KOM: 19.3% (91/471), 38.0% (179/471), 94.2% (471/500)
+2015-05-29 19:03:06,781 : adjectives: KOM/GR: 22.4% (106/473), 49.7% (235/473), 94.6% (473/500)
+2015-05-29 19:14:03,600 : adjectives: GR/SUP: 3.2% (13/406), 9.1% (37/406), 81.2% (406/500)
+2015-05-29 19:23:28,279 : adjectives: SUP/GR: 2.0% (8/404), 11.1% (45/404), 80.8% (404/500)
+2015-05-29 19:33:51,922 : adjectives: KOM/SUP: 6.3% (25/394), 15.5% (61/394), 78.8% (394/500)
+2015-05-29 19:44:14,605 : adjectives: SUP/KOM: 5.8% (23/400), 17.3% (69/400), 80.0% (400/500)
+2015-05-29 19:53:41,705 : verbs (pres): INF/1SP: 50.4% (214/425), 80.0% (340/425), 85.0% (425/500)
+2015-05-29 20:03:50,689 : verbs (pres): 1SP/INF: 47.8% (193/404), 79.5% (321/404), 80.8% (404/500)
+2015-05-29 20:14:21,952 : verbs (pres): INF/2PP: 37.1% (151/407), 51.1% (208/407), 81.4% (407/500)
+2015-05-29 20:24:48,218 : verbs (pres): 2PP/INF: 44.6% (177/397), 61.5% (244/397), 79.4% (397/500)
+2015-05-29 20:34:43,745 : verbs (pres): 1SP/2PP: 35.2% (132/375), 50.4% (189/375), 75.0% (375/500)
+2015-05-29 20:44:28,786 : verbs (pres): 2PP/1SP: 38.0% (147/387), 54.8% (212/387), 77.4% (387/500)
+2015-05-29 20:54:43,541 : verbs (past): INF/3SV: 35.6% (150/421), 66.7% (281/421), 84.2% (421/500)
+2015-05-29 21:05:41,853 : verbs (past): 3SV/INF: 35.5% (153/431), 66.4% (286/431), 86.2% (431/500)
+2015-05-29 21:16:57,415 : verbs (past): INF/3PV: 60.4% (268/444), 83.6% (371/444), 88.8% (444/500)
+2015-05-29 21:28:11,494 : verbs (past): 3PV/INF: 60.9% (266/437), 85.1% (372/437), 87.4% (437/500)
+2015-05-29 21:39:35,972 : verbs (past): 3SV/3PV: 71.5% (321/449), 86.2% (387/449), 89.8% (449/500)
+2015-05-29 21:50:56,633 : verbs (past): 3PV/3SV: 72.4% (323/446), 87.2% (389/446), 89.2% (446/500)
+2015-05-29 21:50:56,634 : total correct:  33.6% (2878/8571)
+2015-05-29 21:50:56,634 : total top 10:   52.7% (4513/8571)
+2015-05-29 21:50:56,634 : total coverage: 85.7% (8571/10000)
+2015-05-29 21:50:56,634 : > EVALUATING SEMANTIC FEATURES
+2015-05-29 21:57:57,962 : opposite correct:  26.3% (73/278)
+2015-05-29 21:57:57,962 : opposite top 10:   51.1% (142/278)
+2015-05-29 21:57:57,962 : opposite coverage: 92.7% (278/300)
+2015-05-29 22:08:42,364 : best match correct:  34.0% (178/524)
+2015-05-29 22:08:42,365 : best match top 10:   67.2% (352/524)
+2015-05-29 22:08:42,365 : best match coverage: 97.0% (524/540)
+2015-05-29 22:08:42,453 : doesn't fit correct:  81.8% (90/110)
+2015-05-29 22:08:42,453 : doesn't fit coverage: 100.0% (110/110)
