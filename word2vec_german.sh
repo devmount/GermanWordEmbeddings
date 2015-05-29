@@ -33,9 +33,7 @@
 # { time python training.py corpus_psub/ model/corpus-psub_SG-52-5.model -s 52 -w 5; } 2> model/corpus-psub_SG-52-5.model.result
 #
 # evaluation
-# for m in SG-300-10; do
-# python evaluation.py model/corpus_SG-52-5.model
-# python evaluation.py model/corpus-ps_SG-52-5.model
+python evaluation.py model/corpus_SG-52-5.model
+python evaluation.py model/corpus-ps_SG-52-5.model
 python evaluation.py -u model/corpus-psu_SG-52-5.model
 python evaluation.py -u model/corpus-psub_SG-52-5.model
-# done
