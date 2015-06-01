@@ -50,7 +50,7 @@ corpus*/*
 extracted*
 model/old*
 model/*.model
-model/*.vocab
+model/vocab
 src/dewiki*
 src/news*
 info.txt
