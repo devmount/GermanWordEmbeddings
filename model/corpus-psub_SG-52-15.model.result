@@ -1,0 +1,10 @@
+2015-06-01 00:10:47,464 : INFO : collecting all words and their counts
+2015-06-01 00:19:28,365 : INFO : collected 13757051 word types from a corpus of 651219519 words and 72454876 sentences
+2015-06-01 00:19:37,623 : INFO : total 3867069 word types after removing those with count<5
+2015-06-01 00:19:37,623 : INFO : constructing a huffman tree from 3867069 words
+2015-06-01 00:22:51,415 : INFO : built huffman tree with maximum node depth 27
+2015-06-01 00:22:55,579 : INFO : resetting layer weights
+2015-06-01 00:23:49,791 : INFO : training model with 4 workers on 3867069 vocabulary and 52 features, using 'skipgram'=1 'hierarchical softmax'=1 'subsample'=0 and 'negative sampling'=0
+2015-06-01 01:59:40,848 : INFO : reached the end of input; waiting to finish 8 outstanding jobs
+2015-06-01 01:59:40,917 : INFO : training on 636847156 words took 5751.1s, 110734 words/s
+2015-06-01 01:59:40,917 : INFO : storing 3867069x52 projection weights into model/corpus-psub_SG-52-15.model
