@@ -27,13 +27,16 @@
 # rm dewiki.xml
 #
 # # training
-# { time python training.py corpus/ model/corpus_SG-52-5.model -s 52 -w 5; } 2> model/corpus_SG-52-5.model.result
-# { time python training.py corpus_ps/ model/corpus-ps_SG-52-5.model -s 52 -w 5; } 2> model/corpus-ps_SG-52-5.model.result
-# { time python training.py corpus_psu/ model/corpus-psu_SG-52-5.model -s 52 -w 5; } 2> model/corpus-psu_SG-52-5.model.result
-# { time python training.py corpus_psub/ model/corpus-psub_SG-52-5.model -s 52 -w 5; } 2> model/corpus-psub_SG-52-5.model.result
+# { time python training.py corpus/ model/corpus_SG-52-5.model -s 52 -w 5; } 2>> model/corpus_SG-52-5.model.result
+# { time python training.py corpus_ps/ model/corpus-ps_SG-52-5.model -s 52 -w 5; } 2>> model/corpus-ps_SG-52-5.model.result
+# { time python training.py corpus_psu/ model/corpus-psu_SG-52-5.model -s 52 -w 5; } 2>> model/corpus-psu_SG-52-5.model.result
+# { time python training.py corpus_psub/ model/corpus-psub_SG-52-5.model -s 52 -w 5; } 2>> model/corpus-psub_SG-52-5.model.result
+python training.py corpus_psub/ model/corpus-psub_SG-52-20.model -s 52 -w 20
 #
 # evaluation
-python evaluation.py model/corpus_SG-52-5.model
-python evaluation.py model/corpus-ps_SG-52-5.model
-python evaluation.py -u model/corpus-psu_SG-52-5.model
-python evaluation.py -u model/corpus-psub_SG-52-5.model
+# python evaluation.py model/corpus_SG-52-5.model
+# python evaluation.py model/corpus-ps_SG-52-5.model
+# python evaluation.py -u model/corpus-psu_SG-52-5.model
+python evaluation.py -u model/corpus-psub_SG-52-10.model
+python evaluation.py -u model/corpus-psub_SG-52-15.model
+python evaluation.py -u model/corpus-psub_SG-52-20.model
