@@ -9,3 +9,12 @@
 2015-06-01 16:00:04,846 : INFO : training on 636847156 words took 6052.3s, 105224 words/s
 2015-06-01 16:00:04,847 : INFO : storing 3867069x52 projection weights into model/corpus-psub_CB-52-15.model
 ---
+2015-06-02 11:59:36,120 : loading projection weights from model/corpus-psub_CB-52-15.model
+2015-06-02 12:00:41,254 : loaded (3867069, 52) matrix from model/corpus-psub_CB-52-15.model
+2015-06-02 12:00:41,255 : precomputing L2-norms of word weight vectors
+2015-06-02 12:01:08,353 : > EVALUATING SYNTACTIC FEATURES
+2015-06-02 12:11:42,138 : nouns: SI/PL: 10.2% (51/500), 23.6% (118/500), 100.0% (500/500)
+2015-06-02 12:22:01,126 : nouns: PL/SI: 5.6% (28/500), 15.4% (77/500), 100.0% (500/500)
+2015-06-02 12:31:48,419 : adjectives: GR/KOM: 11.3% (53/471), 25.9% (122/471), 94.2% (471/500)
+2015-06-02 12:41:38,197 : adjectives: KOM/GR: 15.4% (73/473), 33.6% (159/473), 94.6% (473/500)
+2015-06-02 12:50:39,525 : adjectives: GR/SUP: 4.4% (18/406), 11.1% (45/406), 81.2% (406/500)
