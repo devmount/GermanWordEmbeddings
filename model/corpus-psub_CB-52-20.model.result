@@ -9,3 +9,4 @@
 2015-06-01 17:53:10,034 : INFO : training on 636847156 words took 5930.0s, 107394 words/s
 2015-06-01 17:53:10,035 : INFO : storing 3867069x52 projection weights into model/corpus-psub_CB-52-20.model
 ---
+2015-06-02 15:29:55,181 : loading projection weights from model/corpus-psub_CB-52-20.model
