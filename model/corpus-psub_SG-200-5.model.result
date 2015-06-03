@@ -1,0 +1,29 @@
+2015-06-02 22:18:33,804 : INFO : collecting all words and their counts
+2015-06-02 22:27:16,905 : INFO : collected 13757051 word types from a corpus of 651219519 words and 72454876 sentences
+2015-06-02 22:27:26,514 : INFO : total 3867069 word types after removing those with count<5
+2015-06-02 22:27:26,514 : INFO : constructing a huffman tree from 3867069 words
+2015-06-02 22:30:42,160 : INFO : built huffman tree with maximum node depth 27
+2015-06-02 22:30:46,220 : INFO : resetting layer weights
+2015-06-02 22:31:55,102 : INFO : training model with 4 workers on 3867069 vocabulary and 200 features, using 'skipgram'=1 'hierarchical softmax'=1 'subsample'=0 and 'negative sampling'=0
+2015-06-03 01:07:30,644 : INFO : reached the end of input; waiting to finish 8 outstanding jobs
+2015-06-03 01:07:30,763 : INFO : training on 636847156 words took 9335.7s, 68217 words/s
+2015-06-03 01:07:30,764 : INFO : storing 3867069x200 projection weights into model/corpus-psub_SG-200-5.model
+---
+2015-06-03 11:54:15,665 : loading projection weights from model/corpus-psub_SG-200-5.model
+2015-06-03 11:55:27,620 : loaded (3867069, 200) matrix from model/corpus-psub_SG-200-5.model
+2015-06-03 11:55:27,621 : precomputing L2-norms of word weight vectors
+2015-06-03 11:55:56,234 : > EVALUATING SYNTACTIC FEATURES
+2015-06-03 12:14:50,458 : nouns: SI/PL: 24.4% (122/500), 51.4% (257/500), 100.0% (500/500)
+2015-06-03 12:33:18,693 : nouns: PL/SI: 16.8% (84/500), 47.4% (237/500), 100.0% (500/500)
+2015-06-03 12:50:00,489 : adjectives: GR/KOM: 37.8% (178/471), 64.5% (304/471), 94.2% (471/500)
+2015-06-03 13:07:13,365 : adjectives: KOM/GR: 33.0% (156/473), 61.3% (290/473), 94.6% (473/500)
+2015-06-03 13:23:17,352 : adjectives: GR/SUP: 5.9% (24/406), 18.2% (74/406), 81.2% (406/500)
+2015-06-03 13:39:14,124 : adjectives: SUP/GR: 5.7% (23/404), 15.3% (62/404), 80.8% (404/500)
+2015-06-03 13:55:15,292 : adjectives: KOM/SUP: 14.5% (57/394), 32.7% (129/394), 78.8% (394/500)
+2015-06-03 14:11:30,631 : adjectives: SUP/KOM: 18.3% (73/400), 41.3% (165/400), 80.0% (400/500)
+2015-06-03 14:28:17,420 : verbs (pres): INF/1SP: 70.6% (300/425), 93.9% (399/425), 85.0% (425/500)
+2015-06-03 14:43:27,515 : verbs (pres): 1SP/INF: 70.5% (285/404), 93.1% (376/404), 80.8% (404/500)
+2015-06-03 14:58:09,190 : verbs (pres): INF/2PP: 47.2% (192/407), 59.7% (243/407), 81.4% (407/500)
+2015-06-03 15:12:47,445 : verbs (pres): 2PP/INF: 57.2% (227/397), 71.0% (282/397), 79.4% (397/500)
+2015-06-03 15:26:41,509 : verbs (pres): 1SP/2PP: 49.6% (186/375), 60.3% (226/375), 75.0% (375/500)
+2015-06-03 15:40:49,105 : verbs (pres): 2PP/1SP: 56.3% (218/387), 67.7% (262/387), 77.4% (387/500)
