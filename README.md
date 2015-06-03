@@ -164,14 +164,10 @@ Those options for the script execution are possible:
 flag          | description
 ------------- | -----------------------------------------------------
 -h, --help    | show a help message and exit
--c, --creat   | if set, create testsets before evaluating
+-c, --create  | if set, create testsets before evaluating
 -u, --umlauts | if set, create additional testsets with transformed umlauts and use them instead
 
 Example usage:
 ```shell
 python evaluation.py my.model -u
-```
-Example usage with measuring runtime:
-```shell
-{ time python evaluation.py my.model; } 2>> my.model.result
 ```
