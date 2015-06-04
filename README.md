@@ -1,5 +1,5 @@
 # GermanWordEmbeddings
-There has been a lot of research into training of word embeddings on English corpora. This toolkit applies deep learning via [word2vec](https://radimrehurek.com/gensim/models/word2vec.html) on German corpora to train and evaluate German models.
+There has been a lot of research into training of word embeddings on English corpora. This toolkit applies deep learning via gensims's [word2vec](https://radimrehurek.com/gensim/models/word2vec.html) on German corpora to train and evaluate German models.
 
 1. [Obtaining corpora](#obtention)
 2. [Preprocessing](#preprocessing)
@@ -105,6 +105,7 @@ Example content:
 gut-besser-beste
 laut-lauter-lauteste
 ```
+See [src/adjectives.txt](src/adjectives.txt)
 
 #### nouns.txt
 Possible pattern: `singular-plural`
@@ -114,6 +115,7 @@ Example content:
 Bild-Bilder
 Name-Namen
 ```
+See [src/nouns.txt](src/nouns.txt)
 
 #### verbs.txt
 Possible pattern: `basic-1stPersonSingularPresent-2ndPersonPluralPresent-3rdPersonSingularPast-3rdPersonPluralPast`
@@ -123,6 +125,7 @@ Example content:
 finden-finde-findet-fand-fanden
 suchen-suche-sucht-suchte-suchten
 ```
+See [src/verbs.txt](src/verbs.txt)
 
 ### Semantic test set
 With the semantic test, features concering word meanings can be evaluated. Therefore there are 3 source files: opposite, best match and doesn't match. The given source files result in a total of 950 semantic questions.
@@ -135,6 +138,7 @@ Example content:
 Sommer-Winter
 Tag-Nacht
 ```
+See [src/opposite.txt](src/opposite.txt)
 
 #### bestmatch.txt
 This file contains groups of content similar word pairs, to evaluate the models ability to find thematic relevant analogies. The script combinates each pair with all other pairs of the same group, to build analogy questions. The given bestmatch source file of this project includes 7 groups with a total of 77 unique pairs, resulting in 540 analogy questions.
@@ -149,15 +153,17 @@ Android-Google
 iOS-Apple
 Windows-Microsoft
 ```
+See [src/bestmatch.txt](src/bestmatch.txt)
 
-#### doesntmatch.txt
-This file contains (per line) 3 words with similar content divided by space and a set of not fitting words, divided by dash, like `fittingword1 fittingword2 fittingword3 notfittingword1-notfittingword2-...-notfittingwordn`. This evaluates the models ability to find the least fitting word in a set of 4 words. The script combinates each matching triple with every not matching word of the dash divided list, to build doesntmatch questions. The given doesntmatch source file of this project includes 11 triple each with 10 not fitting words, resulting in 110 questions.
+#### doesntfit.txt
+This file contains (per line) 3 words with similar content divided by space and a set of not fitting words, divided by dash, like `fittingword1 fittingword2 fittingword3 notfittingword1-notfittingword2-...-notfittingwordn`. This evaluates the models ability to find the least fitting word in a set of 4 words. The script combinates each matching triple with every not matching word of the dash divided list, to build doesntfit questions. The given doesntfit source file of this project includes 11 triple each with 10 not fitting words, resulting in 110 questions.
 
 Example content:
 ```
 Hase Hund Katze Baum-Besitzer-Elefant-Essen-Haus-Mensch-Tier-Tierheim-Wiese-Zoo
 August April September Jahr-Monat-Tag-Stunde-Minute-Zeit-Kalender-Woche-Quartal-Uhr
 ```
+See [src/doesntfit.txt](src/doesntfit.txt)
 
 Those options for the script execution are possible:
 
