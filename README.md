@@ -171,7 +171,7 @@ flag          | description
 ------------- | -----------------------------------------------------
 -h, --help    | show a help message and exit
 -c, --create  | if set, create testsets before evaluating
--u, --umlauts | if set, create additional testsets with transformed umlauts and use them instead
+-u, --umlauts | if set, create additional testsets with transformed umlauts and/or use them instead
 
 Example usage:
 ```shell
