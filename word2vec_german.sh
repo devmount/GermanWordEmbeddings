@@ -31,9 +31,7 @@
 # { time python training.py corpus_ps/ model/corpus-ps_SG-52-5.model -s 52 -w 5; } 2>> model/corpus-ps_SG-52-5.model.result
 # { time python training.py corpus_psu/ model/corpus-psu_SG-52-5.model -s 52 -w 5; } 2>> model/corpus-psu_SG-52-5.model.result
 # { time python training.py corpus_psub/ model/corpus-psub_SG-52-5.model -s 52 -w 5; } 2>> model/corpus-psub_SG-52-5.model.result
-python training.py corpus_psub/ model/corpus-psub_SG-300-5.model -s 300 -w 5
+python training.py corpus_psub/ model/corpus-psub_CB-52-5-MEAN.model -s 52 -w 5 -g 0 -o 1
 #
 # evaluation
-# python evaluation.py -u model/corpus-psub_SG-100-5.model
-# python evaluation.py -u model/corpus-psub_SG-200-5.model
-# python evaluation.py -u model/corpus-psub_SG-300-5.model
+python evaluation.py -u model/corpus-psub_CB-52-5-MEAN.model
