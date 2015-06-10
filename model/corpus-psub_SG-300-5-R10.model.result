@@ -6,7 +6,7 @@
 2015-06-03 23:50:10,093 : INFO : resetting layer weights
 2015-06-03 23:51:01,114 : INFO : training model with 4 workers on 2427734 vocabulary and 300 features, using 'skipgram'=1 'hierarchical softmax'=1 'subsample'=0 and 'negative sampling'=0
 2015-06-04 03:21:43,147 : INFO : reached the end of input; waiting to finish 8 outstanding jobs
-2015-06-04 03:21:43,320 : INFO : training on 627077813 words took 12642.2s, 49602 words/s
+2015-06-04 03:21:43,320 : INFO : training on 627077813 words took 12642,2s, 49602 words/s
 2015-06-04 03:21:43,321 : INFO : storing 2427734x300 projection weights into model/corpus-psub_SG-300-5.model
 ---
 2015-06-04 08:04:13,988 : loading projection weights from model/corpus-psub_SG-300-5.model
@@ -46,6 +46,7 @@
 2015-06-04 12:07:01,332 : doesn't fit correct:  90.0% (99/110)
 2015-06-04 12:07:01,332 : doesn't fit coverage: 100.0% (110/110)
 ---
+SYN:
 0,246	0,552	1,000
 0,156	0,492	1,000
 0,386	0,675	0,942
@@ -66,9 +67,13 @@
 0,838	0,945	0,874
 0,775	0,955	0,898
 0,843	0,964	0,892
+---------------------
+0,455	0,685	0,850
+
+SEM:
 0,353	0,683	0,927
 0,595	0,813	0,970
 0,900		1,000
-
-0,455	0,685	0,850
+---------------------
 0,558	0,768	0,960
+
