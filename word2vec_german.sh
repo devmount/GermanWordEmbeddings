@@ -27,9 +27,7 @@
 # rm dewiki.xml
 #
 # # training
-# python training.py corpus_psub/ model/corpus-psub_SG-52-5-N10.model -s 52 -w 5 -n 10
-python training.py corpus_psub/ model/corpus-psub_SG-200-5-R10.model -s 200 -w 5 -m 10
-python training.py corpus_psub/ model/corpus-psub_SG-100-5-R10.model -s 100 -w 5 -m 10
+python training.py corpus_psub/ model/corpus-psub_SG-52-5-NOHS.model -s 52 -w 5 -i 0
 #
 # evaluation
-python evaluation.py -u model/corpus-psub_SG-100-5-R10.model|python evaluation.py -u model/corpus-psub_SG-200-5-R10.model
+python evaluation.py -u model/corpus-psub_SG-52-5-NOHS.model
