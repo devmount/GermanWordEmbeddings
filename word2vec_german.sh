@@ -30,4 +30,4 @@
 python training.py corpus_psub/ model/corpus-psub_SG-52-5-NOHS.model -s 52 -w 5 -i 0
 #
 # evaluation
-python evaluation.py -u model/corpus-psub_SG-52-5-NOHS.model
+python evaluation.py -u model/corpus-psub_SG-52-5-NOHS.modelgi

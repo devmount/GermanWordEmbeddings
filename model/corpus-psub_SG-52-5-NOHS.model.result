@@ -4,7 +4,7 @@
 2015-06-13 00:33:57,184 : INFO : resetting layer weights
 2015-06-13 00:34:51,962 : INFO : training model with 4 workers on 3867069 vocabulary and 52 features, using 'skipgram'=1 'hierarchical softmax'=0 'subsample'=0 and 'negative sampling'=0
 2015-06-13 02:28:18,774 : INFO : reached the end of input; waiting to finish 8 outstanding jobs
-2015-06-13 02:28:18,857 : INFO : training on 636847156 words took 6806.9s, 93559 words/s
+2015-06-13 02:28:18,857 : INFO : training on 636847156 words took 6806,9s, 93559 words/s
 2015-06-13 02:28:18,858 : INFO : storing 3867069x52 projection weights into model/corpus-psub_SG-52-5-NOHS.model
 ---
 2015-06-13 02:29:27,151 : loading projection weights from model/corpus-psub_SG-52-5-NOHS.model
