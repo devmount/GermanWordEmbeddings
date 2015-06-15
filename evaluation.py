@@ -19,6 +19,7 @@ parser = argparse.ArgumentParser(description='Script for creating testsets and e
 parser.add_argument('model', type=str, help='source file with trained model')
 parser.add_argument('-c', '--create', action='store_true', help='if set, create testsets before evaluating')
 parser.add_argument('-u', '--umlauts', action='store_true', help='if set, create additional testsets with transformed umlauts and use them instead')
+parser.add_argument('-t', '--topn', type=int, default=10, help='check the top n result (correct answer under top n answeres)')
 args = parser.parse_args()
 TARGET_SYN     = 'data/syntactic.questions'
 TARGET_SEM_OP  = 'data/semantic_op.questions'
@@ -51,7 +52,7 @@ PATTERN_SYN = [
     ('verbs (past)', '3PV/INF', SRC_VERBS, 4, 0),
     ('verbs (past)', '3SV/3PV', SRC_VERBS, 3, 4),
     ('verbs (past)', '3PV/3SV', SRC_VERBS, 4, 3)]
-logging.basicConfig(filename=args.model.strip() + '.result', format='%(asctime)s : %(message)s', level=logging.INFO)
+logging.basicConfig(filename=args.model.strip() + '.top' + args.topn + '.result', format='%(asctime)s : %(message)s', level=logging.INFO)
 
 
 # function replace_umlauts
@@ -181,7 +182,7 @@ def test_mostsimilar(model, src, label='most similar', topn=10):
         # check if all words exist in vocabulary
         if all(x in model.index2word for x in words):
             num_questions += 1
-            bestmatches = model.most_similar(positive=[words[1], words[2]], negative=[words[0]])
+            bestmatches = model.most_similar(positive=[words[1], words[2]], negative=[words[0]], topn=topn)
             # best match
             if words[3] in bestmatches[0]:
                 num_right += 1
@@ -226,7 +227,7 @@ def test_mostsimilar_groups(model, src, topn=10):
             # check if all words exist in vocabulary
             if all(x in model.index2word for x in words):
                 num_group_questions += 1
-                bestmatches = model.most_similar(positive=[words[1], words[2]], negative=[words[0]])
+                bestmatches = model.most_similar(positive=[words[1], words[2]], negative=[words[0]], topn=topn)
                 # best match
                 if words[3] in bestmatches[0]:
                     num_group_right += 1
@@ -293,8 +294,8 @@ if args.create:
 model = gensim.models.Word2Vec.load_word2vec_format(args.model.strip(), binary=True)
 # execute evaluation
 logging.info('> EVALUATING SYNTACTIC FEATURES')
-test_mostsimilar_groups(model, TARGET_SYN + '.nouml' if args.umlauts else TARGET_SYN)
-logging.info('> EVALUATING SEMANTIC FEATURES')
-test_mostsimilar(model, TARGET_SEM_OP + '.nouml' if args.umlauts else TARGET_SEM_OP, 'opposite')
-test_mostsimilar(model, TARGET_SEM_BM + '.nouml' if args.umlauts else TARGET_SEM_BM, 'best match')
-test_doesntfit(model, TARGET_SEM_DF + '.nouml' if args.umlauts else TARGET_SEM_DF)
+test_mostsimilar_groups(model, TARGET_SYN + '.nouml' if args.umlauts else TARGET_SYN, args.topn)
+# logging.info('> EVALUATING SEMANTIC FEATURES')
+# test_mostsimilar(model, TARGET_SEM_OP + '.nouml' if args.umlauts else TARGET_SEM_OP, 'opposite', args.topn)
+# test_mostsimilar(model, TARGET_SEM_BM + '.nouml' if args.umlauts else TARGET_SEM_BM, 'best match', args.topn)
+# test_doesntfit(model, TARGET_SEM_DF + '.nouml' if args.umlauts else TARGET_SEM_DF)

@@ -1,0 +1,50 @@
+2015-06-15 00:02:49,000 : INFO : collecting all words and their counts
+2015-06-15 00:11:41,714 : INFO : collected 13757051 word types from a corpus of 651219519 words and 72454876 sentences
+2015-06-15 00:11:48,663 : INFO : total 608130 word types after removing those with count<50
+2015-06-15 00:11:48,663 : INFO : constructing a huffman tree from 608130 words
+2015-06-15 00:12:15,917 : INFO : built huffman tree with maximum node depth 24
+2015-06-15 00:12:16,172 : INFO : constructing a table with noise distribution from 608130 words
+2015-06-15 00:12:42,218 : INFO : resetting layer weights
+2015-06-15 00:13:08,729 : INFO : training model with 4 workers on 608130 vocabulary and 300 features, using 'skipgram'=1 'hierarchical softmax'=1 'subsample'=0 and 'negative sampling'=10
+2015-06-15 06:22:38,536 : INFO : reached the end of input; waiting to finish 8 outstanding jobs
+2015-06-15 06:22:38,856 : INFO : training on 590296424 words took 22170.1s, 26626 words/s
+2015-06-15 06:22:38,857 : INFO : storing 608130x300 projection weights into model/SG-300-5-NS10-R50.model
+---
+2015-06-15 06:23:00,185 : loading projection weights from model/SG-300-5-NS10-R50.model
+2015-06-15 06:23:10,122 : loaded (608130, 300) matrix from model/SG-300-5-NS10-R50.model
+2015-06-15 06:23:10,122 : precomputing L2-norms of word weight vectors
+2015-06-15 06:23:14,840 : > EVALUATING SYNTACTIC FEATURES
+2015-06-15 06:26:09,326 : nouns: SI/PL: 27.8% (139/500), 57.2% (286/500), 100.0% (500/500)
+2015-06-15 06:29:03,615 : nouns: PL/SI: 18.8% (94/500), 52.6% (263/500), 100.0% (500/500)
+2015-06-15 06:31:50,351 : adjectives: GR/KOM: 42.3% (199/471), 70.5% (332/471), 94.2% (471/500)
+2015-06-15 06:34:37,673 : adjectives: KOM/GR: 37.0% (175/473), 65.5% (310/473), 94.6% (473/500)
+2015-06-15 06:36:22,733 : adjectives: GR/SUP: 11.5% (30/262), 33.6% (88/262), 52.4% (262/500)
+2015-06-15 06:38:08,864 : adjectives: SUP/GR: 6.0% (16/266), 22.9% (61/266), 53.2% (266/500)
+2015-06-15 06:39:54,178 : adjectives: KOM/SUP: 22.6% (59/261), 54.8% (143/261), 52.2% (261/500)
+2015-06-15 06:41:45,677 : adjectives: SUP/KOM: 25.6% (72/281), 53.4% (150/281), 56.2% (281/500)
+2015-06-15 06:44:17,073 : verbs (pres): INF/1SP: 74.6% (317/425), 96.7% (411/425), 85.0% (425/500)
+2015-06-15 06:46:41,759 : verbs (pres): 1SP/INF: 71.3% (288/404), 93.6% (378/404), 80.8% (404/500)
+2015-06-15 06:48:57,129 : verbs (pres): INF/2PP: 55.8% (207/371), 71.7% (266/371), 74.2% (371/500)
+2015-06-15 06:51:05,276 : verbs (pres): 2PP/INF: 64.4% (224/348), 77.0% (268/348), 69.6% (348/500)
+2015-06-15 06:53:12,029 : verbs (pres): 1SP/2PP: 59.6% (204/342), 67.8% (232/342), 68.4% (342/500)
+2015-06-15 06:55:20,843 : verbs (pres): 2PP/1SP: 65.4% (227/347), 75.2% (261/347), 69.4% (347/500)
+2015-06-15 06:57:50,150 : verbs (past): INF/3SV: 47.0% (198/421), 88.8% (374/421), 84.2% (421/500)
+2015-06-15 07:00:22,678 : verbs (past): 3SV/INF: 43.2% (186/431), 87.9% (379/431), 86.2% (431/500)
+2015-06-15 07:02:59,442 : verbs (past): INF/3PV: 76.6% (340/444), 97.7% (434/444), 88.8% (444/500)
+2015-06-15 07:05:34,089 : verbs (past): 3PV/INF: 87.4% (382/437), 96.6% (422/437), 87.4% (437/500)
+2015-06-15 07:08:12,543 : verbs (past): 3SV/3PV: 83.1% (373/449), 97.3% (437/449), 89.8% (449/500)
+2015-06-15 07:10:49,989 : verbs (past): 3PV/3SV: 87.4% (390/446), 97.3% (434/446), 89.2% (446/500)
+2015-06-15 07:10:49,989 : total correct:  52.3% (4120/7879)
+2015-06-15 07:10:49,990 : total top 10:   75.3% (5929/7879)
+2015-06-15 07:10:49,990 : total coverage: 78.8% (7879/10000)
+2015-06-15 07:10:49,990 : > EVALUATING SEMANTIC FEATURES
+2015-06-15 07:12:27,589 : opposite correct:  37.4% (104/278)
+2015-06-15 07:12:27,589 : opposite top 10:   67.3% (187/278)
+2015-06-15 07:12:27,589 : opposite coverage: 92.7% (278/300)
+2015-06-15 07:15:31,477 : best match correct:  66.0% (346/524)
+2015-06-15 07:15:31,477 : best match top 10:   85.7% (449/524)
+2015-06-15 07:15:31,478 : best match coverage: 97.0% (524/540)
+2015-06-15 07:15:31,563 : doesn't fit correct:  88.2% (97/110)
+2015-06-15 07:15:31,563 : doesn't fit coverage: 100.0% (110/110)
+correct: 547/912
+---
