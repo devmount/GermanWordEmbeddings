@@ -30,5 +30,4 @@
 # python training.py corpus_psub/ model/SG-300-5-NS10-R50.model -s 300 -w 5 -n 10 -m 50
 #
 # evaluation
-python evaluation.py -u model/SG-300-5-NS10-R50.model -t 5|python evaluation.py -u model/SG-300-5-NS10-R50.model -t 15|python evaluation.py -u model/SG-300-5-NS10-R50.model -t 20
-python evaluation.py -u model/SG-300-5-NS10-R50.model -t 30|python evaluation.py -u model/SG-300-5-NS10-R50.model -t 40|python evaluation.py -u model/SG-300-5-NS10-R50.model -t 50
+python evaluation.py -u model/SG-300-5-NS10-R50.model -t 60

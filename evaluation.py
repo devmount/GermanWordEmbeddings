@@ -52,7 +52,7 @@ PATTERN_SYN = [
     ('verbs (past)', '3PV/INF', SRC_VERBS, 4, 0),
     ('verbs (past)', '3SV/3PV', SRC_VERBS, 3, 4),
     ('verbs (past)', '3PV/3SV', SRC_VERBS, 4, 3)]
-logging.basicConfig(filename=args.model.strip() + '.top' + args.topn + '.result', format='%(asctime)s : %(message)s', level=logging.INFO)
+logging.basicConfig(filename=args.model.strip() + '.top' + str(args.topn) + '.result', format='%(asctime)s : %(message)s', level=logging.INFO)
 
 
 # function replace_umlauts
@@ -295,7 +295,7 @@ model = gensim.models.Word2Vec.load_word2vec_format(args.model.strip(), binary=T
 # execute evaluation
 logging.info('> EVALUATING SYNTACTIC FEATURES')
 test_mostsimilar_groups(model, TARGET_SYN + '.nouml' if args.umlauts else TARGET_SYN, args.topn)
-# logging.info('> EVALUATING SEMANTIC FEATURES')
-# test_mostsimilar(model, TARGET_SEM_OP + '.nouml' if args.umlauts else TARGET_SEM_OP, 'opposite', args.topn)
-# test_mostsimilar(model, TARGET_SEM_BM + '.nouml' if args.umlauts else TARGET_SEM_BM, 'best match', args.topn)
-# test_doesntfit(model, TARGET_SEM_DF + '.nouml' if args.umlauts else TARGET_SEM_DF)
+logging.info('> EVALUATING SEMANTIC FEATURES')
+test_mostsimilar(model, TARGET_SEM_OP + '.nouml' if args.umlauts else TARGET_SEM_OP, 'opposite', args.topn)
+test_mostsimilar(model, TARGET_SEM_BM + '.nouml' if args.umlauts else TARGET_SEM_BM, 'best match', args.topn)
+test_doesntfit(model, TARGET_SEM_DF + '.nouml' if args.umlauts else TARGET_SEM_DF)
