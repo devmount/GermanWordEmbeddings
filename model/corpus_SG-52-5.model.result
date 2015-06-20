@@ -8,6 +8,7 @@
 2015-05-18 01:17:27,828 : INFO : storing 3526241x52 projection weights into model/corpus_SG-52-5.model
 24152.35user 1703.26system 2:26:58elapsed 293%CPU (0avgtext+0avgdata 11839440maxresident)k
 31433032inputs+0outputs (11major+3388326minor)pagefaults 0swaps
+---
 2015-05-29 15:44:40,667 : loading projection weights from model/corpus_SG-52-5.model
 2015-05-29 15:45:43,470 : loaded (3526241, 52) matrix from model/corpus_SG-52-5.model
 2015-05-29 15:45:43,470 : precomputing L2-norms of word weight vectors
