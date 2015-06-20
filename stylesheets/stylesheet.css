@@ -325,6 +325,12 @@ Full-Width Styles
   background: url('../images/icon_download.png') no-repeat 0% 90%;
 }
 
+.download_link {
+  background: url('../images/icon_download.png') no-repeat 0 60%;
+  background-size: 20px;
+  padding-left: 25px;
+}
+
 .zip_download_link {
   display: block;
   float: right;
