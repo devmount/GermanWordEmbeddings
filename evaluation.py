@@ -52,7 +52,7 @@ PATTERN_SYN = [
     ('verbs (past)', '3PV/INF', SRC_VERBS, 4, 0),
     ('verbs (past)', '3SV/3PV', SRC_VERBS, 3, 4),
     ('verbs (past)', '3PV/3SV', SRC_VERBS, 4, 3)]
-logging.basicConfig(filename=args.model.strip() + '.top' + str(args.topn) + '.result', format='%(asctime)s : %(message)s', level=logging.INFO)
+logging.basicConfig(filename=args.model.strip() + '.result', format='%(asctime)s : %(message)s', level=logging.INFO)
 
 
 # function replace_umlauts

@@ -57,7 +57,8 @@ def draw_words(model, words, alternate=False, pca=True, title=''):
             xytext = (-7, -6) if first else (7, -6),
             textcoords = 'offset points',
             ha = 'right' if first else 'left',
-            va = 'bottom'
+            va = 'bottom',
+            size = "x-large"
         )
         first = not first if alternate else first
 
@@ -73,7 +74,7 @@ def draw_words(model, words, alternate=False, pca=True, title=''):
             edgecolor='#bbbbbb',
             facecolor='#bbbbbb',
             length_includes_head=True,
-            head_width=0.05,
+            head_width=0.08,
             width=0.01
         )
 
@@ -86,6 +87,6 @@ def draw_words(model, words, alternate=False, pca=True, title=''):
 # get trained model
 model = gensim.models.Word2Vec.load_word2vec_format("model/SG-300-5-NS10-R50.model", binary=True)
 # execute evaluation
-draw_words(model, currency, True, True, 'PCA Visualisierung: Waehrung')
-draw_words(model, capital, True, True, 'PCA Visualisierung: Hauptstadt')
-draw_words(model, language, True, True, 'PCA Visualisierung: Sprache')
+draw_words(model, currency, True, True, r'$PCA\ Visualisierung:\ W\ddot{a}hrung$')
+draw_words(model, capital, True, True, r'$PCA\ Visualisierung:\ Hauptstadt$')
+draw_words(model, language, True, True, r'$PCA\ Visualisierung:\ Sprache$')
