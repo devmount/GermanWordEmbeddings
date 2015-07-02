@@ -35,7 +35,39 @@
       <section id="main_content" class="inner">
         <h2><a id="welcome" class="anchor" href="#welcome" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome</h2>
 
-<p>In my bachelor thesis I trained german word embeddings with gensim's word2vec library and evaluated them with generated test sets. This page offers an overview about the project and download links for scripts, source and evaluation files.</p>
+<p>In my bachelor thesis I trained german word embeddings with <a href="http://radimrehurek.com/gensim/models/word2vec.html" target="_blank">gensim's word2vec library</a> and evaluated them with generated test sets. This page offers an overview about the project and download links for scripts, source and evaluation files.</p>
+
+<h2><a id="analogies" class="anchor" href="#analogies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Semantic arithmetics</h2>
+<p>With simple vector arithmetics it's possible to show the meaning of words that are representable by the model. Therefore the vectors are added or subtracted and with the help of the <a href="https://en.wikipedia.org/wiki/Cosine_similarity" target="_blank">cosine similarity</a> the vector(s) that are nearest to the result can be found. In the following, some interesting examples are shown:</p>
+
+<!-- <pre><code>Mensch - Vernunft = Schimpanse <span style="float: right;">(0,349)</span></code></pre>
+(human - reason = chimpanzee) -->
+<p><pre><code>Frau + Kind = Mutter <span style="float: right;">(0,831)</span>
+Frau + Hochzeit = Ehefrau <span style="float: right;">(0,795)</span></code></pre></p>
+<p>A common family relationship: a woman with a child added is a mother. In word2vec terms: adding the vector of <code>child</code> to the vector of <code>woman</code> results in a vector which is closest to <code>mother</code> with a comparatively high cosine similarity of 0,831. In the same way results a <code>woman</code> with a <code>wedding</code> in a <code>wife</code>.</p>
+
+<p><pre><code>Obama - USA + Russland = Putin <span style="float: right;">(0,780)</span></code></pre></p>
+<p>The model is able to find a leader to a given country. Here <code>Obama</code> without <code>USA</code> is the trait for a country leader. Adding this trait to <code>russia</code> results in <code>Putin</code>. It's also successful for other countries.</p>
+
+<p><pre><code>Verwaltungsgebaeude + Buecher = Bibliothek <span style="float: right;">(0,718)</span>
+Verwaltungsgebaeude + Buergermeister = Rathaus <span style="float: right;">(0,746)</span>
+Haus + Filme = Kino <span style="float: right;">(0,713)</span>
+Haus + Filme + Popcorn = Kino <span style="float: right;">(0,721)</span></code></pre></p>
+<p>The relationship between a building and its function is found correctly. Here an <code>administration building</code> with <code>books</code> is logically the <code>library</code> and an <code>administration building</code> with a <code>mayor</code> is the <code>city hall</code>. Moreover a <code>house</code> with <code>movies</code> results in <code>cinema</code>. Note that when additionally adding <code>popcorn</code> to the equation, the resulting vector gets a little closer to the vector of the word <code>cinema</code>.</p>
+
+<p><pre><code>Becken + Wasser = Schwimmbecken <span style="float: right;">(0,790)</span>
+Sand + Wasser = Schlamm <span style="float: right;">(0,792)</span>
+Meer + Sand = Strand <span style="float: right;">(0,725)</span></code></pre></p>
+<p>Some nice examples with water: <code>sand</code> and <code>water</code> result in <code>mud</code>, <code>sea</code> and <code>sand</code> result in <code>beach</code> and a <code>basin</code> with <code>water</code> is a <code>pool</code>.</p>
+
+<p><pre><code>Planet + Wasser = Erde <span style="float: right;">(0,717)</span>
+Planet - Wasser = Pluto <span style="float: right;">(0,385)</span></code></pre></p>
+<p>The main feature of our planet is correctly represented by the model: a <code>planet</code> with <code>water</code> is the <code>earth</code>, while a <code>planet</code> without <code>water</code> is <code>Pluto</code>. That's not quite accurate, because Pluto is made of water ice to one third...</p>
+
+<p><pre><code>Kerze + Feuerzeug = brennende_Kerze <span style="float: right;">(0,768)</span></code></pre></p>
+<p>Here a quite good example for a semantically correct guess of a bigram token: <code>candle</code> and <code>lighter</code> result in a <code>burning_candle</code>.</p>
+
+<p>The examples shown above are the results of a quick manual search for useful vector quations in the model. There are more amazing semantic relations for sure.</p>
 
 <h2><a id="download" class="anchor" href="#download" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download</h2>
 
