@@ -9,7 +9,7 @@ There has been a lot of research about training word embeddings on English corpo
 
 
 ## Obtaining corpora <a name="obtention"></a>
-There are multiple possibilities for an obtention of huge German corpora that are public and free to use. For example the German Wikipedia:
+There are multiple possibilities for obtaining huge German corpora that are public and free to use. For example the German Wikipedia:
 ```shell
 wget http://download.wikimedia.org/dewiki/latest/dewiki-latest-pages-articles.xml.bz2
 ```
@@ -93,7 +93,7 @@ python vocabulary.py my.model my.model.vocab
 To create test sets and evaluate trained models, the [`evaluation.py`](evaluation.py) script can be used. It's possible to evaluate both syntactic and semantic features of a trained model. For a successful creation of testsets, the following source files should be created before starting the script (see the configuration part in the script for more information).
 
 ### Syntactic test set
-With the syntactic test, features like singular, plural, 3rd person, past tense, comparative or superlative can be evaluated. Therefore there are 3 source files: adjectives, nouns and verbs. Every file contains a unique word with it's assessable conjugations per line, divided bei a dash. These combination patterns can be entered in the `PATTERN_SYN` constant in the script configuration. The script now combinates each word with 5 (default) random other words according to the given pattern, to create assessable analogy questions. Once the data file with the questions is created, it can be evaluated. Normally the evaluation can be done by [gensim's word2vec accuracy function](http://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec.accuracy), but to get a more specific evaluation result (correct matches, top n matches and coverage), this project uses it's own accuracy functions (`test_mostsimilar_groups()` and `test_mostsimilar()` in [`evaluation.py`](evaluation.py)). 
+With the syntactic test, features like singular, plural, 3rd person, past tense, comparative or superlative can be evaluated. Therefore there are 3 source files: adjectives, nouns and verbs. Every file contains a unique word with its conjugations per line, divided bei a dash. These combination patterns can be entered in the `PATTERN_SYN` constant in the script configuration. The script now combinates each word with 5 random other words according to the given pattern, to create appropriate analogy questions. Once the data file with the questions is created, it can be evaluated. Normally the evaluation can be done by [gensim's word2vec accuracy function](http://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec.accuracy), but to get a more specific evaluation result (correct matches, top n matches and coverage), this project uses it's own accuracy functions (`test_mostsimilar_groups()` and `test_mostsimilar()` in [`evaluation.py`](evaluation.py)). 
 
 The given source files of this project contains 100 unique nouns with 2 patterns, 100 unique adjectives with 6 patterns and 100 unique verbs with 12 patterns, resulting in 10k analogy questions. Here are some examples for possible source files:
 
@@ -131,7 +131,7 @@ See [src/verbs.txt](src/verbs.txt)
 With the semantic test, features concering word meanings can be evaluated. Therefore there are 3 source files: opposite, best match and doesn't match. The given source files result in a total of 950 semantic questions.
 
 #### opposite.txt
-This file contains opposite words, like `oneword-oppositeword` per line, to evaluate the models ability to find opposites. The script combinates each pair with 10 (default) random other pairs, to build analogy questions. The given opposite source file of this project includes 30 unique pairs, resulting in 300 analogy questions.
+This file contains opposite words, following the pattern of `oneword-oppositeword` per line, to evaluate the models' ability to find opposites.. The script combinates each pair with 10 random other pairs, to build analogy questions. The given opposite source file of this project includes 30 unique pairs, resulting in 300 analogy questions.
 
 Example content:
 ```
@@ -141,7 +141,7 @@ Tag-Nacht
 See [src/opposite.txt](src/opposite.txt)
 
 #### bestmatch.txt
-This file contains groups of content similar word pairs, to evaluate the models ability to find thematic relevant analogies. The script combinates each pair with all other pairs of the same group, to build analogy questions. The given bestmatch source file of this project includes 7 groups with a total of 77 unique pairs, resulting in 540 analogy questions.
+This file contains groups of content similar word pairs, to evaluate the models ability to find thematic relevant analogies. The script combines each pair with all other pairs of the same group to build analogy questions. The given bestmatch source file of this project includes 7 groups with a total of 77 unique pairs, resulting in 540 analogy questions.
 
 Example content:
 ```
@@ -156,7 +156,7 @@ Windows-Microsoft
 See [src/bestmatch.txt](src/bestmatch.txt)
 
 #### doesntfit.txt
-This file contains (per line) 3 words with similar content divided by space and a set of not fitting words, divided by dash, like `fittingword1 fittingword2 fittingword3 notfittingword1-notfittingword2-...-notfittingwordn`. This evaluates the models ability to find the least fitting word in a set of 4 words. The script combinates each matching triple with every not matching word of the dash divided list, to build doesntfit questions. The given doesntfit source file of this project includes 11 triple each with 10 not fitting words, resulting in 110 questions.
+This file contains 3 words (per line) with similar content divided by space and a set of words that do not fit, divided by dash, like `fittingword1 fittingword2 fittingword3 notfittingword1-notfittingword2-...-notfittingwordn`. This tests the models' ability to find the least fitting word in a set of 4 words. The script combines each matching triple with every not matching word of the list divided by dash, to build doesntfit questions. The available doesntfit source file of this project includes 11 triples, each with 10 words that do not fit, resulting in 110 questions.
 
 Example content:
 ```
