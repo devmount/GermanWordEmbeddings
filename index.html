@@ -67,7 +67,29 @@ Planet - Wasser = Pluto <span style="float: right;">(0,385)</span></code></pre><
 <p><pre><code>Kerze + Feuerzeug = brennende_Kerze <span style="float: right;">(0,768)</span></code></pre></p>
 <p>Here is quite a good example for a semantically correct guess of a bigram token: <code>candle</code> and <code>lighter</code> result in a <code>burning_candle</code>.</p>
 
-<p>The examples shown above are the results of a quick manual search for useful vector quations in the model. There are more amazing semantic relations for sure.</p>
+<p>The examples shown above are the results of a quick manual search for useful vector equations in the model. There are more amazing semantic relations for sure.</p>
+
+<h2><a id="pca" class="anchor" href="#pca" aria-hidden="true"><span class="octicon octicon-link"></span></a>PCA</h2>
+
+The <a href="https://en.wikipedia.org/wiki/Principal_component_analysis" target="_blank">Principal Component Analysis</a> is a method to reduce the number of dimensions of high-dimensional vectors, while keeping main features (= the principal components). Therefore the 300 dimensions of the vectors of my German language model were reduced to a two-dimensional representation and plotted with pythons <a href="http://matplotlib.org" target="_blank">matplotlib</a> for some word classes.
+
+<figure>
+  <img src="images/pca_capital.svg" width="75%" alt="PCA: Capital of a country" title="PCA: Capital of a country"/>
+  <figcaption>Countries and capitals are grouped correctly. The connecting lines are approximately parallel (except the one for Sweden maybe...) and of the same length. So the model understands the concept of capitals and countries.</figcaption>
+</figure>
+
+<figure>
+  <img src="images/pca_currency.svg" width="75%" alt="PCA: Currency of a country" title="PCA: Currency of a country"/>
+  <figcaption>Countries and their currencies are also grouped correctly. As well as the capitals, the concept of currencies of countries is well understood by the model. Note: <code>british_pounds</code> is here more accurate then just <code>pounds</code> because of multiple meanings of the word. Same with <code>US-Dollar</code> and <code>Dollar</code>.</figcaption>
+</figure>
+
+<figure>
+  <img src="images/pca_language.svg" width="75%" alt="PCA: Language of a country" title="PCA: Language of a country"/>
+  <figcaption>Finally another great example of grouped features with languages of countries.</figcaption>
+</figure>
+
+<p>The plots above are created with the <a target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/visualize.py">visualize.py</a> script of this project.</p>
+
 
 <h2><a id="download" class="anchor" href="#download" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download</h2>
 
