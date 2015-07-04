@@ -21,7 +21,7 @@
           <a id="forkme_banner" href="https://github.com/devmount/GermanWordEmbeddings">View on GitHub</a>
 
           <h1 id="project_title">GermanWordEmbeddings</h1>
-          <h2 id="project_tagline">A toolkit to obtain and preprocess german corpora, train models and evaluate them with generated testsets</h2>
+          <h2 id="project_tagline">A toolkit to obtain and preprocess German corpora, train models and evaluate them with generated testsets</h2>
 
             <section id="downloads">
               <a class="zip_download_link" target="_blank" href="https://github.com/devmount/GermanWordEmbeddings/zipball/master">Download the whole project as a .zip file</a>
@@ -35,25 +35,25 @@
       <section id="main_content" class="inner">
         <h2><a id="welcome" class="anchor" href="#welcome" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome</h2>
 
-<p>In my bachelor thesis I trained german word embeddings with <a href="http://radimrehurek.com/gensim/models/word2vec.html" target="_blank">gensim's word2vec library</a> and evaluated them with generated test sets. This page offers an overview about the project and download links for scripts, source and evaluation files.</p>
+<p>In my bachelor thesis I trained German word embeddings with <a href="http://radimrehurek.com/gensim/models/word2vec.html" target="_blank">gensim's word2vec library</a> and evaluated them with generated test sets. This page offers an overview about the project and download links for scripts, source and evaluation files.</p>
 
-<h2><a id="analogies" class="anchor" href="#analogies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Semantic arithmetics</h2>
-<p>With simple vector arithmetics it's possible to show the meaning of words that are representable by the model. Therefore the vectors are added or subtracted and with the help of the <a href="https://en.wikipedia.org/wiki/Cosine_similarity" target="_blank">cosine similarity</a> the vector(s) that are nearest to the result can be found. In the following, some interesting examples are shown:</p>
+<h2><a id="analogies" class="anchor" href="#analogies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Semantic arithmetic</h2>
+<p>With basic vector arithmetic it's possible to show the meaning of words that are representable by the model. Therefore the vectors are added or subtracted and with the help of the <a href="https://en.wikipedia.org/wiki/Cosine_similarity" target="_blank">cosine similarity</a> the vector(s) that are nearest to the result can be found. In the following, some interesting examples are shown:</p>
 
 <!-- <pre><code>Mensch - Vernunft = Schimpanse <span style="float: right;">(0,349)</span></code></pre>
 (human - reason = chimpanzee) -->
 <p><pre><code>Frau + Kind = Mutter <span style="float: right;">(0,831)</span>
 Frau + Hochzeit = Ehefrau <span style="float: right;">(0,795)</span></code></pre></p>
-<p>A common family relationship: a woman with a child added is a mother. In word2vec terms: adding the vector of <code>child</code> to the vector of <code>woman</code> results in a vector which is closest to <code>mother</code> with a comparatively high cosine similarity of 0,831. In the same way results a <code>woman</code> with a <code>wedding</code> in a <code>wife</code>.</p>
+<p>A common family relationship: a woman with a child added is a mother. In word2vec terms: adding the vector of <code>child</code> to the vector of <code>woman</code> results in a vector which is closest to <code>mother</code> with a comparatively high cosine similarity of 0,831. In the same way a <code>woman</code> with a <code>wedding</code> results in a <code>wife</code>.</p>
 
 <p><pre><code>Obama - USA + Russland = Putin <span style="float: right;">(0,780)</span></code></pre></p>
-<p>The model is able to find a leader to a given country. Here <code>Obama</code> without <code>USA</code> is the trait for a country leader. Adding this trait to <code>russia</code> results in <code>Putin</code>. It's also successful for other countries.</p>
+<p>The model is able to find a leader to a given country. Here <code>Obama</code> without <code>USA</code> is the feature for a country leader. Adding this feature to <code>Russia</code> results in <code>Putin</code>. It's also successful for other countries.</p>
 
 <p><pre><code>Verwaltungsgebaeude + Buecher = Bibliothek <span style="float: right;">(0,718)</span>
 Verwaltungsgebaeude + Buergermeister = Rathaus <span style="float: right;">(0,746)</span>
 Haus + Filme = Kino <span style="float: right;">(0,713)</span>
 Haus + Filme + Popcorn = Kino <span style="float: right;">(0,721)</span></code></pre></p>
-<p>The relationship between a building and its function is found correctly. Here an <code>administration building</code> with <code>books</code> is logically the <code>library</code> and an <code>administration building</code> with a <code>mayor</code> is the <code>city hall</code>. Moreover a <code>house</code> with <code>movies</code> results in <code>cinema</code>. Note that when additionally adding <code>popcorn</code> to the equation, the resulting vector gets a little closer to the vector of the word <code>cinema</code>.</p>
+<p>The relationship between a building and its function is found correctly. Here an <code>administration building</code> with <code>books</code> is logically the <code>library</code> and an <code>administration building</code> with a <code>mayor</code> is the <code>city hall</code>. Moreover a <code>house</code> with <code>movies</code> results in a <code>cinema</code>. Note that when adding <code>popcorn</code> to the equation, the resulting vector gets a little closer to the vector of the word <code>cinema</code>.</p>
 
 <p><pre><code>Becken + Wasser = Schwimmbecken <span style="float: right;">(0,790)</span>
 Sand + Wasser = Schlamm <span style="float: right;">(0,792)</span>
@@ -65,30 +65,30 @@ Planet - Wasser = Pluto <span style="float: right;">(0,385)</span></code></pre><
 <p>The main feature of our planet is correctly represented by the model: a <code>planet</code> with <code>water</code> is the <code>earth</code>, while a <code>planet</code> without <code>water</code> is <code>Pluto</code>. That's not quite accurate, because Pluto is made of water ice to one third...</p>
 
 <p><pre><code>Kerze + Feuerzeug = brennende_Kerze <span style="float: right;">(0,768)</span></code></pre></p>
-<p>Here a quite good example for a semantically correct guess of a bigram token: <code>candle</code> and <code>lighter</code> result in a <code>burning_candle</code>.</p>
+<p>Here is quite a good example for a semantically correct guess of a bigram token: <code>candle</code> and <code>lighter</code> result in a <code>burning_candle</code>.</p>
 
 <p>The examples shown above are the results of a quick manual search for useful vector quations in the model. There are more amazing semantic relations for sure.</p>
 
 <h2><a id="download" class="anchor" href="#download" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download</h2>
 
 <h4>Model</h4>
-<p>The german language model, trained with word2vec on the german wikipedia and german news articles:<br /><a class="download_link" target="_blank" href="https://tubcloud.tu-berlin.de/public.php?service=files&t=dc4f9d207bcaf4d4fae99ab3fbb1af16">german.model</a> [704 MB]<br />
+<p>The German language model, trained with word2vec on the German wikipedia and German news articles:<br /><a class="download_link" target="_blank" href="https://tubcloud.tu-berlin.de/public.php?service=files&t=dc4f9d207bcaf4d4fae99ab3fbb1af16">german.model</a> [704 MB]<br />
 
 <h4>Syntactic Questions</h4>
-<p>10k questions with german umlauts:<br /><a class="download_link" target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/data/syntactic.questions">syntactic.questions</a><br />
-The same 10k questions with transformed german umlauts:<br /><a class="download_link" target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/data/syntactic.questions.nouml">syntactic.questions.nouml</a>
+<p>10k questions with German umlauts:<br /><a class="download_link" target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/data/syntactic.questions">syntactic.questions</a><br />
+The same 10k questions with transformed German umlauts:<br /><a class="download_link" target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/data/syntactic.questions.nouml">syntactic.questions.nouml</a>
 </p>
 <p>Evaluation source files:<br /><a class="download_link" target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/src/adjectives.txt">adjectives.txt</a><br /><a class="download_link" target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/src/nouns.txt">nouns.txt</a><br /><a class="download_link" target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/src/verbs.txt">verbs.txt</a></p>
 
 <h4>Semantic Questions</h4>
-<p>300 opposite questions with german umlauts:<br /><a class="download_link" target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/data/semantic_op.questions">semantic_op.questions</a><br />
-The same 300 opposite questions with transformed german umlauts:<br /><a class="download_link" target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/data/semantic_op.questions.nouml">semantic_op.questions.nouml</a>
+<p>300 opposite questions with German umlauts:<br /><a class="download_link" target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/data/semantic_op.questions">semantic_op.questions</a><br />
+The same 300 opposite questions with transformed German umlauts:<br /><a class="download_link" target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/data/semantic_op.questions.nouml">semantic_op.questions.nouml</a>
 </p>
-<p>540 best match questions with german umlauts:<br /><a class="download_link" target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/data/semantic_bm.questions">semantic_bm.questions</a><br />
-The same 540 best match questions with transformed german umlauts:<br /><a class="download_link" target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/data/semantic_bm.questions.nouml">semantic_bm.questions.nouml</a>
+<p>540 best match questions with German umlauts:<br /><a class="download_link" target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/data/semantic_bm.questions">semantic_bm.questions</a><br />
+The same 540 best match questions with transformed German umlauts:<br /><a class="download_link" target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/data/semantic_bm.questions.nouml">semantic_bm.questions.nouml</a>
 </p>
-<p>110 doesn't fit questions with german umlauts:<br /><a class="download_link" target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/data/semantic_df.questions">semantic_df.questions</a><br />
-The same 110 doesn't fit questions with transformed german umlauts:<br /><a class="download_link" target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/data/semantic_df.questions.nouml">semantic_df.questions.nouml</a>
+<p>110 doesn't fit questions with German umlauts:<br /><a class="download_link" target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/data/semantic_df.questions">semantic_df.questions</a><br />
+The same 110 doesn't fit questions with transformed German umlauts:<br /><a class="download_link" target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/data/semantic_df.questions.nouml">semantic_df.questions.nouml</a>
 </p>
 <p>Evaluation source files:<br /><a class="download_link" target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/src/opposite.txt">opposite.txt</a><br /><a class="download_link" target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/src/bestmatch.txt">bestmatch.txt</a><br /><a class="download_link" target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/src/doesntfit.txt">doesntfit.txt</a></p>
 
