@@ -37,6 +37,76 @@
 
 <p>In my bachelor thesis I trained German word embeddings with <a href="http://radimrehurek.com/gensim/models/word2vec.html" target="_blank">gensim's word2vec library</a> and evaluated them with generated test sets. This page offers an overview about the project and download links for scripts, source and evaluation files.</p>
 
+<h2><a id="training" class="anchor" href="#training" aria-hidden="true"><span class="octicon octicon-link"></span></a>Training and Evaluation</h2>
+I found the following parameter configuration to be optimal to train german language models with word2vec:
+
+<ul>
+  <li>a corpus as big as possible (and as diverse as possible without being informal)</li>
+  <li>filtering of punctuation and stopwords</li>
+  <li>forming bigramm tokens</li>
+  <li>using skip-gram as training algorithm</li>
+  <li>window size between 5 and 10</li>
+  <li>dimensionality of feature vectors of 300 or more</li>
+  <li>using negative sampling with 10 samples</li>
+  <li>ignoring all words with total frequency lower than 50</li>
+  <li>using hierarchical softmax</li>
+</ul>
+
+<p>The following table shows some training stats for training a model with the above specification:</p>
+
+<table>
+  <tr>
+    <td>training time</td>
+    <td>6,16 h</td>
+  </tr>
+  <tr>
+    <td>training speed</td>
+    <td>26626 words/s</td>
+  </tr>
+  <tr>
+    <td>vocab size</td>
+    <td>608.130 words</td>
+  </tr>
+  <tr>
+    <td>corpus size</td>
+    <td>651.219.519 words</td>
+  </tr>
+  <tr>
+    <td>model size</td>
+    <td>720 MB</td>
+  </tr>
+</table>
+
+<p>To train this model, you can take the following snippets after downloading this toolkit and navigation to its directory, where the <a target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/preprocessing.py">preprocessing.py</a> and the <a target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/training.py">training.py</a> script are used.</p>
+
+<p>Make working directories:</p>
+<p><pre><code>mkdir corpus
+mkdir model</code></pre></p>
+
+<p>Build news corpus:</p>
+<p><pre><code>wget http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.2013.de.shuffled.gz
+gzip -d news.2013.de.shuffled.gz
+python preprocessing.py news.2013.de.shuffled corpus/news.2013.de.shuffled.corpus -psub
+rm news.2013.de.shuffled.gz</code></pre></p>
+
+<p>Build wikipedia corpus:</p>
+<p><pre><code>wget http://download.wikimedia.org/dewiki/latest/dewiki-latest-pages-articles.xml.bz2
+wget http://medialab.di.unipi.it/Project/SemaWiki/Tools/WikiExtractor.py
+python WikiExtractor.py -c -b 25M -o extracted dewiki-latest-pages-articles.xml.bz2
+find extracted -name '*bz2' \! -exec bzip2 -k -c -d {} \; > dewiki.xml
+printf "Number of articles: "
+grep -o "&lt;doc" dewiki.xml | wc -w
+sed -i 's/<[^>]*>//g' dewiki.xml
+rm -rf extracted
+python preprocessing.py dewiki.xml corpus/dewiki.corpus -psub
+rm dewiki.xml</code></pre></p>
+
+<p>Training:</p>
+<p><pre><code>python training.py corpus/ model/my.model -s 300 -w 5 -n 10 -m 50</code></pre></p>
+
+<p>Subsequently the <a target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/evaluation.py">evaluation.py</a> script can be used to evaluate the trained model:</p>
+<p><pre><code>python evaluation.py model/my.model -u -t 10</code></pre></p>
+
 <h2><a id="analogies" class="anchor" href="#analogies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Semantic arithmetic</h2>
 <p>With basic vector arithmetic it's possible to show the meaning of words that are representable by the model. Therefore the vectors are added or subtracted and with the help of the <a href="https://en.wikipedia.org/wiki/Cosine_similarity" target="_blank">cosine similarity</a> the vector(s) that are nearest to the result can be found. In the following, some interesting examples are shown:</p>
 
@@ -69,7 +139,7 @@ Planet - Wasser = Pluto <span style="float: right;">(0,385)</span></code></pre><
 
 <p>The examples shown above are the results of a quick manual search for useful vector equations in the model. There are more amazing semantic relations for sure.</p>
 
-<h2><a id="pca" class="anchor" href="#pca" aria-hidden="true"><span class="octicon octicon-link"></span></a>PCA</h2>
+<h2><a id="pca" class="anchor" href="#pca" aria-hidden="true"><span class="octicon octicon-link"></span></a>Visualizing features with PCA</h2>
 
 The <a href="https://en.wikipedia.org/wiki/Principal_component_analysis" target="_blank">Principal Component Analysis</a> is a method to reduce the number of dimensions of high-dimensional vectors, while keeping main features (= the principal components). Therefore the 300 dimensions of the vectors of my German language model were reduced to a two-dimensional representation and plotted with pythons <a href="http://matplotlib.org" target="_blank">matplotlib</a> for some word classes.
 
