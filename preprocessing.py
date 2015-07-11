@@ -20,8 +20,8 @@ import logging
 parser = argparse.ArgumentParser(description='Script for preprocessing public corpora')
 parser.add_argument('raw', type=str, help='source file with raw data for corpus creation')
 parser.add_argument('target', type=str, help='target file name to store corpus in')
-parser.add_argument('-p', '--punctuation', action='store_true', help='filter punctuation tokens')
-parser.add_argument('-s', '--stopwords', action='store_true', help='filter stop word tokens')
+parser.add_argument('-p', '--punctuation', action='store_true', help='remove punctuation tokens')
+parser.add_argument('-s', '--stopwords', action='store_true', help='remove stop word tokens')
 parser.add_argument('-u', '--umlauts', action='store_true', help='replace german umlauts with their respective digraphs')
 parser.add_argument('-b', '--bigram', action='store_true', help='detect and process common bigram phrases')
 args = parser.parse_args()
@@ -29,7 +29,6 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 sentence_detector = nltk.data.load('tokenizers/punkt/german.pickle')
 punctuation_tokens = ['.', '..', '...', ',', ';', ':', '(', ')', '"', '\'', '[', ']', '{', '}', '?', '!', '-', u'–', '+', '*', '--', '\'\'', '``']
 punctuation = '?.!/;:()&+'
-stop_words = stopwords.words('german')
 
 
 # function replace_umlauts
@@ -46,6 +45,9 @@ def replace_umlauts(text):
     res = res.replace(u'Ü', 'Ue')
     res = res.replace(u'ß', 'ss')
     return res
+
+# get stopwords
+stop_words = stopwords.words('german') if not args.umlauts else [replace_umlauts(token) for token in stopwords.words('german')]
 
 # start preprocessing
 num_sentences = sum(1 for line in open(args.raw))
@@ -75,7 +77,7 @@ with open(args.raw, 'r') as infile:
             # write one sentence per line in output file, if sentence has more than 1 word
             if len(words)>1:
                 output.write(' '.join(words).encode('utf8') + '\n')
-        logging.info('preprocessing sentence ' + str(i) + ' of ' + str(num_sentences))
+        # logging.info('preprocessing sentence ' + str(i) + ' of ' + str(num_sentences))
         i += 1
 logging.info('preprocessing of ' + str(num_sentences) + ' sentences finished!')
 
