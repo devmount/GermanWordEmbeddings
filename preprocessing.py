@@ -15,6 +15,7 @@ import argparse
 import os
 import re
 import logging
+import sys
 
 # configuration
 parser = argparse.ArgumentParser(description='Script for preprocessing public corpora')
@@ -25,7 +26,7 @@ parser.add_argument('-s', '--stopwords', action='store_true', help='remove stop 
 parser.add_argument('-u', '--umlauts', action='store_true', help='replace german umlauts with their respective digraphs')
 parser.add_argument('-b', '--bigram', action='store_true', help='detect and process common bigram phrases')
 args = parser.parse_args()
-logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+logging.basicConfig(stream=sys.stdout, ormat='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 sentence_detector = nltk.data.load('tokenizers/punkt/german.pickle')
 punctuation_tokens = ['.', '..', '...', ',', ';', ':', '(', ')', '"', '\'', '[', ']', '{', '}', '?', '!', '-', u'–', '+', '*', '--', '\'\'', '``']
 punctuation = '?.!/;:()&+'
