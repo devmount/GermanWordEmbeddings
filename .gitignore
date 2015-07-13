@@ -55,3 +55,9 @@ info.txt
 temp*
 test*
 *.html
+code/training.py
+code/preprocessing.py
+code/evaluation.py
+code/.ipynb_*
+code/my.*
+code/corpus*
