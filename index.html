@@ -44,12 +44,11 @@ I found the following parameter configuration to be optimal to train german lang
   <li>a corpus as big as possible (and as diverse as possible without being informal)</li>
   <li>filtering of punctuation and stopwords</li>
   <li>forming bigramm tokens</li>
-  <li>using skip-gram as training algorithm</li>
+  <li>using skip-gram as training algorithm with hierarchical softmax</li>
   <li>window size between 5 and 10</li>
   <li>dimensionality of feature vectors of 300 or more</li>
   <li>using negative sampling with 10 samples</li>
   <li>ignoring all words with total frequency lower than 50</li>
-  <li>using hierarchical softmax</li>
 </ul>
 
 <p>The following table shows some training stats for training a model with the above specification:</p>
@@ -77,7 +76,7 @@ I found the following parameter configuration to be optimal to train german lang
   </tr>
 </table>
 
-<p>To train this model, you can take the following snippets after downloading this toolkit and navigation to its directory, where the <a target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/preprocessing.py">preprocessing.py</a> and the <a target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/training.py">training.py</a> script are used.</p>
+<p>To train this model, you can take the following snippets after downloading this toolkit and navigating to its directory, where the <a target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/preprocessing.py">preprocessing.py</a> and the <a target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/training.py">training.py</a> script are used.</p>
 
 <p>Make working directories:</p>
 <p><pre><code>mkdir corpus
@@ -106,6 +105,12 @@ rm dewiki.xml</code></pre></p>
 
 <p>Subsequently the <a target="_blank" href="https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/evaluation.py">evaluation.py</a> script can be used to evaluate the trained model:</p>
 <p><pre><code>python evaluation.py model/my.model -u -t 10</code></pre></p>
+
+<p>Further examples and code explanation can be found in the following ipython notebooks:<br />
+  <li><a target="_blank" href="https://github.com/devmount/GermanWordEmbeddings/blob/master/code/preprocessing.ipynb">Preprocessing</a></li>
+  <li><a target="_blank" href="https://github.com/devmount/GermanWordEmbeddings/blob/master/code/training.ipynb">Training</a></li>
+  <li><a target="_blank" href="https://github.com/devmount/GermanWordEmbeddings/blob/master/code/evaluation.ipynb">Evaluation</a></li>
+</p>
 
 <h2><a id="analogies" class="anchor" href="#analogies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Semantic arithmetic</h2>
 <p>With basic vector arithmetic it's possible to show the meaning of words that are representable by the model. Therefore the vectors are added or subtracted and with the help of the <a href="https://en.wikipedia.org/wiki/Cosine_similarity" target="_blank">cosine similarity</a> the vector(s) that are nearest to the result can be found. In the following, some interesting examples are shown:</p>
