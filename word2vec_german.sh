@@ -1,6 +1,6 @@
 # start script in new folder
 mkdir word2vec
-cd word2vec
+cd word2vec/
 mkdir corpus
 mkdir model
 
@@ -8,7 +8,7 @@ mkdir model
 for i in 2007 2008 2009 2010 2011 2012 2013; do
 	wget http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.$i.de.shuffled.gz
 	gzip -d news.$i.de.shuffled.gz
-	python preprocessing.py news.$i.de.shuffled corpus_ps/news.$i.de.shuffled.corpus -ps
+	python preprocessing.py news.$i.de.shuffled corpus/news.$i.de.shuffled.corpus -psub
 done
 rm news*
 
@@ -21,11 +21,11 @@ printf "Number of articles: "
 grep -o "<doc" dewiki.xml | wc -w
 sed -i 's/<[^>]*>//g' dewiki.xml
 rm -rf extracted
-python preprocessing.py dewiki.xml corpus_ps/dewiki.corpus -ps
+python preprocessing.py dewiki.xml corpus/dewiki.corpus -psub
 rm dewiki.xml
 
-# training
-python training.py corpus_psub/ model/SG-300-5-NS10-R50.model -s 300 -w 5 -n 10 -m 50
+# train model with vector size 300, window size 5, 10 negative samples and word min count of 50
+python training.py corpus/ model/my.model -s 300 -w 5 -n 10 -m 50
 
-# evaluation
-python evaluation.py -u model/SG-300-5-NS10-R50.model -t 10
+# evaluation with top 10 results
+python evaluation.py model/my.model -u -t 10
