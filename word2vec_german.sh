@@ -4,6 +4,11 @@ cd word2vec/
 mkdir corpus
 mkdir model
 
+# get scripts
+wget https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/preprocessing.py
+wget https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/training.py
+wget https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/evaluation.py
+
 # build news corpus
 for i in 2007 2008 2009 2010 2011 2012 2013; do
 	wget http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.$i.de.shuffled.gz
