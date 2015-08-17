@@ -28,6 +28,8 @@ sed -i 's/<[^>]*>//g' dewiki.xml
 rm -rf extracted
 python preprocessing.py dewiki.xml corpus/dewiki.corpus -psub
 rm dewiki.xml
+# only keep .bigram corpus files
+rm corpus/*.corpus
 
 # train model with vector size 300, window size 5, 10 negative samples and word min count of 50
 python training.py corpus/ model/my.model -s 300 -w 5 -n 10 -m 50
