@@ -77,7 +77,7 @@ with open(args.raw, 'r') as infile:
                 words = [x for x in words if x not in stop_words]
             # write one sentence per line in output file, if sentence has more than 1 word
             if len(words)>1:
-                output.write(' '.join(words).encode('utf8') + '\n')
+                output.write(' '.join(words).encode('utf-8') + '\n')
         # logging.info('preprocessing sentence ' + str(i) + ' of ' + str(num_sentences))
         i += 1
 logging.info('preprocessing of ' + str(num_sentences) + ' sentences finished!')
