@@ -26,7 +26,7 @@ parser.add_argument('-s', '--stopwords', action='store_true', help='remove stop 
 parser.add_argument('-u', '--umlauts', action='store_true', help='replace german umlauts with their respective digraphs')
 parser.add_argument('-b', '--bigram', action='store_true', help='detect and process common bigram phrases')
 args = parser.parse_args()
-logging.basicConfig(stream=sys.stdout, ormat='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+logging.basicConfig(stream=sys.stdout, format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 sentence_detector = nltk.data.load('tokenizers/punkt/german.pickle')
 punctuation_tokens = ['.', '..', '...', ',', ';', ':', '(', ')', '"', '\'', '[', ']', '{', '}', '?', '!', '-', u'–', '+', '*', '--', '\'\'', '``']
 punctuation = '?.!/;:()&+'
@@ -48,7 +48,7 @@ def replace_umlauts(text):
     return res
 
 # get stopwords
-stop_words = stopwords.words('german') if not args.umlauts else [replace_umlauts(token.decode('utf8')) for token in stopwords.words('german')]
+stop_words = stopwords.words('german') if not args.umlauts else [replace_umlauts(token) for token in stopwords.words('german')]
 
 # start preprocessing
 num_sentences = sum(1 for line in open(args.raw))
