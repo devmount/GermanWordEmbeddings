@@ -61,7 +61,7 @@ logging.info('preprocessing ' + str(num_sentences) + ' sentences')
 with open(args.raw, 'r') as infile:
     for line in infile:
         # detect sentences
-        sentences = sentence_detector.tokenize(line.decode('utf8'))
+        sentences = sentence_detector.tokenize(line.decode('utf-8'))
         # process each sentence
         for sentence in sentences:
             # replace umlauts
