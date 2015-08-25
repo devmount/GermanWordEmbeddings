@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # make sure correct character encoding is used
 LANG=de_DE.UTF-8
 
