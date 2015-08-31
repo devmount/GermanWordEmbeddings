@@ -13,18 +13,18 @@ mkdir data
 printf "done!\n"
 
 # get scripts
-printf "Downloading scripts...\n"
-wget https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/preprocessing.py
-wget https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/training.py
-wget https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/evaluation.py
+printf "Downloading scripts... "
+wget -q https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/preprocessing.py
+wget -q https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/training.py
+wget -q https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/evaluation.py
 printf "done!\n"
 
 # get testsets
-printf "Downloading testsets...\n"
-wget https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/data/semantic_bm.questions.nouml -P data/
-wget https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/data/semantic_df.questions.nouml -P data/
-wget https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/data/semantic_op.questions.nouml -P data/
-wget https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/data/syntactic.questions.nouml -P data/
+printf "Downloading testsets... "
+wget -q https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/data/semantic_bm.questions.nouml -P data/
+wget -q https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/data/semantic_df.questions.nouml -P data/
+wget -q https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/data/semantic_op.questions.nouml -P data/
+wget -q https://raw.githubusercontent.com/devmount/GermanWordEmbeddings/master/data/syntactic.questions.nouml -P data/
 printf "done!\n"
 
 # build news corpus

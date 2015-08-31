@@ -48,7 +48,7 @@ def replace_umlauts(text):
     return res
 
 # get stopwords
-stop_words = stopwords.words('german') if not args.umlauts else [replace_umlauts(token) for token in stopwords.words('german')]
+stop_words = stopwords.words('german') if not args.umlauts else [replace_umlauts(token.decode('utf-8')) for token in stopwords.words('german')]
 
 # start preprocessing
 num_sentences = sum(1 for line in open(args.raw))

@@ -61,3 +61,4 @@ code/evaluation.py
 code/.ipynb_*
 code/my.*
 code/corpus*
+*bible*
