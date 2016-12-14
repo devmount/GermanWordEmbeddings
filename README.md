@@ -1,5 +1,5 @@
 # [GermanWordEmbeddings](http://devmount.github.io/GermanWordEmbeddings/)
-[![license](https://img.shields.io/badge/license-MIT License-blue.svg?style=flat-square)]()
+[![license](https://img.shields.io/badge/license-MIT License-blue.svg?style=flat-square)](/LICENSE)
 
 There has been a lot of research about training word embeddings on English corpora. This toolkit applies deep learning via [gensims's word2vec](https://radimrehurek.com/gensim/models/word2vec.html) on German corpora to train and evaluate German models. An overview about the project and download links can be found on the [project's website](http://devmount.github.io/GermanWordEmbeddings/) or directly in this repository.
 
