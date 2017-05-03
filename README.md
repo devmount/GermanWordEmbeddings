@@ -1,6 +1,6 @@
 # [GermanWordEmbeddings](http://devmount.github.io/GermanWordEmbeddings/)
 [![license](https://img.shields.io/badge/license-MIT%20License-blue.svg?style=flat-square)](./LICENSE)
-<a href="http://devmount.github.io/GermanWordEmbeddings/#download">
+<a href="http://devmount.github.io/GermanWordEmbeddings/#download" title="downloads of german.model">
 ![downloads](https://img.shields.io/badge/downloads-2k-blue.svg?style=flat-square)
 </a>
 
