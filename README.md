@@ -13,6 +13,7 @@ This project is released under the [MIT license](MIT.md).
 3. [Training models](#training)
 3. [Vocabulary](#vocabulary)
 3. [Evaluation](#evaluation)
+6. [Download](#download)
 
 
 ## Obtaining corpora <a name="obtention"></a>
@@ -184,3 +185,8 @@ Example usage:
 ```shell
 python evaluation.py my.model -u
 ```
+
+## Download
+The optimized German language model, that was trained with this toolkit based on the German Wikipedia (15th May 2015) and German news articles from 2013 (15th May 2015) can be downloaded here:
+
+[german.model](https://tubcloud.tu-berlin.de/public.php?service=files&t=dc4f9d207bcaf4d4fae99ab3fbb1af16) [704 MB]
