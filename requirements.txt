@@ -1,0 +1,4 @@
+nltk==3.2.4
+genism==2.2.0
+matplotlib==2.0.2
+scikit-learn==0.18.2
