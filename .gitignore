@@ -62,3 +62,6 @@ code/.ipynb_*
 code/my.*
 code/corpus*
 *bible*
+
+.idea
+run.sh
