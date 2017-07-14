@@ -56,6 +56,8 @@ flag               | description
 -s, --stopwords    | filter stop word tokens
 -u, --umlauts      | replace german umlauts with their respective digraphs
 -b, --bigram       | detect and process common bigram phrases
+-t, --threads      | number of concurrent threads. (default: NUMBER_OF_PROCESSORS)
+--batch_size       | batch size (default: 32)
 
 Example usage:
 ```shell
