@@ -65,3 +65,4 @@ code/corpus*
 
 .idea
 run.sh
+.venv

@@ -49,15 +49,15 @@ done
 
 Afterwards, the [`preprocessing.py`](preprocessing.py) script can be called on all the corpus files with the following options:
 
-flag               | description
------------------- | -----------------------------------------------------
--h, --help         | show a help message and exit
--p, --punctuation  | filter punctuation tokens
--s, --stopwords    | filter stop word tokens
--u, --umlauts      | replace german umlauts with their respective digraphs
--b, --bigram       | detect and process common bigram phrases
--t, --threads      | number of concurrent threads. (default: NUMBER_OF_PROCESSORS)
---batch_size       | batch size (default: 32)
+flag                  | default | description
+--------------------- | ------- | ---------------------------------------------
+-h, --help            | -       | show a help message and exit
+-p, --punctuation     | False   | filter punctuation tokens
+-s, --stopwords       | False   | filter stop word tokens
+-u, --umlauts         | False   | replace german umlauts with their respective digraphs
+-b, --bigram          | False   | detect and process common bigram phrases
+-t [ ], --threads [ ] | NUMBER_OF_PROCESSORS | number of worker threads
+--batch_size [ ]      | 32      | batch size for sentence processing
 
 Example usage:
 ```shell
@@ -74,7 +74,7 @@ flag                   | default | description
 -s [ ], --size [ ]     | 100     | dimension of word vectors
 -w [ ], --window [ ]   | 5       | size of the sliding window
 -m [ ], --mincount [ ] | 5       | minimum number of occurences of a word to be considered
--c [ ], --workers [ ]  | 4       | number of worker threads to train the model
+-t [ ], --threads [ ]  | NUMBER_OF_PROCESSORS | number of worker threads to train the model
 -g [ ], --sg [ ]       | 1       | training algorithm: Skip-Gram (1), otherwise CBOW (0)
 -i [ ], --hs [ ]       | 1       | use of hierachical sampling for training
 -n [ ], --negative [ ] | 0       | use of negative sampling for training (usually between 5-20)
