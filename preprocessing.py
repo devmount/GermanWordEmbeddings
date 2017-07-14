@@ -34,14 +34,10 @@ args = parser.parse_args()
 logging.basicConfig(stream=sys.stdout, format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 sentence_detector = nltk.data.load('tokenizers/punkt/german.pickle')
 punctuation_tokens = ['.', '..', '...', ',', ';', ':', '(', ')', '"', '\'', '[', ']',
-                      '{', '}', '?', '!', '-', u'–', '+', '*', '--', '\'\'', '``']
+                      '{', '}', '?', '!', '-', '–', '+', '*', '--', '\'\'', '``']
 punctuation = '?.!/;:()&+'
 
 
-# function replace_umlauts
-# ... replaces german umlauts and sharp s in given text
-# @param string  text
-# @return string with replaced umlauts
 def replace_umlauts(text):
     """
     Replaces german umlauts and sharp s in given text.
@@ -105,7 +101,7 @@ with open(args.raw, 'r') as infile:
                 outfile.flush()
             if s:
                 outfile.write(s)
-        logging.info('preprocessing of {} sentences finished!')
+        logging.info('preprocessing of {} sentences finished!'.format(i))
 
 
 # get corpus sentences
