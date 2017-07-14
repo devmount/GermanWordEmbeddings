@@ -26,12 +26,16 @@ parser.add_argument('-i', '--hs', type=int, default=1, help='use of hierachical 
 parser.add_argument('-n', '--negative', type=int, default=0, help='use of negative sampling for training (usually between 5-20)')
 parser.add_argument('-o', '--cbowmean', type=int, default=0, help='for CBOW training algorithm: use sum (0) or mean (1) to merge context vectors')
 args = parser.parse_args()
-logging.basicConfig(filename=args.target.strip() + '.result', format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
+logging.basicConfig(
+    filename=args.target.strip() + '.result', format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO
+)
+
 
 # get corpus sentences
 class CorpusSentences(object):
     def __init__(self, dirname):
         self.dirname = dirname
+
     def __iter__(self):
         for fname in os.listdir(self.dirname):
             for line in open(os.path.join(self.dirname, fname)):
