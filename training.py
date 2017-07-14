@@ -5,13 +5,17 @@
 # 
 # @author: Andreas Mueller
 # @see: Bachelor Thesis 'Analyse von Wort-Vektoren deutscher Textkorpora'
-# 
+#
+# Contributors:
+#  Michael Egger <michael.egger@tsn.at>
+#
 # @example: python training.py corpus_dir/ test.model -s 300 -w 10
 
 import gensim
 import logging
 import os
 import argparse
+import multiprocessing as mp
 
 # configuration
 parser = argparse.ArgumentParser(description='Script for training word vector models using public corpora')
@@ -20,7 +24,7 @@ parser.add_argument('target', type=str, help='target file name to store model in
 parser.add_argument('-s', '--size', type=int, default=100, help='dimension of word vectors')
 parser.add_argument('-w', '--window', type=int, default=5, help='size of the sliding window')
 parser.add_argument('-m', '--mincount', type=int, default=5, help='minimum number of occurences of a word to be considered')
-parser.add_argument('-c', '--workers', type=int, default=4, help='number of worker threads to train the model')
+parser.add_argument('-t', '--threads', type=int, default=mp.cpu_count(), help='number of worker threads to train the model')
 parser.add_argument('-g', '--sg', type=int, default=1, help='training algorithm: Skip-Gram (1), otherwise CBOW (0)')
 parser.add_argument('-i', '--hs', type=int, default=1, help='use of hierachical sampling for training')
 parser.add_argument('-n', '--negative', type=int, default=0, help='use of negative sampling for training (usually between 5-20)')
@@ -49,7 +53,7 @@ model = gensim.models.Word2Vec(
     size=args.size,
     window=args.window,
     min_count=args.mincount,
-    workers=args.workers,
+    workers=args.threads,
     sg=args.sg,
     hs=args.hs,
     negative=args.negative,
