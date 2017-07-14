@@ -6,6 +6,9 @@
 # @author: Andreas Mueller
 # @see: Bachelor Thesis 'Analyse von Wort-Vektoren deutscher Textkorpora'
 #
+# Contributors:
+#  Michael Egger <michael.egger@tsn.at>
+#
 # @example: python preprocessing.py test.raw test.corpus -psub
 
 import gensim
