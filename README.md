@@ -6,6 +6,11 @@
 
 There has been a lot of research about training word embeddings on English corpora. This toolkit applies deep learning via [gensims's word2vec](https://radimrehurek.com/gensim/models/word2vec.html) on German corpora to train and evaluate German models. An overview about the project and [download links](http://devmount.github.io/GermanWordEmbeddings/#download) can be found on the [project's website](http://devmount.github.io/GermanWordEmbeddings/) or directly in this repository.
 
+#### Dependencies
+
+* python3.6
+* BLAS
+
 This project is released under the [MIT license](MIT.md).
 
 1. [Obtaining corpora](#obtention)
@@ -14,7 +19,6 @@ This project is released under the [MIT license](MIT.md).
 3. [Vocabulary](#vocabulary)
 3. [Evaluation](#evaluation)
 6. [Download](#download)
-
 
 ## Obtaining corpora <a name="obtention"></a>
 There are multiple possibilities for obtaining huge German corpora that are public and free to use. For example the German Wikipedia:
