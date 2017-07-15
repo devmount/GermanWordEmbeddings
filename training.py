@@ -61,4 +61,4 @@ model = gensim.models.Word2Vec(
 )
 
 # store model
-model.save_word2vec_format(args.target, binary=True)
+model.wv.save_word2vec_format(args.target, binary=True)
