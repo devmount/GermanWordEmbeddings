@@ -42,8 +42,9 @@ class CorpusSentences(object):
 
     def __iter__(self):
         for fname in os.listdir(self.dirname):
-            for line in open(os.path.join(self.dirname, fname)):
-                yield line.split()
+            with open(os.path.join(self.dirname, fname)) as fp:
+                for line in fp:
+                    yield line.split()
 
 sentences = CorpusSentences(args.corpora)
 
