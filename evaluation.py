@@ -23,6 +23,7 @@ parser.add_argument('model', type=str, help='source file with trained model')
 parser.add_argument('-c', '--create', action='store_true', help='if set, create testsets before evaluating')
 parser.add_argument('-u', '--umlauts', action='store_true', help='if set, create additional testsets with transformed umlauts and use them instead')
 parser.add_argument('-t', '--topn', type=int, default=10, help='check the top n result (correct answer under top n answeres)')
+
 args = parser.parse_args()
 TARGET_SYN = 'data/syntactic.questions'
 TARGET_SEM_OP = 'data/semantic_op.questions'
@@ -57,6 +58,9 @@ PATTERN_SYN = [
     ('verbs (past)', '3PV/3SV', SRC_VERBS, 4, 3)
 ]
 logging.basicConfig(filename=args.model.strip() + '.result', format='%(asctime)s : %(message)s', level=logging.INFO)
+
+consoleHandler = logging.StreamHandler()
+logging.getLogger().addHandler(consoleHandler)
 
 
 def replace_umlauts(text):
@@ -229,59 +233,60 @@ def test_most_similar_groups(model, src, topn=10):
     num_right = 0
     num_topn = 0
     # test each group
-    groups = open(src).read().split('\n: ')
-    for group in groups:
-        questions = group.splitlines()
-        label = questions.pop(0)
-        label = label[2:] if label.startswith(': ') else label  # handle first group
-        num_group_lines = len(questions)
-        num_group_questions = 0
-        num_group_right = 0
-        num_group_topn = 0
-        # test each question of current group
-        for question in questions:
-            words = question.split()
-            # check if all words exist in vocabulary
-            if all(x in model.index2word for x in words):
-                num_group_questions += 1
-                best_matches = model.most_similar(positive=[words[1], words[2]], negative=[words[0]], topn=topn)
-                # best match
-                if words[3] in best_matches[0]:
-                    num_group_right += 1
-                # topn match
-                for match in best_matches[:topn]:
-                    if words[3] in match:
-                        num_group_topn += 1
-                        break
+    with open(src) as groups_fp:
+        groups = groups_fp.read().split('\n: ')
+        for group in groups:
+            questions = group.splitlines()
+            label = questions.pop(0)
+            label = label[2:] if label.startswith(': ') else label  # handle first group
+            num_group_lines = len(questions)
+            num_group_questions = 0
+            num_group_right = 0
+            num_group_topn = 0
+            # test each question of current group
+            for question in questions:
+                words = question.split()
+                # check if all words exist in vocabulary
+                if all(x in model.index2word for x in words):
+                    num_group_questions += 1
+                    best_matches = model.most_similar(positive=[words[1], words[2]], negative=[words[0]], topn=topn)
+                    # best match
+                    if words[3] in best_matches[0]:
+                        num_group_right += 1
+                    # topn match
+                    for match in best_matches[:topn]:
+                        if words[3] in match:
+                            num_group_topn += 1
+                            break
+            # calculate result
+            correct_group_matches = round(num_group_right/float(num_group_questions)*100, 1) if num_group_questions > 0 else 0.0
+            topn_group_matches = round(num_group_topn/float(num_group_questions)*100, 1) if num_group_questions > 0 else 0.0
+            group_coverage = round(num_group_questions/float(num_group_lines)*100, 1) if num_group_lines > 0 else 0.0
+            # log result
+            logging.info(label + ': {0}% ({1}/{2}), {3}% ({4}/{5}), {6}% ({7}/{8})'.format(
+                correct_group_matches,
+                num_group_right,
+                num_group_questions,
+                topn_group_matches,
+                num_group_topn,
+                num_group_questions,
+                group_coverage,
+                num_group_questions,
+                num_group_lines
+            ))
+            # total numbers
+            num_lines += num_group_lines
+            num_questions += num_group_questions
+            num_right += num_group_right
+            num_topn += num_group_topn
         # calculate result
-        correct_group_matches = round(num_group_right/float(num_group_questions)*100, 1) if num_group_questions > 0 else 0.0
-        topn_group_matches = round(num_group_topn/float(num_group_questions)*100, 1) if num_group_questions > 0 else 0.0
-        group_coverage = round(num_group_questions/float(num_group_lines)*100, 1) if num_group_lines > 0 else 0.0
+        correct_matches = round(num_right/float(num_questions)*100, 1) if num_questions > 0 else 0.0
+        topn_matches = round(num_topn/float(num_questions)*100, 1) if num_questions > 0 else 0.0
+        coverage = round(num_questions/float(num_lines)*100, 1) if num_lines > 0 else 0.0
         # log result
-        logging.info(label + ': {0}% ({1}/{2}), {3}% ({4}/{5}), {6}% ({7}/{8})'.format(
-            correct_group_matches,
-            num_group_right,
-            num_group_questions,
-            topn_group_matches,
-            num_group_topn,
-            num_group_questions,
-            group_coverage,
-            num_group_questions,
-            num_group_lines
-        ))
-        # total numbers
-        num_lines += num_group_lines
-        num_questions += num_group_questions
-        num_right += num_group_right
-        num_topn += num_group_topn
-    # calculate result
-    correct_matches = round(num_right/float(num_questions)*100, 1) if num_questions > 0 else 0.0
-    topn_matches = round(num_topn/float(num_questions)*100, 1) if num_questions > 0 else 0.0
-    coverage = round(num_questions/float(num_lines)*100, 1) if num_lines > 0 else 0.0
-    # log result
-    logging.info('total correct:  {0}% ({1}/{2})'.format(correct_matches, num_right, num_questions))
-    logging.info('total top {0}:   {1}% ({2}/{3})'.format(topn, topn_matches, num_topn, num_questions))
-    logging.info('total coverage: {0}% ({1}/{2})'.format(coverage, num_questions, num_lines))
+        logging.info('total correct:  {0}% ({1}/{2})'.format(correct_matches, num_right, num_questions))
+        logging.info('total top {0}:   {1}% ({2}/{3})'.format(topn, topn_matches, num_topn, num_questions))
+        logging.info('total coverage: {0}% ({1}/{2})'.format(coverage, num_questions, num_lines))
 
 
 def test_doesnt_fit(model, src):
@@ -322,6 +327,9 @@ if args.create:
 
 # get trained model
 trained_model = gensim.models.KeyedVectors.load_word2vec_format(args.model.strip(), binary=True)
+# remove original vectors to free up memory
+trained_model.init_sims(replace=True)
+
 # execute evaluation
 logging.info('> EVALUATING SYNTACTIC FEATURES')
 test_most_similar_groups(trained_model, TARGET_SYN + '.nouml' if args.umlauts else TARGET_SYN, args.topn)
