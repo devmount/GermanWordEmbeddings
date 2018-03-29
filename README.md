@@ -29,7 +29,7 @@ Now you can download [`word2vec_german.sh`](./word2vec_german.sh) and execute it
 
 You can also clone this repository and use my already [trained model](https://tubcloud.tu-berlin.de/s/dc4f9d207bcaf4d4fae99ab3fbb1af16) to play around with the evaluation and visualization.
 
-If you just want to see how the different Python scripts work, have a look into the [code directory](.code) to see Jupyter Notebook script output examples.
+If you just want to see how the different Python scripts work, have a look into the [code directory](./code) to see Jupyter Notebook script output examples.
 
 ## Obtaining corpora <a name="obtention"></a>
 
