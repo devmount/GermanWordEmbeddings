@@ -16,6 +16,7 @@ import gensim
 import random
 import argparse
 import logging
+from pathlib import Path
 
 # configuration
 parser = argparse.ArgumentParser(description='Script for creating testsets and evaluating word vector models')
@@ -326,7 +327,8 @@ if args.create:
     create_semantic_testset()
 
 # get trained model
-trained_model = gensim.models.KeyedVectors.load_word2vec_format(args.model.strip(), binary=True)
+is_binary = Path(args.model.strip()).suffix == ".bin"
+trained_model = gensim.models.KeyedVectors.load_word2vec_format(args.model.strip(), binary=is_binary)
 # remove original vectors to free up memory
 trained_model.init_sims(replace=True)
 
