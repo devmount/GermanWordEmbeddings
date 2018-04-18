@@ -326,8 +326,9 @@ if args.create:
     logging.info('> CREATING SEMANTIC TESTSET')
     create_semantic_testset()
 
-# get trained model
-is_binary = Path(args.model.strip()).suffix == ".bin"
+# get trained model, files without a suffix, .bin or .model are treated as binary files
+binary_filetypes = ['', '.bin','.model']
+is_binary = Path(args.model.strip()).suffix in binary_filetypes
 trained_model = gensim.models.KeyedVectors.load_word2vec_format(args.model.strip(), binary=is_binary)
 # remove original vectors to free up memory
 trained_model.init_sims(replace=True)
