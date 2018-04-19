@@ -25,7 +25,7 @@ Make sure you have **Python 3** installed, as well as the following libraries:
 pip install gensim, nltk, matplotlib, numpy, scipy, scikit-learn
 ```
 
-Now you can download [`word2vec_german.sh`](./word2vec_german.sh) and execute it in your shell to automatically download this toolkit and the corresponding corpus files and do the model training and evaluation. :warning: This could take a huge amount of time!
+Now you can download [`word2vec_german.sh`](./word2vec_german.sh) and execute it in your shell to automatically download this toolkit and the corresponding corpus files and do the model training and evaluation. Be aware that this could take a **huge amount of time**!
 
 You can also clone this repository and use my already [trained model](https://tubcloud.tu-berlin.de/s/dc4f9d207bcaf4d4fae99ab3fbb1af16) to play around with the evaluation and visualization.
 
@@ -241,6 +241,8 @@ Example usage:
 ```shell
 python evaluation.py my.model -u
 ```
+
+Note: Only files with the filetypes `.bin`, `.model` or without any suffix are treated as binary files.
 
 ## Download
 
