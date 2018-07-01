@@ -27,7 +27,7 @@ pip install gensim, nltk, matplotlib, numpy, scipy, scikit-learn
 
 Now you can download [`word2vec_german.sh`](./word2vec_german.sh) and execute it in your shell to automatically download this toolkit and the corresponding corpus files and do the model training and evaluation. Be aware that this could take a **huge amount of time**!
 
-You can also clone this repository and use my already [trained model](https://tubcloud.tu-berlin.de/s/dc4f9d207bcaf4d4fae99ab3fbb1af16) to play around with the evaluation and visualization.
+You can also clone this repository and use my already [trained model](http://cloud.devmount.de/d2bc5672c523b086) to play around with the evaluation and visualization.
 
 If you just want to see how the different Python scripts work, have a look into the [code directory](./code) to see Jupyter Notebook script output examples.
 
@@ -248,4 +248,4 @@ Note: Only files with the filetypes `.bin`, `.model` or without any suffix are t
 
 The optimized German language model, that was trained with this toolkit based on the German Wikipedia (15th May 2015) and German news articles from 2013 (15th May 2015) can be downloaded here:
 
-[german.model](https://tubcloud.tu-berlin.de/s/dc4f9d207bcaf4d4fae99ab3fbb1af16) [704 MB]
+[german.model](http://cloud.devmount.de/d2bc5672c523b086) [704 MB]
