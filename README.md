@@ -91,6 +91,7 @@ Example usage:
 
 ```shell
 python preprocessing.py dewiki.xml corpus/dewiki.corpus -psub
+for file in *.shuffled; do python preprocessing.py $file corpus/$file.corpus -psub; done
 ```
 
 ## Training models <a name="training"></a>
