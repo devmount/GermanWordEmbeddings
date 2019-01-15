@@ -22,7 +22,7 @@ This project is released under the [MIT license](MIT.md).
 Make sure you have **Python 3** installed, as well as the following libraries:
 
 ```shell
-pip install gensim, nltk, matplotlib, numpy, scipy, scikit-learn
+pip install gensim nltk matplotlib numpy scipy scikit-learn
 ```
 
 Now you can download [`word2vec_german.sh`](./word2vec_german.sh) and execute it in your shell to automatically download this toolkit and the corresponding corpus files and do the model training and evaluation. Be aware that this could take a **huge amount of time**!
