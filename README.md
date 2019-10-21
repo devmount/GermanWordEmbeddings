@@ -38,7 +38,7 @@ There are multiple possibilities for obtaining huge German corpora that are publ
 ### German Wikipedia
 
 ```shell
-wget http://download.wikimedia.org/dewiki/latest/dewiki-latest-pages-articles.xml.bz2
+wget https://dumps.wikimedia.org/dewiki/latest/dewiki-latest-pages-articles.xml.bz2
 ```
 
 ### Statistical Machine Translation
