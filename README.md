@@ -251,4 +251,18 @@ The optimized German language model, that was trained with this toolkit based on
 
 [german.model](https://cloud.devmount.de/d2bc5672c523b086) [704 MB]
 
+If you want to use this project for your own work, you can use the following BibTex entry for citation:
+
+```bibtex
+@thesis{mueller2015,
+  author = {{Müller}, Andreas},
+  title  = "{Analyse von Wort-Vektoren deutscher Textkorpora}",
+  school = {Technische Universität Berlin},
+  year   = 2015,
+  month  = jun,
+  type   = {Bachelor's Thesis},
+  url    = {https://devmount.github.io/GermanWordEmbeddings}
+}
+```
+
 The GermanWordEmbeddings tool and the pretrained language model are completely free to use. If you enjoy it, please consider [donating via Paypal](https://paypal.me/devmount) for further development. :green_heart:
