@@ -26,7 +26,7 @@ parser.add_argument('-w', '--window', type=int, default=5, help='size of the sli
 parser.add_argument('-m', '--mincount', type=int, default=5, help='minimum number of occurences of a word to be considered')
 parser.add_argument('-t', '--threads', type=int, default=mp.cpu_count(), help='number of worker threads to train the model')
 parser.add_argument('-g', '--sg', type=int, default=1, help='training algorithm: Skip-Gram (1), otherwise CBOW (0)')
-parser.add_argument('-i', '--hs', type=int, default=1, help='use of hierachical sampling for training')
+parser.add_argument('-i', '--hs', type=int, default=1, help='use of hierarchical sampling for training')
 parser.add_argument('-n', '--negative', type=int, default=0, help='use of negative sampling for training (usually between 5-20)')
 parser.add_argument('-o', '--cbowmean', type=int, default=0, help='for CBOW training algorithm: use sum (0) or mean (1) to merge context vectors')
 args = parser.parse_args()
