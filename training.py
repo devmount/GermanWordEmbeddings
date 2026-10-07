@@ -23,7 +23,7 @@ parser.add_argument('corpora', type=str, help='source folder with preprocessed c
 parser.add_argument('target', type=str, help='target file name to store model in')
 parser.add_argument('-s', '--size', type=int, default=100, help='dimension of word vectors')
 parser.add_argument('-w', '--window', type=int, default=5, help='size of the sliding window')
-parser.add_argument('-m', '--mincount', type=int, default=5, help='minimum number of occurences of a word to be considered')
+parser.add_argument('-m', '--mincount', type=int, default=5, help='minimum number of occurrences of a word to be considered')
 parser.add_argument('-t', '--threads', type=int, default=mp.cpu_count(), help='number of worker threads to train the model')
 parser.add_argument('-g', '--sg', type=int, default=1, help='training algorithm: Skip-Gram (1), otherwise CBOW (0)')
 parser.add_argument('-i', '--hs', type=int, default=1, help='use of hierarchical softmax for training')

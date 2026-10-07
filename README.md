@@ -1,16 +1,12 @@
 # [GermanWordEmbeddings](https://devmount.github.io/GermanWordEmbeddings/)
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](./LICENSE)
-<a href="https://devmount.github.io/GermanWordEmbeddings/#download" title="downloads of german.model">
-![downloads](https://img.shields.io/badge/downloads-11k-blue.svg?style=flat-square)
-</a>
+[![downloads](https://img.shields.io/badge/downloads-11k-blue.svg?style=flat-square)](https://devmount.github.io/GermanWordEmbeddings/#download "downloads of german.model")
 
 There has been a lot of research about the training of word embeddings on English corpora. This toolkit applies [gensim's word2vec](https://radimrehurek.com/gensim/models/word2vec.html) on German corpora to train and evaluate German word embeddings. An overview about the project, evaluation results and [download links](https://devmount.github.io/GermanWordEmbeddings/#download) can be found on the [project's website](https://devmount.github.io/GermanWordEmbeddings/) or directly in this repository.
 
 > [!NOTE]
 > This project is old (2015) and trained word embeddings on German text long before LLMs were called AI. I still actively maintain this repo, the models from the past still load and can be used.
-
-This project is released under the [MIT license](LICENSE).
 
 1. [Get started](#getstarted)
 2. [Obtaining corpora](#obtention)
@@ -61,7 +57,7 @@ The models published with this toolkit are based on the German Wikipedia and onl
 
 ## Preprocessing <a name="preprocessing"></a>
 
-This Tool preprocesses the raw wikipedia XML corpus with the [WikiExtractor](https://github.com/attardi/wikiextractor) (a Python Script from Giuseppe Attardi to filter a Wikipedia XML Dump, installed via `requirements.txt`) and some shell instructions to filter all XML tags and quotations:
+This tool preprocesses the raw wikipedia XML corpus with the [WikiExtractor](https://github.com/attardi/wikiextractor) (a Python Script from Giuseppe Attardi to filter a Wikipedia XML Dump, installed via `requirements.txt`) and some shell instructions to filter all XML tags and quotations:
 
 ```shell
 python -m wikiextractor.WikiExtractor -c -b 25M -o extracted dewiki-latest-pages-articles.xml.bz2
@@ -71,7 +67,7 @@ sed -i 's|["'\''„“‚‘]||g' dewiki.xml
 rm -rf extracted
 ```
 
-The German news already contain one sentence per line and don't have any XML syntax overhead. Only quotation should to be removed:
+The German news already contain one sentence per line and don't have any XML syntax overhead. Only quotation marks need to be removed:
 
 ```shell
 for i in 2007 2008 2009 2010 2011 2012 2013; do
@@ -87,7 +83,7 @@ flag                  | default | description
 -h, --help            | -       | show a help message and exit
 -p, --punctuation     | False   | filter punctuation tokens
 -s, --stopwords       | False   | filter stop word tokens
--u, --umlauts         | False   | replace german umlauts with their respective digraphs
+-u, --umlauts         | False   | replace German umlauts with their respective digraphs
 -b, --bigram          | False   | detect and process common bigram phrases
 -t [ ], --threads [ ] | NUMBER_OF_PROCESSORS | number of worker threads
 --batch_size [ ]      | 32      | batch size for sentence processing
@@ -107,10 +103,10 @@ Models are trained with the help of the [`training.py`](training.py) script with
 
 flag                   | default | description
 ---------------------- | ------- | -----------------------------------------------------
--h, --help             | -       | show this help message and exit
+-h, --help             | -       | show a help message and exit
 -s [ ], --size [ ]     | 100     | dimension of word vectors
 -w [ ], --window [ ]   | 5       | size of the sliding window
--m [ ], --mincount [ ] | 5       | minimum number of occurences of a word to be considered
+-m [ ], --mincount [ ] | 5       | minimum number of occurrences of a word to be considered
 -t [ ], --threads [ ]  | NUMBER_OF_PROCESSORS | number of worker threads to train the model
 -g [ ], --sg [ ]       | 1       | training algorithm: Skip-Gram (1), otherwise CBOW (0)
 -i [ ], --hs [ ]       | 1       | use of hierarchical softmax for training
@@ -147,9 +143,9 @@ To create test sets and evaluate trained models, the [`evaluation.py`](evaluatio
 
 ### Syntactic test set
 
-With the syntactic test, features like singular, plural, 3rd person, past tense, comparative or superlative can be evaluated. Therefore there are 3 source files: adjectives, nouns and verbs. Every file contains a unique word with its conjugations per line, divided bei a dash. These combination patterns can be entered in the `PATTERN_SYN` constant in the script configuration. The script now combinates each word with 5 random other words according to the given pattern, to create appropriate analogy questions. Once the data file with the questions is created, it can be evaluated. Normally the evaluation can be done by [gensim's word analogy evaluation function](https://radimrehurek.com/gensim/models/keyedvectors.html#gensim.models.keyedvectors.KeyedVectors.evaluate_word_analogies), but to get a more specific evaluation result (correct matches, top n matches and coverage), this project uses it's own accuracy functions (`test_most_similar_groups()` and `test_most_similar()` in [`evaluation.py`](evaluation.py)).
+With the syntactic test, features like singular, plural, 3rd person, past tense, comparative or superlative can be evaluated. Therefore there are 3 source files: adjectives, nouns and verbs. Every file contains a unique word with its conjugations per line, divided by a dash. These combination patterns can be entered in the `PATTERN_SYN` constant in the script configuration. The script now combines each word with 5 random other words according to the given pattern, to create appropriate analogy questions. Once the data file with the questions is created, it can be evaluated. Normally the evaluation can be done by [gensim's word analogy evaluation function](https://radimrehurek.com/gensim/models/keyedvectors.html#gensim.models.keyedvectors.KeyedVectors.evaluate_word_analogies), but to get a more specific evaluation result (correct matches, top n matches and coverage), this project uses its own accuracy functions (`test_most_similar_groups()` and `test_most_similar()` in [`evaluation.py`](evaluation.py)).
 
-The given source files of this project contains 100 unique nouns with 2 patterns, 100 unique adjectives with 6 patterns and 100 unique verbs with 12 patterns, resulting in 10k analogy questions. Here are some examples for possible source files:
+The given source files of this project contain 100 unique nouns with 2 patterns, 100 unique adjectives with 6 patterns and 100 unique verbs with 12 patterns, resulting in 10k analogy questions. Here are some examples for possible source files:
 
 #### adjectives.txt
 
@@ -192,11 +188,11 @@ See [src/verbs.txt](src/verbs.txt)
 
 ### Semantic test set
 
-With the semantic test, features concering word meanings can be evaluated. Therefore there are 3 source files: opposite, best match and doesn't match. The given source files result in a total of 950 semantic questions.
+With the semantic test, features concerning word meanings can be evaluated. Therefore there are 3 source files: opposite, best match and doesn't fit. The given source files result in a total of 950 semantic questions.
 
 #### opposite.txt
 
-This file contains opposite words, following the pattern of `oneword-oppositeword` per line, to evaluate the models' ability to find opposites.. The script combinates each pair with 10 random other pairs, to build analogy questions. The given opposite source file of this project includes 30 unique pairs, resulting in 300 analogy questions.
+This file contains opposite words, following the pattern of `oneword-oppositeword` per line, to evaluate the models' ability to find opposites. The script combines each pair with 10 random other pairs, to build analogy questions. The given opposite source file of this project includes 30 unique pairs, resulting in 300 analogy questions.
 
 Example content:
 
@@ -209,7 +205,7 @@ See [src/opposite.txt](src/opposite.txt)
 
 #### bestmatch.txt
 
-This file contains groups of content similar word pairs, to evaluate the models ability to find thematic relevant analogies. The script combines each pair with all other pairs of the same group to build analogy questions. The given bestmatch source file of this project includes 7 groups with a total of 77 unique pairs, resulting in 540 analogy questions.
+This file contains groups of content similar word pairs, to evaluate the model's ability to find thematic relevant analogies. The script combines each pair with all other pairs of the same group to build analogy questions. The given bestmatch source file of this project includes 7 groups with a total of 77 unique pairs, resulting in 540 analogy questions.
 
 Example content:
 
@@ -293,7 +289,7 @@ The optimized German language model, that was trained with this toolkit based on
 
 [german.model](https://cloud.devmount.de/d2bc5672c523b086) [704 MB]
 
-If you want to use this project for your own work, you can use the following BibTex entry for citation:
+If you want to use this project for your own work, you can use the following BibTeX entry for citation:
 
 ```bibtex
 @thesis{mueller2015,
@@ -307,4 +303,4 @@ If you want to use this project for your own work, you can use the following Bib
 }
 ```
 
-The GermanWordEmbeddings tool and the pretrained language model are completely free to use. If you enjoy it, please consider [donating via Paypal](https://paypal.me/devmount) for further development. :green_heart:
+The GermanWordEmbeddings tool and the pretrained language model are completely free to use. If you enjoy it, please consider [donating via PayPal](https://paypal.me/devmount) for further development. :green_heart:
