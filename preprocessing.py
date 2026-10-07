@@ -64,10 +64,11 @@ def process_line(line):
     Pre processes the given line.
 
     :param line: line as str
-    :return: preprocessed sentence
+    :return: preprocessed sentences, one per line
     """
     # detect sentences
     sentences = sentence_detector.tokenize(line)
+    result = ''
     # process each sentence
     for sentence in sentences:
         # replace umlauts
@@ -83,7 +84,8 @@ def process_line(line):
             words = [x for x in words if x not in stop_words]
         # write one sentence per line in output file, if sentence has more than 1 word
         if len(words) > 1:
-            return '{}\n'.format(' '.join(words))
+            result += '{}\n'.format(' '.join(words))
+    return result
 
 # get stopwords
 if not args.umlauts:
