@@ -12,8 +12,7 @@ import os
 
 import gensim
 import numpy as np
-import tensorflow as tf
-from tensorflow.contrib.tensorboard.plugins import projector
+from tensorboard.plugins import projector
 
 
 parser = argparse.ArgumentParser(description='Script for visualizing word vector models with tensorboard')
@@ -31,33 +30,23 @@ if not os.path.exists(args.projector):
 model = gensim.models.KeyedVectors.load_word2vec_format(args.model, binary=True)
 
 # project part of vocab with all dimensions
-w2v_samples = np.zeros((args.samples, model.vector_size))
+words = model.index_to_key[:args.samples]
 with open('{}/{}_metadata.tsv'.format(args.projector, args.prefix), 'w+') as file_metadata:
-    for i, word in enumerate(model.wv.index2word[:args.samples]):
-        w2v_samples[i] = model[word]
+    for word in words:
         file_metadata.write(word + '\n')
 
-# define the model without training
-sess = tf.InteractiveSession()
-
-with tf.device("/cpu:0"):
-    embedding = tf.Variable(w2v_samples, trainable=False, name='{}_embedding'.format(args.prefix))
-
-tf.global_variables_initializer().run()
-
-saver = tf.train.Saver()
-writer = tf.summary.FileWriter(args.projector, sess.graph)
+# store vectors as tab separated values
+np.savetxt('{}/{}_tensor.tsv'.format(args.projector, args.prefix), model[words], delimiter='\t')
 
 # adding into projector
 config = projector.ProjectorConfig()
 embed = config.embeddings.add()
 embed.tensor_name = '{}_embedding'.format(args.prefix)
+embed.tensor_path = './{}_tensor.tsv'.format(args.prefix)
 embed.metadata_path = './{}_metadata.tsv'.format(args.prefix)
 
-# Specify the width and height of a single thumbnail.
-projector.visualize_embeddings(writer, config)
-
-saver.save(sess, '{}/{}_model.ckpt'.format(args.projector, args.prefix), global_step=args.samples)
+# write projector config
+projector.visualize_embeddings(args.projector, config)
 
 print('Start tensorboard with: \'tensorboard --logdir=\"projector\"\'\n'
       'and check http://localhost:6006/#embeddings to view your embedding')

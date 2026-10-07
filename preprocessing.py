@@ -35,7 +35,7 @@ parser.add_argument('-t', '--threads', type=int, default=mp.cpu_count(), help='t
 parser.add_argument('--batch_size', type=int, default=32, help='batch size for multiprocessing')
 args = parser.parse_args()
 logging.basicConfig(stream=sys.stdout, format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-sentence_detector = nltk.data.load('tokenizers/punkt/german.pickle')
+sentence_detector = nltk.tokenize.PunktTokenizer('german')
 punctuation_tokens = ['.', '..', '...', ',', ';', ':', '(', ')', '"', '\'', '[', ']',
                       '{', '}', '?', '!', '-', '–', '+', '*', '--', '\'\'', '``']
 punctuation = '?.!/;:()&+'
@@ -64,10 +64,11 @@ def process_line(line):
     Pre processes the given line.
 
     :param line: line as str
-    :return: preprocessed sentence
+    :return: preprocessed sentences, one per line
     """
     # detect sentences
     sentences = sentence_detector.tokenize(line)
+    result = ''
     # process each sentence
     for sentence in sentences:
         # replace umlauts
@@ -83,29 +84,14 @@ def process_line(line):
             words = [x for x in words if x not in stop_words]
         # write one sentence per line in output file, if sentence has more than 1 word
         if len(words) > 1:
-            return '{}\n'.format(' '.join(words))
+            result += '{}\n'.format(' '.join(words))
+    return result
 
 # get stopwords
 if not args.umlauts:
     stop_words = stopwords.words('german')
 else:
     stop_words = [replace_umlauts(token) for token in stopwords.words('german')]
-
-if not os.path.exists(os.path.dirname(args.target)):
-    os.makedirs(os.path.dirname(args.target))
-with open(args.raw, 'r') as infile:
-    # start pre processing with multiple threads
-    pool = mp.Pool(args.threads)
-    values = pool.imap(process_line, infile, chunksize=args.batch_size)
-    with open(args.target, 'w') as outfile:
-        for i, s in enumerate(values):
-            if i and i % 25000 == 0:
-                logging.info('processed {} sentences'.format(i))
-                outfile.flush()
-            if s:
-                outfile.write(s)
-        logging.info('preprocessing of {} sentences finished!'.format(i))
-
 
 # get corpus sentences
 class CorpusSentences:
@@ -116,10 +102,27 @@ class CorpusSentences:
         for line in open(self.filename):
             yield line.split()
 
-if args.bigram:
-    logging.info('train bigram phrase detector')
-    bigram = gensim.models.Phrases(CorpusSentences(args.target))
-    logging.info('transform corpus to bigram phrases')
-    with open('{}.bigram'.format(args.target), 'w') as outfile:
-        for tokens in bigram[CorpusSentences(args.target)]:
-            outfile.write('{}\n'.format(' '.join(tokens)))
+
+if __name__ == '__main__':
+    if os.path.dirname(args.target) and not os.path.exists(os.path.dirname(args.target)):
+        os.makedirs(os.path.dirname(args.target))
+    with open(args.raw, 'r') as infile:
+        # start pre processing with multiple threads
+        pool = mp.Pool(args.threads)
+        values = pool.imap(process_line, infile, chunksize=args.batch_size)
+        with open(args.target, 'w') as outfile:
+            for i, s in enumerate(values):
+                if i and i % 25000 == 0:
+                    logging.info('processed {} sentences'.format(i))
+                    outfile.flush()
+                if s:
+                    outfile.write(s)
+            logging.info('preprocessing of {} sentences finished!'.format(i))
+
+    if args.bigram:
+        logging.info('train bigram phrase detector')
+        bigram = gensim.models.Phrases(CorpusSentences(args.target))
+        logging.info('transform corpus to bigram phrases')
+        with open('{}.bigram'.format(args.target), 'w') as outfile:
+            for tokens in bigram[CorpusSentences(args.target)]:
+                outfile.write('{}\n'.format(' '.join(tokens)))

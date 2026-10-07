@@ -1,7 +1,8 @@
 nltk==3.10.3
-numpy==1.22.0
-scipy==1.10.0
-gensim==2.2.0
-matplotlib==2.0.2
-scikit-learn==1.5.0
-tensorflow==2.12.1
+numpy==2.5.3
+scipy==1.18.1
+gensim==4.4.0
+matplotlib==3.11.2
+scikit-learn==1.9.1
+tensorboard==2.21.0
+wikiextractor==3.1.0

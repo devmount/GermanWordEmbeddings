@@ -100,6 +100,8 @@ def create_syntactic_testset():
                 if args.umlauts:
                     u.write(replace_umlauts(q) + '\n')
             logging.info('created pattern ' + short)
+    if args.umlauts:
+        u.close()
 
 
 def create_semantic_testset():
@@ -109,15 +111,20 @@ def create_semantic_testset():
     :return: None
     """
     # opposite
+    if args.umlauts:
+        u = open(TARGET_SEM_OP + '.nouml', 'w')
     with open(TARGET_SEM_OP, 'w') as t:
         for q in create_questions(SRC_OPPOSITE, combinate=10):
             t.write(q + '\n')
             if args.umlauts:
-                with open(TARGET_SEM_OP + '.nouml', 'w') as u:
-                    u.write(replace_umlauts(q) + '\n')
+                u.write(replace_umlauts(q) + '\n')
         logging.info('created opposite questions')
+    if args.umlauts:
+        u.close()
 
     # best match
+    if args.umlauts:
+        u = open(TARGET_SEM_BM + '.nouml', 'w')
     with open(TARGET_SEM_BM, 'w') as t:
         groups = open(SRC_BESTMATCH).read().split(':')
         groups.pop(0)  # remove first empty group
@@ -129,12 +136,15 @@ def create_semantic_testset():
                     question = questions[0].split('-') + questions[i].split('-')
                     t.write(' '.join(question) + '\n')
                     if args.umlauts:
-                        with open(TARGET_SEM_BM + '.nouml', 'w') as u:
-                            u.write(replace_umlauts(' '.join(question)) + '\n')
+                        u.write(replace_umlauts(' '.join(question)) + '\n')
                 questions.pop(0)
         logging.info('created best-match questions')
+    if args.umlauts:
+        u.close()
 
     # doesn't fit
+    if args.umlauts:
+        u = open(TARGET_SEM_DF + '.nouml', 'w')
     with open(TARGET_SEM_DF, 'w') as t:
         for line in open(SRC_DOESNTFIT):
             words = line.split()
@@ -142,9 +152,10 @@ def create_semantic_testset():
                 question = ' '.join(words[:3] + [wrongword])
                 t.write(question + '\n')
                 if args.umlauts:
-                    with open(TARGET_SEM_DF + '.nouml', 'w') as u:
-                        u.write(replace_umlauts(question) + '\n')
+                    u.write(replace_umlauts(question) + '\n')
         logging.info('created doesn\'t-fit questions')
+    if args.umlauts:
+        u.close()
 
 
 def create_questions(src, index1=0, index2=1, combinate=5):
@@ -199,7 +210,7 @@ def test_most_similar(model, src, label='most similar', topn=10):
     for question in questions:
         words = question.split()
         # check if all words exist in vocabulary
-        if all(x in model.index2word for x in words):
+        if all(x in model.key_to_index for x in words):
             num_questions += 1
             best_matches = model.most_similar(positive=[words[1], words[2]], negative=[words[0]], topn=topn)
             # best match
@@ -248,7 +259,7 @@ def test_most_similar_groups(model, src, topn=10):
             for question in questions:
                 words = question.split()
                 # check if all words exist in vocabulary
-                if all(x in model.index2word for x in words):
+                if all(x in model.key_to_index for x in words):
                     num_group_questions += 1
                     best_matches = model.most_similar(positive=[words[1], words[2]], negative=[words[0]], topn=topn)
                     # best match
@@ -309,7 +320,7 @@ def test_doesnt_fit(model, src):
     for question in questions:
         words = question.split()
         # check if all words exist in vocabulary
-        if all(x in model.index2word for x in words):
+        if all(x in model.key_to_index for x in words):
             num_questions += 1
             if model.doesnt_match(words) == words[3]:
                 num_right += 1
@@ -331,7 +342,7 @@ binary_filetypes = ['', '.bin','.model']
 is_binary = Path(args.model.strip()).suffix in binary_filetypes
 trained_model = gensim.models.KeyedVectors.load_word2vec_format(args.model.strip(), binary=is_binary)
 # remove original vectors to free up memory
-trained_model.init_sims(replace=True)
+trained_model.unit_normalize_all()
 
 # execute evaluation
 logging.info('> EVALUATING SYNTACTIC FEATURES')

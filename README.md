@@ -7,7 +7,7 @@
 
 There has been a lot of research about the training of word embeddings on English corpora. This toolkit applies deep learning via [gensims's word2vec](https://radimrehurek.com/gensim/models/word2vec.html) on German corpora to train and evaluate German language models. An overview about the project, evaluation results and [download links](https://devmount.github.io/GermanWordEmbeddings/#download) can be found on the [project's website](https://devmount.github.io/GermanWordEmbeddings/) or directly in this repository.
 
-This project is released under the [MIT license](MIT.md).
+This project is released under the [MIT license](LICENSE).
 
 1. [Get started](#getstarted)
 2. [Obtaining corpora](#obtention)
@@ -19,10 +19,11 @@ This project is released under the [MIT license](MIT.md).
 
 ## Get started <a name="getstarted"></a>
 
-Make sure you have **Python 3** installed, as well as the following libraries:
+Make sure you have **Python 3.12** or newer installed, as well as the required libraries and NLTK data:
 
 ```shell
-pip install gensim nltk matplotlib numpy scipy scikit-learn
+pip install -r requirements.txt
+python -m nltk.downloader punkt_tab stopwords
 ```
 
 Now you can download [`word2vec_german.sh`](./word2vec_german.sh) and execute it in your shell to automatically download this toolkit and the corresponding corpus files and do the model training and evaluation. Be aware that this could take a **huge amount of time**!
@@ -47,7 +48,7 @@ Shuffled German news of the years 2007 to 2013:
 
 ```shell
 for i in 2007 2008 2009 2010 2011 2012 2013; do
-  wget http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.$i.de.shuffled.gz
+  wget https://www.statmt.org/wmt14/training-monolingual-news-crawl/news.$i.de.shuffled.gz
 done
 ```
 
@@ -55,11 +56,10 @@ Models trained with this toolkit are based on the German Wikipedia and German ne
 
 ## Preprocessing <a name="preprocessing"></a>
 
-This Tool preprocesses the raw wikipedia XML corpus with the WikipediaExtractor (a Python Script from Giuseppe Attardi to filter a Wikipedia XML Dump, licensed under GPLv3) and some shell instructions to filter all XML tags and quotations:
+This Tool preprocesses the raw wikipedia XML corpus with the [WikiExtractor](https://github.com/attardi/wikiextractor) (a Python Script from Giuseppe Attardi to filter a Wikipedia XML Dump, installed via `requirements.txt`) and some shell instructions to filter all XML tags and quotations:
 
 ```shell
-wget http://medialab.di.unipi.it/Project/SemaWiki/Tools/WikiExtractor.py
-python WikiExtractor.py -c -b 25M -o extracted dewiki-latest-pages-articles.xml.bz2
+python -m wikiextractor.WikiExtractor -c -b 25M -o extracted dewiki-latest-pages-articles.xml.bz2
 find extracted -name '*bz2' \! -exec bzip2 -k -c -d {} \; > dewiki.xml
 sed -i 's/<[^>]*>//g' dewiki.xml
 sed -i 's|["'\''„“‚‘]||g' dewiki.xml
@@ -106,7 +106,7 @@ flag                   | default | description
 -m [ ], --mincount [ ] | 5       | minimum number of occurences of a word to be considered
 -t [ ], --threads [ ]  | NUMBER_OF_PROCESSORS | number of worker threads to train the model
 -g [ ], --sg [ ]       | 1       | training algorithm: Skip-Gram (1), otherwise CBOW (0)
--i [ ], --hs [ ]       | 1       | use of hierachical sampling for training
+-i [ ], --hs [ ]       | 1       | use of hierarchical sampling for training
 -n [ ], --negative [ ] | 0       | use of negative sampling for training (usually between 5-20)
 -o [ ], --cbowmean [ ] | 0       | for CBOW training algorithm: use sum (0) or mean (1) to merge context vectors
 

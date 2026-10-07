@@ -25,8 +25,8 @@ model = gensim.models.KeyedVectors.load_word2vec_format(args.model, binary=True)
 
 # build vocab
 vocab = []
-for word, obj in model.vocab.items():
-    vocab.append([word, obj.count])
+for word in model.index_to_key:
+    vocab.append([word, model.get_vecattr(word, 'count')])
 
 # save vocab
 with open(args.target, 'w') as f:
