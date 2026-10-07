@@ -112,6 +112,8 @@ flag                   | default | description
 -i [ ], --hs [ ]       | 1       | use of hierarchical softmax for training
 -n [ ], --negative [ ] | 0       | use of negative sampling for training (usually between 5-20)
 -o [ ], --cbowmean [ ] | 0       | for CBOW training algorithm: use sum (0) or mean (1) to merge context vectors
+-f, --full             | False   | additionally store the full model in `<target>.full` to resume training later
+-r [ ], --resume [ ]   | -       | full model file to resume training from with new corpora
 
 Example usage:
 
@@ -126,6 +128,15 @@ If the time needed to train the model should be measured and stored into the res
 ```shell
 { time python training.py corpus/ my.model -s 200 -w 5; } 2>> my.model.result
 ```
+
+By default only the word vectors are stored, which is sufficient for evaluation and visualization. To be able to continue the training later, e.g. with new words, the full model has to be stored with the `-f` flag. It can then be passed to the `-r` option together with a directory that only contains the additional corpus files:
+
+```shell
+python training.py corpus/ my.model -s 200 -w 5 -f
+python training.py corpus_new/ my.model -r my.model.full -f
+```
+
+Mind that the model parameters (`-s`, `-w`, `-m`, `-g`, `-i`, `-n`, `-o`) are taken from the resumed model and are ignored when given, and that a full model needs considerably more disk space than the word vectors alone.
 
 ## Vocabulary <a name="vocabulary"></a>
 
@@ -288,6 +299,8 @@ Afterwards the projector is available at <http://localhost:6006/#projector>.
 The optimized German language model, that was trained with this toolkit based on the German Wikipedia and German news articles from 2013 (both retrieved on 15th May 2015) can be downloaded here:
 
 [german.model](https://cloud.devmount.de/d2bc5672c523b086) [704 MB]
+
+Mind that this model only contains the word vectors, so it can't be used to resume training.
 
 If you want to use this project for your own work, you can use the following BibTeX entry for citation:
 

@@ -14,6 +14,7 @@
 import gensim
 import logging
 import os
+import pickle
 import argparse
 import multiprocessing as mp
 
@@ -29,6 +30,8 @@ parser.add_argument('-g', '--sg', type=int, default=1, help='training algorithm:
 parser.add_argument('-i', '--hs', type=int, default=1, help='use of hierarchical softmax for training')
 parser.add_argument('-n', '--negative', type=int, default=0, help='use of negative sampling for training (usually between 5-20)')
 parser.add_argument('-o', '--cbowmean', type=int, default=0, help='for CBOW training algorithm: use sum (0) or mean (1) to merge context vectors')
+parser.add_argument('-f', '--full', action='store_true', help='additionally store full model in <target>.full to resume training later')
+parser.add_argument('-r', '--resume', type=str, help='full model file to resume training from with new corpora (model parameters are taken from this model)')
 args = parser.parse_args()
 logging.basicConfig(
     filename=args.target.strip() + '.result', format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO
@@ -48,18 +51,33 @@ class CorpusSentences(object):
 
 sentences = CorpusSentences(args.corpora)
 
-# train the model
-model = gensim.models.Word2Vec(
-    sentences,
-    vector_size=args.size,
-    window=args.window,
-    min_count=args.mincount,
-    workers=args.threads,
-    sg=args.sg,
-    hs=args.hs,
-    negative=args.negative,
-    cbow_mean=args.cbowmean
-)
+if args.resume:
+    # resume training of given full model with new words and sentences
+    logging.info('resuming training of {}, given model parameters are ignored'.format(args.resume))
+    try:
+        model = gensim.models.Word2Vec.load(args.resume)
+    except pickle.UnpicklingError:
+        parser.error('{} is not a full model, it has to be stored with --full'.format(args.resume))
+    model.workers = args.threads
+    model.build_vocab(sentences, update=True)
+    model.train(sentences, total_examples=model.corpus_count, epochs=model.epochs)
+else:
+    # train the model
+    model = gensim.models.Word2Vec(
+        sentences,
+        vector_size=args.size,
+        window=args.window,
+        min_count=args.mincount,
+        workers=args.threads,
+        sg=args.sg,
+        hs=args.hs,
+        negative=args.negative,
+        cbow_mean=args.cbowmean
+    )
 
 # store model
 model.wv.save_word2vec_format(args.target, binary=True)
+
+# store full model
+if args.full:
+    model.save(args.target + '.full')
