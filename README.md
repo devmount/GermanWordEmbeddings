@@ -18,22 +18,24 @@ This project is released under the [MIT license](LICENSE).
 4. [Training models](#training)
 5. [Vocabulary](#vocabulary)
 6. [Evaluation](#evaluation)
-7. [Download](#download)
+7. [Visualization](#visualization)
+8. [Download](#download)
 
 ## Get started <a name="getstarted"></a>
 
-Make sure you have **Python 3.12** or **3.13** installed, as well as the required libraries and NLTK data:
+Make sure you have **Python 3.12** or **3.13** installed, as well as the required libraries and NLTK data, preferably in a virtual environment:
 
 ```shell
+python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 python -m nltk.downloader punkt_tab stopwords
 ```
 
-Now you can download [`word2vec_german.sh`](./word2vec_german.sh) and execute it in your shell to automatically download this toolkit and the corresponding corpus files and do the model training and evaluation. Be aware that this could take a **huge amount of time**!
+Now you can download [`word2vec_german.sh`](./word2vec_german.sh) and execute it in your shell to automatically download this toolkit and the corresponding corpus files and do the model training and evaluation. The script expects the libraries and NLTK data from above to be installed and trains a model with 300 dimensions, a window size of 5, 10 negative samples and a minimum word count of 50. Be aware that this could take a **huge amount of time**!
 
 You can also clone this repository and use my already [trained model](https://cloud.devmount.de/d2bc5672c523b086) to play around with the evaluation and visualization.
 
-If you just want to see how the different Python scripts work, have a look into the [code directory](./code) to see Jupyter Notebook script output examples.
+If you just want to see how the different Python scripts work, have a look into the [code directory](./code) to see Jupyter Notebook script output examples. Mind that these outputs are from the original runs in 2015.
 
 ## Obtaining corpora <a name="obtention"></a>
 
@@ -238,11 +240,12 @@ See [src/doesntfit.txt](src/doesntfit.txt)
 
 Those options for the script execution are possible:
 
-flag          | description
-------------- | -----------------------------------------------------
--h, --help    | show a help message and exit
--c, --create  | if set, create testsets before evaluating
--u, --umlauts | if set, create additional testsets with transformed umlauts and/or use them instead
+flag               | default | description
+------------------ | ------- | -----------------------------------------------------
+-h, --help         | -       | show a help message and exit
+-c, --create       | False   | if set, create testsets before evaluating
+-u, --umlauts      | False   | if set, create additional testsets with transformed umlauts and/or use them instead
+-t [ ], --topn [ ] | 10      | check the top n results (correct answer under top n answers)
 
 Example usage:
 
@@ -250,9 +253,41 @@ Example usage:
 python evaluation.py my.model -u
 ```
 
-Note: Only files with the filetypes `.bin`, `.model` or without any suffix are treated as binary files.
+The script has to be executed from the repository root, as it uses relative paths to the test sets in the [data directory](./data). The results are printed and also stored in `my.model.result`.
 
-## Download
+Mind that the `-c` flag randomly recreates and overwrites the test sets in the data directory, so results are not comparable to the published ones anymore.
+
+Note: `evaluation.py` only treats files with the filetypes `.bin`, `.model` or without any suffix as binary files. All other scripts always expect the binary format.
+
+## Visualization <a name="visualization"></a>
+
+To visualize word vectors of a trained model, the [`visualize.py`](visualize.py) script can be used. It reduces the vectors of the word lists configured in the script to two dimensions with PCA and plots them:
+
+```shell
+python visualize.py my.model
+```
+
+Mind that the configured words contain transformed umlauts and bigram phrases, so the model has to be trained on a corpus that was preprocessed with the `-u` and `-b` flags.
+
+To explore a model interactively with the embedding projector of [TensorBoard](https://www.tensorflow.org/tensorboard), the [`tfvisualize.py`](tfvisualize.py) script exports the vectors of the most frequent words with the following options:
+
+flag                    | default   | description
+----------------------- | --------- | --------------------------------
+-h, --help              | -         | show a help message and exit
+-s [ ], --samples [ ]   | 10000     | number of samples to project
+-p [ ], --projector [ ] | projector | target projector path
+--prefix [ ]            | default   | model prefix for projector files
+
+Example usage:
+
+```shell
+python tfvisualize.py my.model -s 10000
+tensorboard --logdir projector
+```
+
+Afterwards the projector is available at <http://localhost:6006/#projector>.
+
+## Download <a name="download"></a>
 
 The optimized German language model, that was trained with this toolkit based on the German Wikipedia and German news articles from 2013 (both retrieved on 15th May 2015) can be downloaded here:
 
