@@ -2,10 +2,13 @@
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](./LICENSE)
 <a href="https://devmount.github.io/GermanWordEmbeddings/#download" title="downloads of german.model">
-![downloads](https://img.shields.io/badge/downloads-5k-blue.svg?style=flat-square)
+![downloads](https://img.shields.io/badge/downloads-11k-blue.svg?style=flat-square)
 </a>
 
-There has been a lot of research about the training of word embeddings on English corpora. This toolkit applies deep learning via [gensims's word2vec](https://radimrehurek.com/gensim/models/word2vec.html) on German corpora to train and evaluate German language models. An overview about the project, evaluation results and [download links](https://devmount.github.io/GermanWordEmbeddings/#download) can be found on the [project's website](https://devmount.github.io/GermanWordEmbeddings/) or directly in this repository.
+There has been a lot of research about the training of word embeddings on English corpora. This toolkit applies [gensim's word2vec](https://radimrehurek.com/gensim/models/word2vec.html) on German corpora to train and evaluate German word embeddings. An overview about the project, evaluation results and [download links](https://devmount.github.io/GermanWordEmbeddings/#download) can be found on the [project's website](https://devmount.github.io/GermanWordEmbeddings/) or directly in this repository.
+
+> [!NOTE]
+> This project is old (2015) and trained word embeddings on German text long before LLMs were called AI. I still actively maintain this repo, the models from the past still load and can be used.
 
 This project is released under the [MIT license](LICENSE).
 
@@ -19,7 +22,7 @@ This project is released under the [MIT license](LICENSE).
 
 ## Get started <a name="getstarted"></a>
 
-Make sure you have **Python 3.12** or newer installed, as well as the required libraries and NLTK data:
+Make sure you have **Python 3.12** or **3.13** installed, as well as the required libraries and NLTK data:
 
 ```shell
 pip install -r requirements.txt
@@ -52,7 +55,7 @@ for i in 2007 2008 2009 2010 2011 2012 2013; do
 done
 ```
 
-Models trained with this toolkit are based on the German Wikipedia and German news of 2013.
+The models published with this toolkit are based on the German Wikipedia and only the German news of 2013.
 
 ## Preprocessing <a name="preprocessing"></a>
 
@@ -94,6 +97,8 @@ python preprocessing.py dewiki.xml corpus/dewiki.corpus -psub
 for file in *.shuffled; do python preprocessing.py $file corpus/$file.corpus -psub; done
 ```
 
+Mind that the `-b` flag creates an additional `.bigram` file next to each corpus file. As the training uses every file in the corpus directory, only keep one of both versions, e.g. with `rm corpus/*.corpus`.
+
 ## Training models <a name="training"></a>
 
 Models are trained with the help of the [`training.py`](training.py) script with the following options:
@@ -106,7 +111,7 @@ flag                   | default | description
 -m [ ], --mincount [ ] | 5       | minimum number of occurences of a word to be considered
 -t [ ], --threads [ ]  | NUMBER_OF_PROCESSORS | number of worker threads to train the model
 -g [ ], --sg [ ]       | 1       | training algorithm: Skip-Gram (1), otherwise CBOW (0)
--i [ ], --hs [ ]       | 1       | use of hierarchical sampling for training
+-i [ ], --hs [ ]       | 1       | use of hierarchical softmax for training
 -n [ ], --negative [ ] | 0       | use of negative sampling for training (usually between 5-20)
 -o [ ], --cbowmean [ ] | 0       | for CBOW training algorithm: use sum (0) or mean (1) to merge context vectors
 
@@ -126,11 +131,13 @@ If the time needed to train the model should be measured and stored into the res
 
 ## Vocabulary <a name="vocabulary"></a>
 
-To compute the vocabulary of a given corpus, the [`vocabulary.py`](vocabulary.py) script can be used:
+To compute the vocabulary of a trained model, the [`vocabulary.py`](vocabulary.py) script can be used:
 
 ```shell
 python vocabulary.py my.model my.model.vocab
 ```
+
+Mind that the binary model format doesn't contain word frequencies, so the stored counts only reflect the frequency rank of each word.
 
 ## Evaluation <a name="evaluation"></a>
 
@@ -138,7 +145,7 @@ To create test sets and evaluate trained models, the [`evaluation.py`](evaluatio
 
 ### Syntactic test set
 
-With the syntactic test, features like singular, plural, 3rd person, past tense, comparative or superlative can be evaluated. Therefore there are 3 source files: adjectives, nouns and verbs. Every file contains a unique word with its conjugations per line, divided bei a dash. These combination patterns can be entered in the `PATTERN_SYN` constant in the script configuration. The script now combinates each word with 5 random other words according to the given pattern, to create appropriate analogy questions. Once the data file with the questions is created, it can be evaluated. Normally the evaluation can be done by [gensim's word2vec accuracy function](http://radimrehurek.com/gensim/models/word2vec.html#gensim.models.word2vec.Word2Vec.accuracy), but to get a more specific evaluation result (correct matches, top n matches and coverage), this project uses it's own accuracy functions (`test_mostsimilar_groups()` and `test_mostsimilar()` in [`evaluation.py`](evaluation.py)).
+With the syntactic test, features like singular, plural, 3rd person, past tense, comparative or superlative can be evaluated. Therefore there are 3 source files: adjectives, nouns and verbs. Every file contains a unique word with its conjugations per line, divided bei a dash. These combination patterns can be entered in the `PATTERN_SYN` constant in the script configuration. The script now combinates each word with 5 random other words according to the given pattern, to create appropriate analogy questions. Once the data file with the questions is created, it can be evaluated. Normally the evaluation can be done by [gensim's word analogy evaluation function](https://radimrehurek.com/gensim/models/keyedvectors.html#gensim.models.keyedvectors.KeyedVectors.evaluate_word_analogies), but to get a more specific evaluation result (correct matches, top n matches and coverage), this project uses it's own accuracy functions (`test_most_similar_groups()` and `test_most_similar()` in [`evaluation.py`](evaluation.py)).
 
 The given source files of this project contains 100 unique nouns with 2 patterns, 100 unique adjectives with 6 patterns and 100 unique verbs with 12 patterns, resulting in 10k analogy questions. Here are some examples for possible source files:
 
@@ -247,7 +254,7 @@ Note: Only files with the filetypes `.bin`, `.model` or without any suffix are t
 
 ## Download
 
-The optimized German language model, that was trained with this toolkit based on the German Wikipedia (15th May 2015) and German news articles from 2013 (15th May 2015) can be downloaded here:
+The optimized German language model, that was trained with this toolkit based on the German Wikipedia and German news articles from 2013 (both retrieved on 15th May 2015) can be downloaded here:
 
 [german.model](https://cloud.devmount.de/d2bc5672c523b086) [704 MB]
 
