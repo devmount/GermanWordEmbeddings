@@ -30,7 +30,7 @@ printf "done!\n"
 # build news corpus
 printf "Downloading and preprocessing news raw data... \n"
 for i in 2007 2008 2009 2010 2011 2012 2013; do
-	wget http://www.statmt.org/wmt14/training-monolingual-news-crawl/news.$i.de.shuffled.gz
+	wget https://www.statmt.org/wmt14/training-monolingual-news-crawl/news.$i.de.shuffled.gz
 	gzip -d news.$i.de.shuffled.gz
 	python preprocessing.py news.$i.de.shuffled corpus/news.$i.de.shuffled.corpus -psub
 	printf "News %i done!\n" $i
@@ -39,9 +39,8 @@ rm news*
 
 # build wikipedia corpus
 printf "Downloading and preprocessing wikipedia raw data... "
-wget http://download.wikimedia.org/dewiki/latest/dewiki-latest-pages-articles.xml.bz2
-wget http://medialab.di.unipi.it/Project/SemaWiki/Tools/WikiExtractor.py
-python WikiExtractor.py -c -b 25M -o extracted dewiki-latest-pages-articles.xml.bz2
+wget https://dumps.wikimedia.org/dewiki/latest/dewiki-latest-pages-articles.xml.bz2
+python -m wikiextractor.WikiExtractor -c -b 25M -o extracted dewiki-latest-pages-articles.xml.bz2
 find extracted -name '*bz2' \! -exec bzip2 -k -c -d {} \; > dewiki.xml
 printf "Number of articles: "
 grep -o "<doc" dewiki.xml | wc -w
