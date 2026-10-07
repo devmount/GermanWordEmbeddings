@@ -35,7 +35,7 @@ parser.add_argument('-t', '--threads', type=int, default=mp.cpu_count(), help='t
 parser.add_argument('--batch_size', type=int, default=32, help='batch size for multiprocessing')
 args = parser.parse_args()
 logging.basicConfig(stream=sys.stdout, format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
-sentence_detector = nltk.data.load('tokenizers/punkt/german.pickle')
+sentence_detector = nltk.tokenize.PunktTokenizer('german')
 punctuation_tokens = ['.', '..', '...', ',', ';', ':', '(', ')', '"', '\'', '[', ']',
                       '{', '}', '?', '!', '-', '–', '+', '*', '--', '\'\'', '``']
 punctuation = '?.!/;:()&+'
@@ -91,22 +91,6 @@ if not args.umlauts:
 else:
     stop_words = [replace_umlauts(token) for token in stopwords.words('german')]
 
-if not os.path.exists(os.path.dirname(args.target)):
-    os.makedirs(os.path.dirname(args.target))
-with open(args.raw, 'r') as infile:
-    # start pre processing with multiple threads
-    pool = mp.Pool(args.threads)
-    values = pool.imap(process_line, infile, chunksize=args.batch_size)
-    with open(args.target, 'w') as outfile:
-        for i, s in enumerate(values):
-            if i and i % 25000 == 0:
-                logging.info('processed {} sentences'.format(i))
-                outfile.flush()
-            if s:
-                outfile.write(s)
-        logging.info('preprocessing of {} sentences finished!'.format(i))
-
-
 # get corpus sentences
 class CorpusSentences:
     def __init__(self, filename):
@@ -116,10 +100,27 @@ class CorpusSentences:
         for line in open(self.filename):
             yield line.split()
 
-if args.bigram:
-    logging.info('train bigram phrase detector')
-    bigram = gensim.models.Phrases(CorpusSentences(args.target))
-    logging.info('transform corpus to bigram phrases')
-    with open('{}.bigram'.format(args.target), 'w') as outfile:
-        for tokens in bigram[CorpusSentences(args.target)]:
-            outfile.write('{}\n'.format(' '.join(tokens)))
+
+if __name__ == '__main__':
+    if os.path.dirname(args.target) and not os.path.exists(os.path.dirname(args.target)):
+        os.makedirs(os.path.dirname(args.target))
+    with open(args.raw, 'r') as infile:
+        # start pre processing with multiple threads
+        pool = mp.Pool(args.threads)
+        values = pool.imap(process_line, infile, chunksize=args.batch_size)
+        with open(args.target, 'w') as outfile:
+            for i, s in enumerate(values):
+                if i and i % 25000 == 0:
+                    logging.info('processed {} sentences'.format(i))
+                    outfile.flush()
+                if s:
+                    outfile.write(s)
+            logging.info('preprocessing of {} sentences finished!'.format(i))
+
+    if args.bigram:
+        logging.info('train bigram phrase detector')
+        bigram = gensim.models.Phrases(CorpusSentences(args.target))
+        logging.info('transform corpus to bigram phrases')
+        with open('{}.bigram'.format(args.target), 'w') as outfile:
+            for tokens in bigram[CorpusSentences(args.target)]:
+                outfile.write('{}\n'.format(' '.join(tokens)))

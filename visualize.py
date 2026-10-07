@@ -57,13 +57,13 @@ def draw_words(model, words, pca=False, alternate=True, arrows=True, x1=3, x2=3,
     :return: None
     """
     # get vectors for given words from model
-    vectors = [model[word] for word in words]
+    vectors = model[words]
 
     if pca:
         pca = PCA(n_components=2, whiten=True)
         vectors2d = pca.fit(vectors).transform(vectors)
     else:
-        tsne = TSNE(n_components=2, random_state=0)
+        tsne = TSNE(n_components=2, random_state=0, perplexity=min(30, len(words) - 1))
         vectors2d = tsne.fit_transform(vectors)
 
     # draw image

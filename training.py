@@ -51,7 +51,7 @@ sentences = CorpusSentences(args.corpora)
 # train the model
 model = gensim.models.Word2Vec(
     sentences,
-    size=args.size,
+    vector_size=args.size,
     window=args.window,
     min_count=args.mincount,
     workers=args.threads,
