@@ -1,4 +1,4 @@
-nltk==3.10.3
+nltk==3.10.4
 numpy==2.5.3
 scipy==1.18.1
 gensim==4.4.0
